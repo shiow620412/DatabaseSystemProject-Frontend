@@ -39,9 +39,9 @@
                     </div>
                     <div class="col-md-2 d-flex justify-content-center">
                         <div class="d-flex flex-row align-items-center qty">
-                            <i class="fa fa-minus text-danger" type="buon" @click="te.Cnum--"></i>
+                            <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
                             <h5><input type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum"></h5>
-                            <i class="fa fa-plus text-success" type="button" @click="te.Cnum++"></i>
+                            <i class="fa fa-plus text-success" type="button" @click="ClickUp(index)"></i>
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -72,7 +72,7 @@ export default {
     },
     data() {
         return {
-            num: 0,
+            cut: 0,
             commodity: [{
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'T-shirt',
@@ -107,18 +107,20 @@ export default {
         }
     },
     methods: {
-        ClickDown: function () {
+        ClickDown: function (num) {
             // alert("減少數量");
-            if (this.$options.num > 0) {
-                this.$options.num--
+            if (this.commodity[num].Cnum > 0) {
+                this.commodity[num].Cnum--
             }
         },
-        ClickUp: function () {
+        ClickUp: function (num) {
             // alert("增加數量")
-            this.$options.num++
+            this.commodity[num].Cnum++
         },
         ClickDelete: function () {
             alert("You delete this data")
+            // this.commodity[num].splice(num, 1)
+            // alert(this.commodity[num])
         }
     }
 }
