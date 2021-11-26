@@ -72,6 +72,7 @@ export default {
     },
     data() {
         return {
+            cut: 0,
             commodity: [{
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'T-shirt',
@@ -108,7 +109,11 @@ export default {
     methods: {
         ClickDown: function (num) {
             // alert("減少數量");
-            if (this.commodity[num].Cnum > 0) {
+            if (this.commodity[num].Cnum == 1) {
+              if (confirm("Are you sure you want to remove this commodity at the shopcart?")) {
+                this.commodity.splice(num, 1)
+              }
+            } else if (this.commodity[num].Cnum > 1) {
                 this.commodity[num].Cnum--
             }
         },
@@ -117,8 +122,9 @@ export default {
             this.commodity[num].Cnum++
         },
         ClickDelete: function (num) {
-            // alert("You delete this data")
-            this.commodity.splice(num, 1)
+            if (confirm("Are you sure you want to remove this commodity at the shopcart?")) {
+                this.commodity.splice(num, 1)
+            }
         }
     }
 }
