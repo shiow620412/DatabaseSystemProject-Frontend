@@ -50,7 +50,7 @@
                     <div class="col-md-2">
                         <h5 class="text-grey text-center">${{ te.Cnum * te.Cprice }}</h5>
                     </div>
-                    <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete"></i></div>
+                    <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete(index)"></i></div>
                 </div>
             </div>
 
@@ -72,7 +72,6 @@ export default {
     },
     data() {
         return {
-            cut: 0,
             commodity: [{
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'T-shirt',
@@ -117,10 +116,9 @@ export default {
             // alert("增加數量")
             this.commodity[num].Cnum++
         },
-        ClickDelete: function () {
-            alert("You delete this data")
-            // this.commodity[num].splice(num, 1)
-            // alert(this.commodity[num])
+        ClickDelete: function (num) {
+            // alert("You delete this data")
+            this.commodity.splice(num, 1)
         }
     }
 }
