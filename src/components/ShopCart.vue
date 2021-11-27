@@ -27,35 +27,40 @@
                 <div class="col-md-2"></div>
             </div>
 
-            <div v-for="(te, index) in commodity" :key=index>
-                <div class="row py-2 align-items-center">
-                    <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div>
-                    <div class="col-md-2 text-center product-details">
-                        <span class="font-weight-bold">{{ te.Cname }}</span>
-                        <!-- <div class="d-flex flex-row product-desc">
+            <div v-if="commodity.length != 0">
+                <div v-for="(te, index) in commodity" :key=index>
+                    <div class="row py-2 align-items-center">
+                        <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div>
+                        <div class="col-md-2 text-center product-details">
+                            <span class="font-weight-bold">{{ te.Cname }}</span>
+                            <!-- <div class="d-flex flex-row product-desc">
                         <div class="size mr-1"><span class="text-grey">Size:</span><span class="font-weight-bold">&nbsp;M</span></div>
                         <div class="color"><span class="text-grey">Color:</span><span class="font-weight-bold">&nbsp;Grey</span></div>
                         </div> -->
-                    </div>
-                    <div class="col-md-2 d-flex justify-content-center">
-                        <div class="d-flex flex-row align-items-center qty">
-                            <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
-                            <h5><input type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum"></h5>
-                            <i class="fa fa-plus text-success" type="button" @click="ClickUp(index)"></i>
                         </div>
+                        <div class="col-md-2 d-flex justify-content-center">
+                            <div class="d-flex flex-row align-items-center qty">
+                                <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
+                                <h5><input type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum"></h5>
+                                <i class="fa fa-plus text-success" type="button" @click="ClickUp(index)"></i>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="text-grey text-center">${{ te.Cprice }}</h5>
+                        </div>
+                        <div class="col-md-2">
+                            <h5 class="text-grey text-center">${{ te.Cnum * te.Cprice }}</h5>
+                        </div>
+                        <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete(index)"></i></div>
                     </div>
-                    <div class="col-md-2">
-                        <h5 class="text-grey text-center">${{ te.Cprice }}</h5>
-                    </div>
-                    <div class="col-md-2">
-                        <h5 class="text-grey text-center">${{ te.Cnum * te.Cprice }}</h5>
-                    </div>
-                    <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete(index)"></i></div>
+                </div>
+
+                <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
+                    <button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button">付款</button>
                 </div>
             </div>
-
-            <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
-                <button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button">付款</button>
+            <div v-else>
+                <p>No commodity</p>
             </div>
 
         </div>
@@ -110,9 +115,9 @@ export default {
         ClickDown: function (num) {
             // alert("減少數量");
             if (this.commodity[num].Cnum == 1) {
-              if (confirm("Are you sure you want to remove this commodity at the shopcart?")) {
-                this.commodity.splice(num, 1)
-              }
+                if (confirm("Are you sure you want to remove this commodity at the shopcart?")) {
+                    this.commodity.splice(num, 1)
+                }
             } else if (this.commodity[num].Cnum > 1) {
                 this.commodity[num].Cnum--
             }
