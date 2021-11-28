@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div v-else>
-                <p>No commodity</p>
+                <p>未將任何商品加入購物車!!</p>
             </div>
 
         </div>
@@ -115,7 +115,7 @@ export default {
         ClickDown: function (num) {
             // alert("減少數量");
             if (this.commodity[num].Cnum == 1) {
-                if (confirm("Are you sure you want to remove this commodity at the shopcart?")) {
+                if (confirm("確定要將此商品從購物車中移除?")) {
                     this.commodity.splice(num, 1)
                 }
             } else if (this.commodity[num].Cnum > 1) {
@@ -127,7 +127,7 @@ export default {
             this.commodity[num].Cnum++
         },
         ClickDelete: function (num) {
-            if (confirm("Are you sure you want to remove this commodity at the shopcart?")) {
+            if (confirm("確定要將此商品從購物車中移除?")) {
                 this.commodity.splice(num, 1)
             }
         }
