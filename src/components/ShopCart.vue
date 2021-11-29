@@ -27,8 +27,9 @@
                 <div class="col-md-2"></div>
             </div>
 
-            <div v-if="commodity.length != 0">
-                <div v-for="(te, index) in commodity" :key=index>
+            <div v-show='false'>{{ newCommdity = CreateItem() }}</div>
+            <div v-if="newCommdity.length != 0">
+                <div v-for="(te, index) in newCommdity" :key=index>
                     <div class="row py-2 align-items-center">
                         <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div>
                         <div class="col-md-2 text-center product-details">
@@ -41,8 +42,8 @@
                         <div class="col-md-2 d-flex justify-content-center">
                             <div class="d-flex flex-row align-items-center qty">
                                 <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
-                                <h5><input type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum"></h5>
-                                <i class="fa fa-plus text-success" type="button" @click="ClickUp(index)"></i>
+                                <h5><input type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum" @keyup.enter="CheckInventory(index, te.Cnum, te.Inventory)"></h5>
+                                <i class="fa fa-plus text-success" type="button" @click="ClickUp(index, te.Inventory)"></i>
                             </div>
                         </div>
                         <div class="col-md-2">
@@ -52,6 +53,12 @@
                             <h5 class="text-grey text-center">${{ te.Cnum * te.Cprice }}</h5>
                         </div>
                         <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete(index)"></i></div>
+                        <div class="d-flex flex-row-reverse product-desc" v-if="te.Inventory < 10">
+                            <div class="size mr-1"><span class="text-grey">此商品剩下 {{ te.Inventory }} 個!</span></div>
+                        </div>
+                        <div class="d-flex flex-row-reverse product-desc" v-else-if="te.Inventory >= 10">
+                            <div class="size mr-1"><span class="text-grey">&nbsp;</span></div>
+                        </div>
                     </div>
                 </div>
 
@@ -77,7 +84,6 @@ export default {
     },
     data() {
         return {
-            cut: 0,
             commodity: [{
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'T-shirt',
@@ -108,6 +114,22 @@ export default {
                 Cnum: 1,
                 Cprice: 135,
                 Ctitle: 135
+            }],
+            stocket: [{
+                Cname: 'T-shirt',
+                Inventory: 5
+            }, {
+                Cname: 'Tableware',
+                Inventory: 15
+            }, {
+                Cname: 'Book',
+                Inventory: 35
+            }, {
+                Cname: 'Bag',
+                Inventory: 3
+            }, {
+                Cname: 'Pencil Box',
+                Inventory: 2
             }]
         }
     },
@@ -122,14 +144,35 @@ export default {
                 this.commodity[num].Cnum--
             }
         },
-        ClickUp: function (num) {
+        ClickUp: function (num, maxCt) {
             // alert("增加數量")
-            this.commodity[num].Cnum++
+            if (this.commodity[num].Cnum < maxCt) {
+                this.commodity[num].Cnum++
+            } else {
+                alert('此商品的數量只剩下 ' + maxCt + ' 個!')
+            }
         },
         ClickDelete: function (num) {
             if (confirm("確定要將此商品從購物車中移除?")) {
                 this.commodity.splice(num, 1)
             }
+        },
+        CheckInventory: function (num, cyNum, maxCt) {
+            if (cyNum > maxCt) {
+                alert('此商品的數量只剩下 ' + maxCt + ' 個!')
+                this.commodity[num].Cnum = maxCt
+            }
+        },
+        CreateItem: function () {
+            let newCS = [{}]
+            newCS.pop()
+            for (let i = 0; i < this.commodity.length; i++) {
+                if (this.commodity[i].Cname == this.stocket[i].Cname) {
+                    newCS.push(this.commodity[i])
+                    newCS[i].Inventory = this.stocket[i].Inventory
+                }
+            }
+            return newCS
         }
     }
 }
