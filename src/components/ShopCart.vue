@@ -56,7 +56,7 @@
                         <div class="d-flex flex-row-reverse product-desc" v-if="te.Inventory < 10">
                             <div class="size mr-1"><span class="text-grey">此商品剩下 {{ te.Inventory }} 個!</span></div>
                         </div>
-                        <div class="d-flex flex-row-reverse product-desc" v-else-if="te.Inventory >= 10">
+                        <div class="d-flex flex-row-reverse product-desc" v-else>
                             <div class="size mr-1"><span class="text-grey">&nbsp;</span></div>
                         </div>
                     </div>
