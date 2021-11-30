@@ -27,7 +27,7 @@
                 <div class="col-md-2"></div>
             </div>
 
-            <div v-if="commoditys.length != 0">
+            <div v-if="commoditys.length !== 0">
                 <div v-for="(te, index) in commoditys" :key=index>
                     <div class="row py-2 align-items-center">
                         <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div>
@@ -128,7 +128,7 @@ export default {
     methods: {
         ClickDown: function (num) {
             // alert("減少數量");
-            if (this.commoditys[num].Cnum == 1) {
+            if (this.commoditys[num].Cnum === 1) {
                 if (confirm("確定要將此商品從購物車中移除?")) {
                     this.commoditys.splice(num, 1)
                 }
@@ -153,7 +153,7 @@ export default {
             if (cyNum > maxCt) {
                 alert('此商品的數量只剩下 ' + maxCt + ' 個!')
                 this.commoditys[num].Cnum = maxCt
-            } else if (cyNum == "" || cyNum == 0) {
+            } else if (cyNum === "" || cyNum === 0) {
                 this.ClickDelete(num)
             }
         }
