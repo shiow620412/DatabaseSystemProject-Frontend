@@ -18,7 +18,7 @@
                 </div> -->
             </div>
 
-            <div class="row py-2 text-center">
+            <div class="row py-2" style="height:60px;background-color:#FFE4C4;text-align:center;line-height:45px;font-weight:bolder">
                 <div class="col-md-2">商品圖片</div>
                 <div class="col-md-2">商品名稱</div>
                 <div class="col-md-2">購買數量</div>
@@ -27,9 +27,8 @@
                 <div class="col-md-2"></div>
             </div>
 
-            <div v-show='false'>{{ newCommdity = CreateItem() }}</div>
-            <div v-if="newCommdity.length != 0">
-                <div v-for="(te, index) in newCommdity" :key=index>
+            <div v-if="commoditys.length != 0">
+                <div v-for="(te, index) in commoditys" :key=index>
                     <div class="row py-2 align-items-center">
                         <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div>
                         <div class="col-md-2 text-center product-details">
@@ -42,7 +41,11 @@
                         <div class="col-md-2 d-flex justify-content-center">
                             <div class="d-flex flex-row align-items-center qty">
                                 <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
-                                <h5><input type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum" @keyup.enter="CheckInventory(index, te.Cnum, te.Inventory)"></h5>
+                                <h5>
+                                    <select type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum" @keypress.enter="CheckInventory(index, te.Cnum, te.Inventory)">
+                                        <option v-for="n in te.Inventory" :key=n>{{ n }}</option>
+                                    </select>
+                                </h5>
                                 <i class="fa fa-plus text-success" type="button" @click="ClickUp(index, te.Inventory)"></i>
                             </div>
                         </div>
@@ -53,17 +56,17 @@
                             <h5 class="text-grey text-center">${{ te.Cnum * te.Cprice }}</h5>
                         </div>
                         <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete(index)"></i></div>
-                        <div class="d-flex flex-row-reverse product-desc" v-if="te.Inventory < 10">
+                        <!-- <div class="d-flex flex-row-reverse product-desc" v-if="te.Inventory < 10">
                             <div class="size mr-1"><span class="text-grey">此商品剩下 {{ te.Inventory }} 個!</span></div>
                         </div>
                         <div class="d-flex flex-row-reverse product-desc" v-else>
                             <div class="size mr-1"><span class="text-grey">&nbsp;</span></div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
-                <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded">
-                    <button class="btn btn-warning btn-block btn-lg ml-2 pay-button" type="button">付款</button>
+                <div class="d-flex flex-row align-items-center bg-white rounded">
+                    <button class="btn btn-warning btn-block btn-lg pay-button" type="button">付款</button>
                 </div>
             </div>
             <div v-else>
@@ -84,51 +87,40 @@ export default {
     },
     data() {
         return {
-            commodity: [{
+            commoditys: [{
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'T-shirt',
                 Cnum: 5,
                 Cprice: 300,
-                Ctitle: 1500
+                Ctitle: 1500,
+                Inventory: 5
             }, {
                 Cphoto: require('../assets/logo_test.png'),
                 Cname: 'Tableware',
                 Cnum: 3,
                 Cprice: 100,
-                Ctitle: 300
+                Ctitle: 300,
+                Inventory: 15
             }, {
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'Book',
                 Cnum: 7,
                 Cprice: 50,
-                Ctitle: 350
+                Ctitle: 350,
+                Inventory: 35
             }, {
                 Cphoto: require('../assets/logo_test.png'),
                 Cname: 'Bag',
                 Cnum: 1,
                 Cprice: 550,
-                Ctitle: 550
+                Ctitle: 550,
+                Inventory: 3
             }, {
                 Cphoto: require('../assets/logo.png'),
                 Cname: 'Pencil Box',
                 Cnum: 1,
                 Cprice: 135,
-                Ctitle: 135
-            }],
-            stocket: [{
-                Cname: 'T-shirt',
-                Inventory: 5
-            }, {
-                Cname: 'Tableware',
-                Inventory: 15
-            }, {
-                Cname: 'Book',
-                Inventory: 35
-            }, {
-                Cname: 'Bag',
-                Inventory: 3
-            }, {
-                Cname: 'Pencil Box',
+                Ctitle: 135,
                 Inventory: 2
             }]
         }
@@ -136,43 +128,34 @@ export default {
     methods: {
         ClickDown: function (num) {
             // alert("減少數量");
-            if (this.commodity[num].Cnum == 1) {
+            if (this.commoditys[num].Cnum == 1) {
                 if (confirm("確定要將此商品從購物車中移除?")) {
-                    this.commodity.splice(num, 1)
+                    this.commoditys.splice(num, 1)
                 }
-            } else if (this.commodity[num].Cnum > 1) {
-                this.commodity[num].Cnum--
+            } else if (this.commoditys[num].Cnum > 1) {
+                this.commoditys[num].Cnum--
             }
         },
         ClickUp: function (num, maxCt) {
             // alert("增加數量")
-            if (this.commodity[num].Cnum < maxCt) {
-                this.commodity[num].Cnum++
+            if (this.commoditys[num].Cnum < maxCt) {
+                this.commoditys[num].Cnum++
             } else {
                 alert('此商品的數量只剩下 ' + maxCt + ' 個!')
             }
         },
         ClickDelete: function (num) {
             if (confirm("確定要將此商品從購物車中移除?")) {
-                this.commodity.splice(num, 1)
+                this.commoditys.splice(num, 1)
             }
         },
         CheckInventory: function (num, cyNum, maxCt) {
             if (cyNum > maxCt) {
                 alert('此商品的數量只剩下 ' + maxCt + ' 個!')
-                this.commodity[num].Cnum = maxCt
+                this.commoditys[num].Cnum = maxCt
+            } else if (cyNum == "" || cyNum == 0) {
+                this.ClickDelete(num)
             }
-        },
-        CreateItem: function () {
-            let newCS = [{}]
-            newCS.pop()
-            for (let i = 0; i < this.commodity.length; i++) {
-                if (this.commodity[i].Cname == this.stocket[i].Cname) {
-                    newCS.push(this.commodity[i])
-                    newCS[i].Inventory = this.stocket[i].Inventory
-                }
-            }
-            return newCS
         }
     }
 }
