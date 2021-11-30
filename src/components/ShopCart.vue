@@ -19,7 +19,7 @@
             </div>
 
             <div class="row py-2" style="height:60px;background-color:#FFE4C4;text-align:center;line-height:45px;font-weight:bolder">
-                <div class="col-md-2">商品圖片</div>
+                <div class="col-md-2">選取</div>
                 <div class="col-md-2">商品名稱</div>
                 <div class="col-md-2">購買數量</div>
                 <div class="col-md-2">單價</div>
@@ -30,7 +30,8 @@
             <div v-if="commoditys.length !== 0">
                 <div v-for="(te, index) in commoditys" :key=index>
                     <div class="row py-2 align-items-center">
-                        <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div>
+                        <!-- <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div> -->
+                        <div class="col-md-2 d-flex justify-content-center"><input type="checkbox" name="selectItem"></div>
                         <div class="col-md-2 text-center product-details">
                             <span class="font-weight-bold">{{ te.Cname }}</span>
                             <!-- <div class="d-flex flex-row product-desc">
@@ -42,7 +43,7 @@
                             <div class="d-flex flex-row align-items-center qty">
                                 <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
                                 <h5>
-                                    <select type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum" @keypress.enter="CheckInventory(index, te.Cnum, te.Inventory)">
+                                    <select type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum">
                                         <option v-for="n in te.Inventory" :key=n>{{ n }}</option>
                                     </select>
                                 </h5>
@@ -147,14 +148,6 @@ export default {
         ClickDelete: function (num) {
             if (confirm("確定要將此商品從購物車中移除?")) {
                 this.commoditys.splice(num, 1)
-            }
-        },
-        CheckInventory: function (num, cyNum, maxCt) {
-            if (cyNum > maxCt) {
-                alert('此商品的數量只剩下 ' + maxCt + ' 個!')
-                this.commoditys[num].Cnum = maxCt
-            } else if (cyNum === "" || cyNum === 0) {
-                this.ClickDelete(num)
             }
         }
     }
