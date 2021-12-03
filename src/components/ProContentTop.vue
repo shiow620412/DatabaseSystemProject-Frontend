@@ -1,5 +1,5 @@
 <!--remi branch
-test-->
+test2-->
 <template>
   <div class="product-briefing">
     <el-row :gutter="20">
