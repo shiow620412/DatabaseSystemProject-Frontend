@@ -1,3 +1,4 @@
+<!--remi branch-->
 <template>
   <div class="product-briefing">
     <el-row :gutter="20">
