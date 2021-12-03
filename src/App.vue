@@ -3,33 +3,21 @@
   <router-view/>
 </template>
 <script>
-  import Top from './components/top.vue'
+  // import HelloWorld from './components/HelloWorld.vue'
+  // import Res from './res.vue'
+  import Top from './top.vue'
+  //import Subject from './subject.vue'
+
   export default {
-      name: "index",
-      components: {
-        Top
-      }
-  }
-</script>
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    name: 'App',
+    components: {
+      Top
     }
   }
-}
+</script>
+
+<style>
+  #app {
+    
+  }
 </style>
