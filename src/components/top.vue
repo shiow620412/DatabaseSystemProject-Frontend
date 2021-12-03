@@ -8,21 +8,13 @@
 
             
             <el-row :gutter="20">
-              <el-col :span="12"><div class="quantity_text">數量</div></el-col>
-              
-              <el-col :span="12"><div class="pro_input_quantity"><br><br><el-input-number v-model="num" @change="handleChange" :min="1" :max="99" label="描述文字"></el-input-number></div></el-col>
-              
+              <el-col :span="5"><div class="quantity_text">數量</div></el-col>
+              <el-col :span="5"><div class="pro_input_quantity"><el-input-number v-model="num" @change="handleChange" :min="1" :max="99" label="描述文字"></el-input-number></div></el-col>
+              <el-col :span="6"><div class="shpping_cat"><br><br><el-button type="success">加入購物車</el-button></div></el-col>
+              <el-col :span="6"></el-col>
             </el-row>
-            <div class="shpping_cat"><br><br><el-button type="success">加入購物車</el-button></div>
             
             
-            <el-row :gutter="20">
-              <el-col :span="12" :offset="6">
-                <div class="pro_quantity"><br><br><el-input-number v-model="num" @change="handleChange" :min="1" :max="99" label="描述文字"></el-input-number></div>
-                <div class="shpping_cat"><br><br><el-button type="success">加入購物車</el-button></div>
-                
-              </el-col>
-            </el-row>
             
             
         </div></el-col>
@@ -74,15 +66,16 @@ a {
 }
 .quantity_text{
   background-color:#C7FF91;
-  width:300px;
-  height:100px;
+  width:100px;
+  height:50px;
   margin-right: 100px;
-  text-align:center;
-  line-height:100px
+  line-height:50px
+}
+.pro_input_quantity{
+  width:100px;
+  height:50px;
+  margin-right: 100px;
+  line-height:50px
 }
 
-.pro_input_quantity{
-  position: relative;
-  margin-right: 370px;
-}
 </style>
