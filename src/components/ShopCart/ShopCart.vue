@@ -94,7 +94,7 @@ export default {
             isAllCheck: false,
             productArray: [{
                 check: true,
-                photo: require('../assets/logo.png'),
+                photo: require('../../assets/logo.png'),
                 productName: 'T-shirt',
                 price: 300,
                 quantitry: 5,
@@ -102,7 +102,7 @@ export default {
                 stock: 5
             }, {
                 check: false,
-                photo: require('../assets/logo_test.png'),
+                photo: require('../../assets/logo_test.png'),
                 productName: 'Tableware',
                 price: 100,
                 quantitry: 3,
@@ -110,7 +110,7 @@ export default {
                 stock: 15
             }, {
                 check: false,
-                photo: require('../assets/logo.png'),
+                photo: require('../../assets/logo.png'),
                 productName: 'Book',
                 price: 50,
                 quantitry: 7,
@@ -118,7 +118,7 @@ export default {
                 stock: 35
             }, {
                 check: false,
-                photo: require('../assets/logo_test.png'),
+                photo: require('../../assets/logo_test.png'),
                 productName: 'Bag',
                 price: 550,
                 quantitry: 1,
@@ -126,7 +126,7 @@ export default {
                 stock: 3
             }, {
                 check: false,
-                photo: require('../assets/logo.png'),
+                photo: require('../../assets/logo.png'),
                 productName: 'Pencil Box',
                 price: 135,
                 quantitry: 1,
@@ -212,7 +212,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
-@import '../assets/css/ShoppingCart.css';
+@import '../../assets/css/ShoppingCart.css';
 
 h3 {
     margin: 40px 0 0;
