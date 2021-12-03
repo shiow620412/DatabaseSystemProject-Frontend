@@ -1,79 +1,82 @@
 <template>
-<div class="container">
+<div class="shoppingCart">
 
-    <div class="d-flex justify-content-center row">
-        <div class="col-md-8">
+    <div class="cart-header">
+        <div class="cart-header-content">
+            <p>
+                <i class="el-icon-shopping-cart-full" style="color:#ff6700; font-weight: 600;"></i>
+                購物車
+            </p>
+        </div>
+    </div>
 
-            <div class="p-2">
-                <h4>購物車</h4>
-                <!-- <div class="d-flex flex-row align-items-center pull-right dropdown">
-                    <span class="mr-1">Sort Ascending by:</span>
-                    <span class="mr-1 font-weight-bold">Price</span>
-                    <i type="button" class="fa fa-angle-down" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Name</a>
-                            <a class="dropdown-item" href="#">Price</a>
-                        </div>
-                    </i>
-                </div> -->
-            </div>
-
-            <div class="row py-2" style="height:60px;background-color:#FFE4C4;text-align:center;line-height:45px;font-weight:bolder">
-                <div class="col-md-2">選取</div>
-                <div class="col-md-2">商品名稱</div>
-                <div class="col-md-2">購買數量</div>
-                <div class="col-md-2">單價</div>
-                <div class="col-md-2">金額</div>
-                <div class="col-md-2"></div>
-            </div>
-
-            <div v-if="commoditys.length !== 0">
-                <div v-for="(te, index) in commoditys" :key=index>
-                    <div class="row py-2 align-items-center">
-                        <!-- <div class="col-md-2 d-flex justify-content-center"><img class="rounded" width="80" height="55" :src="te.Cphoto"></div> -->
-                        <div class="col-md-2 d-flex justify-content-center"><input type="checkbox" name="selectItem"></div>
-                        <div class="col-md-2 text-center product-details">
-                            <span class="font-weight-bold">{{ te.Cname }}</span>
-                            <!-- <div class="d-flex flex-row product-desc">
-                        <div class="size mr-1"><span class="text-grey">Size:</span><span class="font-weight-bold">&nbsp;M</span></div>
-                        <div class="color"><span class="text-grey">Color:</span><span class="font-weight-bold">&nbsp;Grey</span></div>
-                        </div> -->
-                        </div>
-                        <div class="col-md-2 d-flex justify-content-center">
-                            <div class="d-flex flex-row align-items-center qty">
-                                <i class="fa fa-minus text-danger" type="button" @click="ClickDown(index)"></i>
-                                <h5>
-                                    <select type="text" class="text-grey mt-1 mr-1 ml-1 text-center" size="1" v-model.number="te.Cnum">
-                                        <option v-for="n in te.Inventory" :key=n>{{ n }}</option>
-                                    </select>
-                                </h5>
-                                <i class="fa fa-plus text-success" type="button" @click="ClickUp(index, te.Inventory)"></i>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="text-grey text-center">${{ te.Cprice }}</h5>
-                        </div>
-                        <div class="col-md-2">
-                            <h5 class="text-grey text-center">${{ te.Cnum * te.Cprice }}</h5>
-                        </div>
-                        <div class="col-md-2"><i class="fa fa-trash mb-1 text-danger" type="button" @click="ClickDelete(index)"></i></div>
-                        <!-- <div class="d-flex flex-row-reverse product-desc" v-if="te.Inventory < 10">
-                            <div class="size mr-1"><span class="text-grey">此商品剩下 {{ te.Inventory }} 個!</span></div>
-                        </div>
-                        <div class="d-flex flex-row-reverse product-desc" v-else>
-                            <div class="size mr-1"><span class="text-grey">&nbsp;</span></div>
-                        </div> -->
-                    </div>
+    <div class="content" v-if="productArray.length > 0">
+        <ul>
+            <li class="header">
+                <div class="pro-check">
+                    <el-checkbox v-model="isAllCheck">全選</el-checkbox>
                 </div>
+                <div class="pro-img">商品圖片</div>
+                <div class="pro-name">商品名稱</div>
+                <div class="pro-price">單價</div>
+                <div class="pro-quantitry">購買數量</div>
+                <div class="pro-total">小計</div>
+                <div class="pro-action">操作</div>
+            </li>
 
-                <div class="d-flex flex-row align-items-center bg-white rounded">
-                    <button class="btn btn-warning btn-block btn-lg pay-button" type="button">付款</button>
+            <li class="product-list" v-for="(item, index) in productArray" :key=index>
+                <div class="pro-check">
+                    <!-- <el-checkbox :value="item.check" @change="checkChange($event, index)"></el-checkbox> -->
+                    <!-- <el-checkbox :value="item.check"></el-checkbox> -->
+                    <el-checkbox v-model="item.check"></el-checkbox>
                 </div>
-            </div>
-            <div v-else>
-                <p>未將任何商品加入購物車!!</p>
-            </div>
+                <div class="pro-img">
+                    <img class="rounded" width="80" height="55" :src="item.photo">
+                </div>
+                <div class="pro-name">{{ item.productName }}</div>
 
+                <div class="pro-price">{{ item.price }}元</div>
+                <div class="pro-quantitry">
+                    <!-- <el-input-number size="small" :value="item.quantitry" :min="1" :max="item.stock"></el-input-number> -->
+                    <el-input-number size="small" v-model="item.quantitry" :min="1" :max="item.stock"></el-input-number>
+                </div>
+                <div class="pro-total pro-total-in">{{ item.quantitry * item.price }}元</div>
+                <div class="pro-action">
+                        <i class="el-icon-delete" style="font-size: 18px;" @click="deleteProduct(index)"></i>
+                    <!-- <el-popover placement="right">
+                        <p>確定要刪除嗎?</p>
+                        <div style="text-align: right; margin: 10px 0 0">
+                            <el-button type="primary" size="mini" @click="deleteProduct(index)">確定</el-button>
+                        </div>
+                        <i class="el-icon-error" style="font-size: 18px;"></i>
+                    </el-popover> -->
+                </div>
+            </li>
+        </ul>
+
+        <div style="height: 20px; background-color: #f5f5f5"></div>
+        <div class="cart-bar">
+            <div class="cart-bar-left">
+                <span class="cart-total">
+                    共
+                    <span class="cart-total-num">{{ getQuantitry() }}</span> 件商品，已選擇
+                    <!-- <span class="cart-total-num">{{ this.productArray.length }}</span> 件商品，已選擇 -->
+                    <span class="cart-total-num">{{ getCheckQuantitry() }}</span> 件
+                </span>
+            </div>
+            <div class="cart-bar-right">
+                <span>
+                    <span class="total-price-title">合計：</span>
+                    <span class="total-price">{{ getTotalPrice() }}元</span>
+                </span>
+                <div :class="getCheckQuantitry() > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</div>
+            </div>
+        </div>
+    </div>
+    <div v-else class="cart-empty">
+        <div class="empty">
+            <h2>您未將任何商品加入購物車！</h2>
+            <p>快去購物吧！</p>
         </div>
     </div>
 
@@ -88,67 +91,119 @@ export default {
     },
     data() {
         return {
-            commoditys: [{
-                Cphoto: require('../assets/logo.png'),
-                Cname: 'T-shirt',
-                Cnum: 5,
-                Cprice: 300,
-                Ctitle: 1500,
-                Inventory: 5
+            isAllCheck: false,
+            productArray: [{
+                check: true,
+                photo: require('../assets/logo.png'),
+                productName: 'T-shirt',
+                price: 300,
+                quantitry: 5,
+                total: 1500,
+                stock: 5
             }, {
-                Cphoto: require('../assets/logo_test.png'),
-                Cname: 'Tableware',
-                Cnum: 3,
-                Cprice: 100,
-                Ctitle: 300,
-                Inventory: 15
+                check: false,
+                photo: require('../assets/logo_test.png'),
+                productName: 'Tableware',
+                price: 100,
+                quantitry: 3,
+                total: 300,
+                stock: 15
             }, {
-                Cphoto: require('../assets/logo.png'),
-                Cname: 'Book',
-                Cnum: 7,
-                Cprice: 50,
-                Ctitle: 350,
-                Inventory: 35
+                check: false,
+                photo: require('../assets/logo.png'),
+                productName: 'Book',
+                price: 50,
+                quantitry: 7,
+                total: 350,
+                stock: 35
             }, {
-                Cphoto: require('../assets/logo_test.png'),
-                Cname: 'Bag',
-                Cnum: 1,
-                Cprice: 550,
-                Ctitle: 550,
-                Inventory: 3
+                check: false,
+                photo: require('../assets/logo_test.png'),
+                productName: 'Bag',
+                price: 550,
+                quantitry: 1,
+                total: 550,
+                stock: 3
             }, {
-                Cphoto: require('../assets/logo.png'),
-                Cname: 'Pencil Box',
-                Cnum: 1,
-                Cprice: 135,
-                Ctitle: 135,
-                Inventory: 2
+                check: false,
+                photo: require('../assets/logo.png'),
+                productName: 'Pencil Box',
+                price: 135,
+                quantitry: 1,
+                total: 135,
+                stock: 2
             }]
         }
     },
     methods: {
-        ClickDown: function (num) {
-            // alert("減少數量");
-            if (this.commoditys[num].Cnum === 1) {
-                if (confirm("確定要將此商品從購物車中移除?")) {
-                    this.commoditys.splice(num, 1)
-                }
-            } else if (this.commoditys[num].Cnum > 1) {
-                this.commoditys[num].Cnum--
-            }
-        },
-        ClickUp: function (num, maxCt) {
-            // alert("增加數量")
-            if (this.commoditys[num].Cnum < maxCt) {
-                this.commoditys[num].Cnum++
-            } else {
-                alert('此商品的數量只剩下 ' + maxCt + ' 個!')
-            }
-        },
-        ClickDelete: function (num) {
+        // ClickDown: function (num) {
+        //     // alert("減少數量");
+        //     if (this.productArray[num].quantitry === 1) {
+        //         if (confirm("確定要將此商品從購物車中移除?")) {
+        //             this.productArray.splice(num, 1)
+        //         }
+        //     } else if (this.productArray[num].quantitry > 1) {
+        //         this.productArray[num].quantitry--
+        //     }
+        // },
+        // ClickUp: function (num, maxCt) {
+        //     // alert("增加數量")
+        //     if (this.productArray[num].quantitry < maxCt) {
+        //         this.productArray[num].quantitry++
+        //     } else {
+        //         alert('此商品的數量只剩下 ' + maxCt + ' 個!')
+        //     }
+        // },
+        deleteProduct: function (num) {
             if (confirm("確定要將此商品從購物車中移除?")) {
-                this.commoditys.splice(num, 1)
+            this.productArray.splice(num, 1)
             }
+        },
+        getQuantitry: function() {
+            let totalQuantitry = 0;
+            for (let i = 0; i < this.productArray.length; i++) {
+                const temp = this.productArray[i];
+                totalQuantitry += temp.quantitry;
+            }
+            return totalQuantitry;
+        },
+        // updateShoppingCart (state, payload) {
+        //     if (payload.prop == "quantitry") {
+        //         if (this.productArray[payload.key].maxNum < payload.val) {
+        //             return;
+        //         }
+        //         if (payload.val < 1) {
+        //             return;
+        //         }
+        //     }
+        //     this.productArray[payload.key][payload.prop] = payload.val;
+        // },
+        // checkChange(val, key) {
+        //     this.updateShoppingCart({
+        //         key: key,
+        //         prop: "check",
+        //         val: val
+        //     });
+        // },
+        getCheckQuantitry: function() {
+            let totalQuantitry = 0
+            for (let i = 0; i < this.productArray.length; i++) {
+                const temp = this.productArray[i]
+                if (temp.check) {
+                    totalQuantitry += temp.quantitry
+                }
+            }
+            return totalQuantitry
+        },
+        getTotalPrice: function() {
+            let totalPrice = 0;
+            for (let i = 0; i < this.productArray.length; i++) {
+                const temp = this.productArray[i];
+                if (temp.check) {
+                    totalPrice += temp.price * temp.quantitry;
+                }
+            }
+            return totalPrice;
         }
     }
 }
@@ -157,6 +212,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 
 <style scoped>
+@import '../assets/css/ShoppingCart.css';
+
 h3 {
     margin: 40px 0 0;
 }
