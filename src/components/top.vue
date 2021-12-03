@@ -36,8 +36,8 @@
     }
     .shoppingCart-position{
         position: relative;
-        top: -80px;
-        left: 1035px;
+        top: -70px;
+        left: 370px;
     }
     .shoppingCart-photo{
         width: 50px;
@@ -50,7 +50,7 @@
         position: relative;
         color: white;
         top: -180px;
-        left: 1100px;
+        left: 430px;
     }
     .input-position{
         position: relative;
@@ -60,13 +60,13 @@
     }
     .search-button{
         position: relative;
-        left: 555px;
+        left: 300px;
         bottom: 41px;
     }
     .photo-position{
         position: relative;
         width: 150px;
         top: 40px;
-        left: 250px;
+        right: 450px;
     }
 </style>
