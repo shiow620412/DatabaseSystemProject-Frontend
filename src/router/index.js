@@ -1,19 +1,21 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
 import index from '../view/index.vue'
 
 
-const routes = [
-  {
-    path: '/index',
-    component:index        
+const routes = [{
+    path: '',
+    component: index
   },
   {
-    
+
   }
-  
+
 ]
 
-const router =  createRouter({
+const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes: routes
 })
