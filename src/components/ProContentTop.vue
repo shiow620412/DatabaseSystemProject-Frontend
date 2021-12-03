@@ -1,5 +1,4 @@
-<!--remi branch
-test2-->
+<!--
 <template>
   <div class="product-briefing">
     <el-row :gutter="20">
@@ -8,19 +7,17 @@ test2-->
             <div class="pro_name"><h3> -特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購</h3></div>
             <div class="pro_price"><p></p><br><h1>$515</h1></div>
 
-            
             <el-row :gutter="20">
-              <el-col :span="5"><div class="quantity_text">數量</div></el-col>
-              <el-col :span="5"><div class="pro_input_quantity"><el-input-number v-model="num" @change="handleChange" :min="1" :max="99" label="描述文字"></el-input-number></div></el-col>
-              <el-col :span="6"><div class="shpping_cat"><br><br><el-button type="success">加入購物車</el-button></div></el-col>
-              <el-col :span="6"></el-col>
+                <el-col :span="5"><div class="quantity_text">數量</div></el-col>
+                <el-col :span="6"><div class="pro_input_quantity"><el-input-number v-model="num" @change="handleChange" :min="1" :max="99" label="描述文字"></el-input-number></div></el-col>
+                <el-col :span="13"><div class="the_rest_of"><span>還剩下X個</span></div></el-col>
             </el-row>
-            
-            
-            
-            
+            <div class="add_procat"><br><br><el-button type="success">加入購物車</el-button></div>
         </div></el-col>
     </el-row>
+  </div>
+  <div class="product-detail">
+
   </div>
 </template>
 
@@ -39,9 +36,10 @@ export default {
     }
   };
 </script>
-
+-->
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!--
 <style scoped>
 h3 {
   margin: 40px 0 0;
@@ -68,16 +66,27 @@ a {
 }
 .quantity_text{
   background-color:#C7FF91;
-  width:100px;
-  height:50px;
+  width:  100px;
+  height: 50px;
   margin-right: 100px;
-  line-height:50px
+  line-height:  50px
 }
 .pro_input_quantity{
-  width:100px;
-  height:50px;
+  width:  100px;
+  height: 50px;
   margin-right: 100px;
-  line-height:50px
+  line-height:  50px
+}
+.the_rest_of{
+  width:  100px;
+  height: 50px;
+  margin-right: 500px;
+  line-height:  50px
 }
 
+.add_procat{
+  width:  50px;
+  line-height:  50px
+}
 </style>
+--->

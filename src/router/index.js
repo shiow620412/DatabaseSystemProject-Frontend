@@ -3,7 +3,7 @@ import {
   createWebHistory
 } from 'vue-router'
 import index from '../view/index.vue'
-import test from '../components/test.vue'
+import ProContentTop from '../components/proContentTop.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 
 const routes = [
@@ -12,8 +12,8 @@ const routes = [
     component: index        
   },
   {
-    path: '/test',
-    component: test
+    path: '/proContentTop',
+    component: ProContentTop
   },
   {
     path: '/cart',
