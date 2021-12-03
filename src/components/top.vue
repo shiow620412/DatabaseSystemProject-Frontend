@@ -1,12 +1,12 @@
 <template>
     <div class="top">
-        <a href="../public/index.html"><img class="photo-position" src="../assets/logo.png" alt=""></a>
+        <router-link to="/"><img class="photo-position" src="../assets/logo.png" alt=""></router-link>
         <div class="input-position">
             <el-input v-model="input" placeholder="Please Search Product" />
             <el-button type="danger" class="search-button"><el-icon><Search/></el-icon></el-button>
         </div>
         <a class="member-position" href="https://github.com/Wang-YuQuan" target="_blank" rel="noopener">登入|註冊</a>
-        <a class="shoppingCart-position" href="https://github.com/Wang-YuQuan" target="_blank" rel="noopener"><img class="shoppingCart-photo" src="../assets/shoppingCart.png" alt=""></a>
+        <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-photo" src="../assets/shoppingCart.png" alt=""></router-link>
     </div>
     <div>
         
@@ -37,7 +37,7 @@
     .shoppingCart-position{
         position: relative;
         top: -70px;
-        left: 370px;
+        left: 365px;
     }
     .shoppingCart-photo{
         width: 50px;

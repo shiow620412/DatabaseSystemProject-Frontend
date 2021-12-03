@@ -8,7 +8,7 @@ import cart from '../components/ShopCart/ShopCart.vue';
 
 const routes = [
   {
-    path: '/index',
+    path: '',
     component: index        
   },
   {
