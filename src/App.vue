@@ -5,7 +5,7 @@
 <script>
   // import HelloWorld from './components/HelloWorld.vue'
   // import Res from './res.vue'
-  import Top from './top.vue'
+  import Top from './components/top.vue'
   //import Subject from './subject.vue'
 
   export default {
