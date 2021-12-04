@@ -5,6 +5,7 @@ import index from '../view/index.vue'
 const routes = [
   {
     path: '/index',
+    alias:'',
     component:index        
   },
   {

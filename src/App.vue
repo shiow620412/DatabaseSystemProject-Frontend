@@ -1,6 +1,13 @@
 <template>
-  <Top/>
-  <router-view/>
+    <el-container>
+        <el-header :height="150">
+              <Top/>
+        </el-header>
+        <el-main>
+            <router-view/> 
+        </el-main>
+    </el-container>
+
 </template>
 <script>
   import Top from './components/top.vue'
