@@ -35,9 +35,9 @@
 
                 <div class="pro-price">{{ item.price }}元</div>
                 <div class="pro-quantitry">
-                    <el-input-number size="small" v-model="item.quantitry" :min="1" :max="item.stock"></el-input-number>
+                    <el-input-number size="small" v-model="item.quantity" :min="1" :max="item.stock"></el-input-number>
                 </div>
-                <div class="pro-total pro-total-in">{{ item.quantitry * item.price }}元</div>
+                <div class="pro-total pro-total-in">{{ item.quantity * item.price }}元</div>
                 <div class="pro-action">
                     <i class="el-icon-delete" style="font-size: 18px;" @click="deleteProduct(index)"></i>
                 </div>
@@ -49,17 +49,17 @@
             <div class="cart-bar-left">
                 <span class="cart-total">
                     共
-                    <span class="cart-total-num">{{ getQuantitry() }}</span> 件商品，已選擇
-                    <span class="cart-total-num">{{ getCheckQuantitry() }}</span> 件
+                    <span class="cart-total-num">{{ getQuantitry }}</span> 件商品，已選擇
+                    <span class="cart-total-num">{{ getCheckQuantity }}</span> 件
                 </span>
             </div>
             <div class="cart-bar-right">
                 <span>
                     <span class="total-price-title">合計：</span>
-                    <span class="total-price">{{ getTotalPrice() }}元</span>
+                    <span class="total-price">{{ getTotalPrice }}元</span>
                 </span>
-                <!-- <router-link :to="getCheckQuantitry() > 0 ? '../products' : ''"> -->
-                <div :class="getCheckQuantitry() > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</div>
+                <!-- <router-link :to="getCheckQuantity() > 0 ? '../products' : ''"> -->
+                <div :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</div>
                 <!-- </router-link> -->
             </div>
         </div>
@@ -87,35 +87,35 @@ export default {
                 photo: require('../../assets/logo.png'),
                 productName: 'T-shirt',
                 price: 300,
-                quantitry: 5,
+                quantity: 5,
                 stock: 5
             }, {
                 check: false,
                 photo: require('../../assets/logo_test.png'),
                 productName: 'Tableware',
                 price: 100,
-                quantitry: 3,
+                quantity: 3,
                 stock: 15
             }, {
                 check: false,
                 photo: require('../../assets/logo.png'),
                 productName: 'Book',
                 price: 50,
-                quantitry: 7,
+                quantity: 7,
                 stock: 35
             }, {
                 check: false,
                 photo: require('../../assets/logo_test.png'),
                 productName: 'Bag',
                 price: 550,
-                quantitry: 1,
+                quantity: 1,
                 stock: 3
             }, {
                 check: false,
                 photo: require('../../assets/logo.png'),
                 productName: 'Pencil Box',
                 price: 135,
-                quantitry: 1,
+                quantity: 1,
                 stock: 2
             }]
         }
@@ -136,32 +136,23 @@ export default {
                     this.productArray[i].check = true;
                 }
             }
-        },
-        getIsAllCheck() {
-            let isAllCheck = true;
-            for (let i = 0; i < this.productArray.length; i++) {
-                const temp = this.productArray[i];
-                if (!temp.check) {
-                    isAllCheck = false;
-                    return isAllCheck;
-                }
-            }
-            return isAllCheck;
-        },
+        }
+    },
+    computed: {
         getQuantitry() {
             let totalQuantitry = 0;
             for (let i = 0; i < this.productArray.length; i++) {
                 const temp = this.productArray[i];
-                totalQuantitry += temp.quantitry;
+                totalQuantitry += temp.quantity;
             }
             return totalQuantitry;
         },
-        getCheckQuantitry() {
+        getCheckQuantity() {
             let totalQuantitry = 0
             for (let i = 0; i < this.productArray.length; i++) {
                 const temp = this.productArray[i]
                 if (temp.check) {
-                    totalQuantitry += temp.quantitry
+                    totalQuantitry += temp.quantity
                 }
             }
             return totalQuantitry
@@ -171,7 +162,7 @@ export default {
             for (let i = 0; i < this.productArray.length; i++) {
                 const temp = this.productArray[i];
                 if (temp.check) {
-                    totalPrice += temp.price * temp.quantitry;
+                    totalPrice += temp.price * temp.quantity;
                 }
             }
             return totalPrice;
