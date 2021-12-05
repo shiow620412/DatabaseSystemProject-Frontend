@@ -2,17 +2,17 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router'
-import index from '../view/index.vue'
-import ProContentTop from '../components/proContentTop.vue';
+//import index from '../view/index.vue'
+import ProContentTop from '../components/productpage/proContentTop.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 
 const routes = [
-  {
+  /*{
     path: '/index',
     component: index        
-  },
+  },*/
   {
-    path: '/proContentTop',
+    path: '',
     component: ProContentTop
   },
   {
