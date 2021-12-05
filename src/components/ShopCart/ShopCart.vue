@@ -39,7 +39,16 @@
                 </div>
                 <div class="pro-total pro-total-in">{{ item.quantity * item.price }}元</div>
                 <div class="pro-action">
-                    <i class="el-icon-delete" style="font-size: 18px;" @click="deleteProduct(index)"></i>
+                    <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="dialogVisible = true"></el-button>
+                    <el-dialog v-model="dialogVisible" width="30%" show-close=false>
+                        <span>您確定要將此商品從購物車中移除嗎?</span>
+                        <template #footer>
+                            <span class="dialog-footer">
+                                <el-button @click="dialogVisible = false">取消</el-button>
+                                <el-button type="primary" @click="deleteProduct(index)">確定</el-button>
+                            </span>
+                        </template>
+                    </el-dialog>
                 </div>
             </li>
         </ul>
@@ -74,8 +83,17 @@
 </template>
 
 <script>
+import {
+    ref
+} from 'vue'
+
 export default {
     name: 'ShopCart',
+    setup() {
+        return {
+            dialogVisible: ref(false),
+        }
+    },
     Comment: {
 
     },
@@ -122,9 +140,8 @@ export default {
     },
     methods: {
         deleteProduct(num) {
-            if (confirm("確定要將此商品從購物車中移除?")) {
-                this.productArray.splice(num, 1)
-            }
+            this.productArray.splice((this.productArray.length - num - 1), 1)
+            this.dialogVisible = false
         },
         checkAll() {
             if (this.isAllCheck) {
@@ -146,10 +163,8 @@ export default {
             }
             if (tempNum === this.productArray.length) {
                 this.isAllCheck = true;
-                // console.log(this.isAllCheck);
             } else {
                 this.isAllCheck = false;
-                // console.log(this.isAllCheck);
             }
         }
     },
