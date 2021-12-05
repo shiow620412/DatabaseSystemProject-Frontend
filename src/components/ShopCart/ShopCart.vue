@@ -26,7 +26,7 @@
 
             <li class="product-list" v-for="(item, index) in productArray" :key=index>
                 <div class="pro-check">
-                    <el-checkbox v-model="item.check"></el-checkbox>
+                    <el-checkbox v-model="item.check" @change="allCheck()"></el-checkbox>
                 </div>
                 <div class="pro-img">
                     <img class="rounded" width="80" height="55" :src="item.photo">
@@ -135,6 +135,21 @@ export default {
                 for (let i = 0; i < this.productArray.length; i++) {
                     this.productArray[i].check = true;
                 }
+            }
+        },
+        allCheck() {
+            let tempNum = 0;
+            for (let i = 0; i < this.productArray.length; i++) {
+                if (this.productArray[i].check) {
+                    tempNum++;
+                }
+            }
+            if (tempNum === this.productArray.length) {
+                this.isAllCheck = true;
+                // console.log(this.isAllCheck);
+            } else {
+                this.isAllCheck = false;
+                // console.log(this.isAllCheck);
             }
         }
     },
