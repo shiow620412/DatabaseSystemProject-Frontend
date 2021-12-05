@@ -1,28 +1,14 @@
 <template>
-    <div v-for="i in tableData" :key="i" class="div-content">
-        <el-row gutter="20">
-            <el-col :span="5">
-                <div>
-                    <img class="photo" src="https://b.ecimg.tw/items/DHAS4NA900B7V2B/000002_1617190751.jpg" alt="">
-                </div>
-            </el-col>
-            <el-col :span="14">
-                <div>
-                    <p class="text-position"><b>ASUS ROG Zephyrus G14 GA401QM-0032E5900HS 日蝕灰(R9-5900HS/16+16G/RTX3060-6G/1T PCIe/W10/WQHD</b></p>
-                </div>
-            </el-col>
-            <el-col :span="5">
-                <div class="div-price">
-                    <p>網路價$</p>
-                    <h2 style="color:red">{{i.date}}</h2>
-                    <select>
-                        <option v-for="j in i.stock" :key="j" value=key>{{j}}</option>
-                    </select>
-                    <el-button type="danger" style="margin-left:5px" @click="test(i.stock)">加入購物車</el-button>
-                </div>
-            </el-col>
-        </el-row>
+    <div class="div-content">
+        <a href="https://www.youtube.com/"><el-card class="card" v-for="i in 90" :key="i" id="max-height">
+            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image"/>
+            <div>
+                <p>Yummy hamburger</p>
+            </div>
+            <el-button type="text" class="button">Operating</el-button>
+        </el-card></a>
     </div>
+    <a href="#max-height"><el-button type="info" class="return-top-button">回到頂部</el-button></a>
 </template>
 
 <script>
@@ -32,9 +18,7 @@
             
         },
         methods: {
-            test(x){
-                alert(x)
-            }
+            
         },
         data() {
             return {
@@ -71,23 +55,21 @@
 
 <style>
     .div-content{
-        background-color: #D9FFFF;
-        width: 1000px;
-        height: 200px;
+        width: 75%;
         margin: 10px auto;
-        radius: 20px;
     }
-    .photo{
-        position: relative;
-        width: 180px;
-        top: 10px;
-        left: 10px;
+    .image{
+        width: 100%;
     }
-    .text-position{
-
+    .card{
+        width: 200px;
+        margin: 10px;
+        display: inline-block;
     }
-    .div-price{
-        position: relative;
-        top: 0px;
+    .card:hover{
+        transform: scale(1.1);
+    }
+    .return-top-button{
+        float: right;
     }
 </style>
