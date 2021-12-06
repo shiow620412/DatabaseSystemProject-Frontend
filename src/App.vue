@@ -1,20 +1,24 @@
 <template>
   <Top/>
+  
   <router-view/>
 </template>
+
 <script>
-  // import HelloWorld from './components/HelloWorld.vue'
-  // import Res from './res.vue'
   import Top from './components/top.vue'
-  //import Subject from './subject.vue'
+  //import ProContentTop from './components/proContentTop.vue'
+  //import subscribe from './subject.vue'
 
   export default {
     name: 'App',
     components: {
-      Top
+      Top,
+      //ProContentTop,
+
     }
   }
 </script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
