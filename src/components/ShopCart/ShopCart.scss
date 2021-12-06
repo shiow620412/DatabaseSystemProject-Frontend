@@ -22,7 +22,6 @@
     margin: 0 auto;
     background-color: #fff;
   }
-  
   .shoppingCart .content ul {
     background-color: #fff;
     color: #424242;
@@ -30,15 +29,15 @@
   }
   .shoppingCart .cart-bar {
     width: 1225px;
-    height: 50px;
-    line-height: 50px;
+    height: 44px;
+    line-height: 44px;
     background-color: #fff;
   }
   .shoppingCart .cart-bar .cart-bar-left {
     float: left;
   }
   .shoppingCart .cart-bar .cart-bar-left a {
-    line-height: 50px;
+    line-height: 44px;
     margin-left: 32px;
     color: #757575;
   }
@@ -103,3 +102,17 @@
     margin: 0 0 20px;
     font-size: 20px;
   }
+h3 {
+    margin: 40px 0 0;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    display: inline-block;
+    margin: 0 10px;
+}
+a {
+    color: #42b983;
+}

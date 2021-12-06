@@ -1,6 +1,5 @@
 <template>
 <div class="shoppingCart">
-
     <div class="cart-header">
         <div class="cart-header-content">
             <p>
@@ -67,9 +66,7 @@
                     <span class="total-price-title">合計：</span>
                     <span class="total-price">{{ getTotalPrice }}元</span>
                 </span>
-                <!-- <router-link :to="getCheckQuantity() > 0 ? '../products' : ''"> -->
-                <div :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</div>
-                <!-- </router-link> -->
+                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</el-button>
             </div>
         </div>
     </div>
@@ -83,19 +80,14 @@
 </template>
 
 <script>
-import {
-    ref
-} from 'vue'
-
+import { ref } from 'vue'
+import ShopCartController from "./ShopCart.controller";
 export default {
     name: 'ShopCart',
     setup() {
         return {
             dialogVisible: ref(false),
         }
-    },
-    Comment: {
-
     },
     data() {
         return {
@@ -139,67 +131,18 @@ export default {
             }],
         }
     },
-    methods: {
-        setIndex(num) {
-            this.deleteIndex = num;
-        },
-        deleteProduct() {
-            this.productArray.splice(this.deleteIndex, 1);
-            this.dialogVisible = false;
-        },
-        addToPayArray(val) {
-            this.productOfChecked = val;
-        },
-    },
+    methods: ShopCartController,
     computed: {
         getQuantity() {
-            let totalQuantitry = 0;
-            for (let i = 0; i < this.productArray.length; i++) {
-                const temp = this.productArray[i];
-                totalQuantitry += temp.quantity;
-            }
-            return totalQuantitry;
+            return this.productArray.reduce((x, y) => x + y.quantity, 0)
         },
         getCheckQuantity() {
-            let totalQuantity = 0
-            for (let i = 0; i < this.productOfChecked.length; i++) {
-                const temp = this.productOfChecked[i]
-                totalQuantity += temp.quantity
-            }
-            return totalQuantity
+            return this.productOfChecked.reduce((x, y) => x + y.quantity, 0)
         },
         getTotalPrice() {
-            let totalPrice = 0;
-            for (let i = 0; i < this.productOfChecked.length; i++) {
-                const temp = this.productOfChecked[i];
-                    totalPrice += temp.price * temp.quantity;
-            }
-            return totalPrice;
+            return this.productOfChecked.reduce((x, y) => x + y.price * y.quantity, 0)
         }
     }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-
-<style scoped>
-@import './ShopCart.scss';
-
-h3 {
-    margin: 40px 0 0;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-a {
-    color: #42b983;
-}
-</style>
+<style scoped lang="scss" src="./ShopCart.scss"></style>
