@@ -12,9 +12,9 @@
       </el-row>
       <el-row class="row_three">
         <el-col :span="6"><div class="quantity_text"><span>數量</span></div></el-col>
-        <el-col :span="4"><div class="pro_input_quantity"><el-input-number v-model="num" @change="handleChange" :min="1" :max="99" label="描述文字"></el-input-number></div></el-col>
-        <el-col :span="6"><div class="the_rest_of"><span>還剩下X個</span></div></el-col>
-        <el-col :span="8"></el-col>
+        <el-col :span="6"><div class="pro_input_quantity"><el-input-number v-model="num" @change="handleChange" :min="1" :max=product.stock label="描述文字"></el-input-number></div></el-col>
+        <el-col :span="6"><div class="the_rest_of"><span>還剩下{{product.stock}}個</span></div></el-col>
+        <el-col :span="6"></el-col>
       </el-row>
       <el-row class="add_procat">
         <el-col :span="4"></el-col>
@@ -28,7 +28,7 @@
   <el-row class="product-detail">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="pro_specifications">
-      <p class="pro_spec_title">商品規格</p>
+      <span class="pro_spec_title">商品規格</span>
       <p class="pro_spec_text">Lenovo IdeaPad Slim 3 82KT001ETW 灰 詳細規格表
           上蓋顏色：灰
           處理器：AMD RYZEN_7_5700U_1.8G_8C_MB
@@ -68,7 +68,7 @@
   <el-row class="product-detail">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="pro_desciptions">
-      <p class="pro_desc_title">商品詳情</p>
+      <span class="pro_desc_title">商品詳情</span>
       <p class="pro_desc_text"> 上蓋顏色：灰
           處理器：AMD RYZEN_7_5700U_1.8G_8C_MB
           記憶體：4GB_DDR4_3200_SODIMM+4GB_DDR4_3200
@@ -98,7 +98,7 @@
   <el-row class="product-detail">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="pro_copywriting">
-      <p class="pro_copywriter_title">詳細介紹</p>
+      <span class="pro_copywriter_title">詳細介紹</span>
       <div class="pro_content">
         <div class="image"><img src="http://www.am1470.com/data/activities/4988_747715_1.jpg"></div>
         <div class="image"><img src="http://www.am1470.com/data/activities/4988_747715_1.jpg"></div>
@@ -124,9 +124,11 @@ export default {
         product: {
           name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
           price: 515,
+          stock: 10,
           describe: {
             src1: "文字敘述",
-            src2: "http:www..." 
+            src2: "http:www..." ,
+            src3:"Image"
           }
         },
       };
@@ -157,14 +159,12 @@ a {
 }
 .pro_Image{
   background-color:#ffffff;
-  margin-left:auto;
-  margin-right:auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 .image{
-  margin-top: 3%;
-  margin-bottom: 3%;
-  margin-right: 2%;
-  margin-left: 2%;
+  width: 100%;
+  margin-top: 2%;
 }
 .pro_intro{
   background-color:#ffffff;
@@ -194,8 +194,7 @@ a {
   margin-left: 2%;
 }
 .the_rest_of{
-  margin-top: 18px;
-  margin-left: 2%;
+  margin: 10px;
 }
 .add_procat{
   margin-top: 18px;

@@ -4,6 +4,7 @@ import {
 } from 'vue-router'
 //import index from '../view/index.vue'
 import ProContentTop from '../components/productpage/proContentTop.vue';
+//import login from '../components/loginpage/login.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 
 const routes = [
