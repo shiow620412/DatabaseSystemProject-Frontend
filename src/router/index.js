@@ -5,6 +5,7 @@ import {
 import index from '../view/index.vue'
 import cart from '../components/ShopCart/ShopCart.vue';
 import ProContentTop from '../components/productpage/proContentTop.vue';
+import memberManagement from '../components/memberManagement/memberManagement.vue';
 
 
 const routes = [
@@ -19,8 +20,11 @@ const routes = [
   {
     path: '/cart',
     component: cart
+  },
+  {
+    path: '/memberManagement',
+    component: memberManagement
   }
-
 ]
 
 const router = createRouter({
