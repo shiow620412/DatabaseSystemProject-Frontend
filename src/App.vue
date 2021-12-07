@@ -1,21 +1,11 @@
 <template>
-  <Top/>
-  
+
   <router-view/>
 </template>
 
 <script>
-  import Top from './components/top.vue'
-  //import ProContentTop from './components/proContentTop.vue'
-  //import subscribe from './subject.vue'
-
   export default {
     name: 'App',
-    components: {
-      Top,
-      //ProContentTop,
-
-    }
   }
 </script>
 
