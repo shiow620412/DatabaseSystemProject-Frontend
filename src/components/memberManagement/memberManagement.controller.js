@@ -1,5 +1,5 @@
 export default {
-    setIndex,deleteProduct,addToPayArray,test,clickEdit
+    setIndex,deleteProduct,addToPayArray,checkIsAdmin,clickEdit,changeStatusChinese
 }
 
 function setIndex(num) {
@@ -12,7 +12,7 @@ function deleteProduct() {
 function addToPayArray(val) {
     this.productOfChecked = val;
 }
-function test(num) {
+function checkIsAdmin(num) {
     if (num === 1) {
         return '是';
     } else {
@@ -21,4 +21,11 @@ function test(num) {
 }
 function clickEdit(index, row) {
     console.log(index, row);
+}
+function changeStatusChinese(num) {
+    if (num === 1) {
+        return '正常'
+    } else {
+        return '停權'
+    }
 }
