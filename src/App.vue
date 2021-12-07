@@ -1,17 +1,15 @@
 <template>
-  <Top/>
+  <navheader/>
   <router-view/>
 </template>
+
 <script>
-  // import HelloWorld from './components/HelloWorld.vue'
-  // import Res from './res.vue'
-  import Top from './components/top.vue'
-  //import Subject from './subject.vue'
+  import navheader from './components/navheader.vue'
 
   export default {
     name: 'App',
     components: {
-      Top
+      navheader
     }
   }
 </script>

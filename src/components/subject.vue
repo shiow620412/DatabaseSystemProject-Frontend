@@ -1,14 +1,14 @@
 <template>
-    <div class="div-content">
-        <a href="https://www.youtube.com/"><el-card class="card" v-for="i in 90" :key="i" id="max-height">
-            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image"/>
+    <a href="#max-height"><el-button type="info" class="return-top-button">回到頂部</el-button></a> 
+    <div class="subject-div-content">
+        <a href="https://www.youtube.com/"><el-card class="card" v-for="i in 5" :key="i" id="max-height">
+            <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="subject-image"/>
             <div>
                 <p>Yummy hamburger</p>
             </div>
             <el-button type="text" class="button">Operating</el-button>
         </el-card></a>
     </div>
-    <a href="#max-height"><el-button type="info" class="return-top-button">回到頂部</el-button></a>
 </template>
 
 <script>
@@ -54,11 +54,11 @@
 </script>
 
 <style>
-    .div-content{
+    .subject-div-content{
         width: 75%;
         margin: 10px auto;
     }
-    .image{
+    .subject-image{
         width: 100%;
     }
     .card{
@@ -70,6 +70,8 @@
         transform: scale(1.1);
     }
     .return-top-button{
-        float: right;
+        position: fixed;
+        left: 1380px;
+        top: 100px;
     }
 </style>

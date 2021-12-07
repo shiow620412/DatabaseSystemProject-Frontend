@@ -35,6 +35,10 @@
                 {
                     photo: require("../assets/category5.png"),
                     name: "生活用品"
+                },
+                {
+                    photo: require("../assets/category6.jpg"),
+                    name: "生鮮"
                 },]
             }
         }

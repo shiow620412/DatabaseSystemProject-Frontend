@@ -4,22 +4,38 @@ import {
 } from 'vue-router'
 import index from '../view/index.vue'
 import product from '../components/test.vue'
-import cart from '../components/ShopCart/ShopCart.vue';
+import cart from '../components/ShopCart/ShopCart.vue'
+import member from '../components/member/member/member.vue'
+import information from '../components/member/information/information.vue'
+import transactionRecord from '../components/member/transactionRecord/transactionRecord.vue'
 
-const routes = [
-  {
+const routes = [{
     path: '',
-    component: index        
+    component: index,
   },
   {
     path: '/product',
-    component: product
+    component: product,
+  },
+  {
+    path: "/member",
+    component: member,
+    redirect: "/member/information",
+    children: [
+      {
+        path: '/member/information',
+        component: information,
+      },
+      {
+        path: '/member/transactionRecord',
+        component: transactionRecord,
+      }
+    ]
   },
   {
     path: '/cart',
     component: cart
-  }
-
+  },
 ]
 
 const router = createRouter({
