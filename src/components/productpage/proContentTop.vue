@@ -5,9 +5,9 @@
         <div class="image"><img src="http://www.am1470.com/data/activities/4988_747715_1.jpg"></div>
     </el-col>
     <el-col :span="11" class="pro_intro">
-      <div class="pro_name"><h3>-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購</h3></div>
+      <div class="pro_name"><h3>{{this.product.name}}</h3></div>
       <el-row class="row_three">
-        <el-col :span="9"><div class="pro_price"><h1>TWD 515</h1></div></el-col>
+        <el-col :span="9"><div class="pro_price"><h1>TWD {{this.product.price}}</h1></div></el-col>
         <el-col :span="15"></el-col>
       </el-row>
       <el-row class="row_three">
@@ -113,8 +113,6 @@
   </el-col>
   <el-col :span="3" class="pro_copywriter"></el-col>
   </el-row>
-
-<!-- <div class="pro_price"><h1>TWD 515</h1></div>-->
 </template>
 
 <script>
@@ -122,7 +120,15 @@ export default {
     name: 'top',
     data() {
       return {
-        num: 1
+        num: 1,
+        product: {
+          name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
+          price: 515,
+          describe: {
+            src1: "文字敘述",
+            src2: "http:www..." 
+          }
+        },
       };
     },
     methods: {
@@ -135,7 +141,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 ul {
   list-style-type: none;
   padding: 0;
@@ -152,22 +157,30 @@ a {
 }
 .pro_Image{
   background-color:#ffffff;
+  margin-left:auto;
+  margin-right:auto;
 }
 .image{
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  margin-right: 2%;
+  margin-left: 2%;
 }
 .pro_intro{
   background-color:#ffffff;
+  margin-left:auto;
+  margin-right:auto;
 }
 .pro_name{
+  border-bottom-style: solid;
+  border-color: #f5bb51;
   font-size: 16pt;
   margin-top: 40px;
-  margin-right: 35px;
+  margin-right: 10%;
 }
 .pro_price{
   color: #FF0000;
-  margin-right: 50px;
+  margin-right: 0%;
 }
 .row_three{
   margin-top: 50px;
@@ -177,12 +190,16 @@ a {
   margin-top: 8px;
   font-weight:bold;
 }
+.pro_input_quantity{
+  margin-left: 2%;
+}
 .the_rest_of{
   margin-top: 18px;
+  margin-left: 2%;
 }
 .add_procat{
   margin-top: 18px;
-  margin-left: 30px;
+  margin-left: 6.8%;
   margin-bottom: 18px;
 }
 .product-detail{
@@ -196,12 +213,12 @@ a {
   background-color: #ddcfcf;
   font-size: 20pt;
   margin-top: 18px;
-  margin-right: 1200px;
+  margin-right: 70%;
 }
 .pro_spec_text{
   text-align:left;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 3.6%;
+  margin-right: 3.6%;
 }
 .pro_desciptions{
    background-color: #ffffff;
@@ -210,12 +227,12 @@ a {
   background-color: #ddcfcf;
   font-size: 20pt;
   margin-top: 18px;
-  margin-right: 1200px;
+  margin-right: 70%;
 }
 .pro_desc_text{
   text-align:left;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 3.6%;
+  margin-right: 3.6%;
 }
 
 .pro_copywriting{
@@ -225,11 +242,11 @@ a {
   background-color: #ddcfcf;
   font-size: 20pt;
   margin-top: 18px;
-  margin-right: 1200px;
+  margin-right: 70%;
 }
 .pro_copywriter_text{
   text-align:left;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 3.6%;
+  margin-right: 3.6%;
 }
 </style>

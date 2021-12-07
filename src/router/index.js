@@ -12,7 +12,7 @@ const routes = [
     component: index        
   },*/
   {
-    path: '',
+    path: '/',
     component: ProContentTop
   },
   {
