@@ -65,9 +65,9 @@
 import {
     ref
 } from 'vue'
-import memberManagementController from "./memberManagement.controller";
+import memberController from "./member.controller";
 export default {
-    name: 'memberManagement',
+    name: 'member',
     setup() {
         return {
             statusArray: ref([{
@@ -146,9 +146,9 @@ export default {
             }]
         }
     },
-    methods: memberManagementController,
+    methods: memberController,
     computed: {}
 }
 </script>
 
-<style scoped lang="scss" src="./memberManagement.scss"></style>
+<style scoped lang="scss" src="./member.scss"></style>
