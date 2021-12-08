@@ -2,7 +2,6 @@
 <div class="adminPage">
     <ManagementHeader />
     <ManagementAside />
-    <router-view />
 </div>
 </template>
 

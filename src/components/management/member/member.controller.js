@@ -19,13 +19,13 @@ function changeIsAdminChinese(num) {
         return '否';
     }
 }
-function clickEdit(index, row) {
-    console.log(index, row);
-}
 function changeStatusChinese(num) {
     if (num === 1) {
         return '正常'
     } else {
         return '停權'
     }
+}
+function clickEdit(index, row) {
+    console.log(index, row);
 }
