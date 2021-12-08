@@ -24,7 +24,14 @@
     </el-col>
     <el-col :span="3"></el-col>
   </el-row>
-
+  <el-row>
+    <el-col :span="3"></el-col>
+    <el-col :span="18" class="product-detail">
+      <div v-html="content"></div>
+    </el-col>
+    <el-col :span="3"></el-col>
+  </el-row>
+<!--
   <el-row class="product-detail">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="pro_specifications">
@@ -42,24 +49,6 @@
           有線網路：無
           無線網路：11ac, 2x2 + BT5.0
           藍芽：BT5.0
-          讀卡機：有
-          連接埠：
-          1x power connector
-          1x card reader
-          1x USB 3.2 Gen 1
-          1x USB-C 3.2 Gen 1 (support data transfer only)
-          1x HDMI 1.4b
-          1x headphone / microphone combo jack (3.5mm)
-          1x USB 2.0
-
-          鍵盤：KB_GY_TC
-          材質/尺寸：324.2 x 215.7 x 19.9 mm
-          重量：1.41 kg
-          作業系統：Windows 10 Home 64 bits
-          電池：2CELL_38WH_INTERNAL
-          指紋辨識：N
-          國際條碼 (EAN)：195477494640
-          保固：2年保固/加贈2年Premium Care
       </p> 
     </el-col>
     <el-col :span="3"></el-col>
@@ -70,26 +59,8 @@
     <el-col :span="18" class="pro_desciptions">
       <span class="pro_desc_title">商品詳情</span>
       <p class="pro_desc_text"> 上蓋顏色：灰
-          處理器：AMD RYZEN_7_5700U_1.8G_8C_MB
+          處理器：AM0D RYZEN_7_5700U_1.8G_8C_MB
           記憶體：4GB_DDR4_3200_SODIMM+4GB_DDR4_3200
-          光碟機：NA
-          硬碟：512GB_SSD_M.2_2280_NVME_QLC
-          顯示晶片：Integrated AMD Radeon Graphics
-          螢幕：14.0FHD_TN_AG_250N_N
-          音訊：Stereo speakers, 1.5W x2, Dolby Audio
-          網路攝影機：720p with Privacy Shutter
-          有線網路：無
-          無線網路：11ac, 2x2 + BT5.0
-          藍芽：BT5.0
-          讀卡機：有
-          連接埠：
-          1x power connector
-          1x card reader
-          1x USB 3.2 Gen 1
-          1x USB-C 3.2 Gen 1 (support data transfer only)
-          1x HDMI 1.4b
-          1x headphone / microphone combo jack (3.5mm)
-          1x USB 2.0
         </p>
     </el-col>
     <el-col :span="3"></el-col>
@@ -113,6 +84,7 @@
   </el-col>
   <el-col :span="3" class="pro_copywriter"></el-col>
   </el-row>
+  -->
 </template>
 
 <script>
@@ -120,6 +92,7 @@ export default {
     name: 'top',
     data() {
       return {
+        content: "<p>123</p>",
         num: 1,
         product: {
           name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
@@ -202,6 +175,13 @@ a {
   margin-bottom: 18px;
 }
 .product-detail{
+  background-color: #ffffff;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/*
+.product-detail{
   margin-top: 40px;
   margin-bottom: 40px;
 }
@@ -220,7 +200,7 @@ a {
   margin-right: 3.6%;
 }
 .pro_desciptions{
-   background-color: #ffffff;
+  background-color: #ffffff;
 }
 .pro_desc_title{
   background-color: #ddcfcf;
@@ -233,7 +213,6 @@ a {
   margin-left: 3.6%;
   margin-right: 3.6%;
 }
-
 .pro_copywriting{
   background-color: #ffffff;
 }
@@ -248,4 +227,5 @@ a {
   margin-left: 3.6%;
   margin-right: 3.6%;
 }
+*/
 </style>

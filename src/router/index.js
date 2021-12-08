@@ -2,9 +2,9 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router'
-//import index from '../view/index.vue'
-import ProContentTop from '../components/productpage/proContentTop.vue';
-//import login from '../components/loginpage/login.vue';
+//import index from '../view/index.vue';
+import login from '../components/memberAccount/login.vue';
+import Product from '../components/product/product.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 
 const routes = [
@@ -13,8 +13,12 @@ const routes = [
     component: index        
   },*/
   {
-    path: '/',
-    component: ProContentTop
+    path: '/login',
+    component: login
+  },
+  {
+    path: '/product',
+    component: Product
   },
   {
     path: '/cart',
