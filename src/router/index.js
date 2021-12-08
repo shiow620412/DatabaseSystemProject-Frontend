@@ -3,8 +3,10 @@ import {
   createWebHistory
 } from 'vue-router'
 import index from '../view/index.vue';
+import register from '../components/register/register.vue'
+import login from '../components/login/login.vue';
+import Product from '../components/product/product.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
-import ProContentTop from '../components/productpage/proContentTop.vue';
 import indexHeader from "../components/top.vue";
 
 import adminHeader from '../view/management.vue';
@@ -15,14 +17,13 @@ const routes = [
   {
     path: '',
     component: indexHeader,
-    // alias: 'index',
     children: [{
       path: '',
       alias: '/index',
       component: index
     },{
       path: '/product',
-      component: ProContentTop
+      component: Product
     },
     {
       path: '/cart',
@@ -35,6 +36,14 @@ const routes = [
       path: 'member',
       component: member
     }]
+  },
+  {
+    path: '/login',
+    component: login
+  },
+  {
+    path: '/register',
+    component: register
   }
   
 
