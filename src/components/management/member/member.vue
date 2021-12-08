@@ -15,8 +15,13 @@
                         <el-table-column prop="account" label="帳號" min-width="25%" align="center"></el-table-column>
                         <el-table-column prop="email" label="信箱" min-width="25%" align="center"></el-table-column>
                         <el-table-column label="是否為管理員" min-width="15%" align="center">
-                            <template v-slot="scope">
-                                <el-text>{{ checkIsAdmin(scope.row.isAdmin) }}</el-text>
+                            <template v-slot="scope" v-if="this.isEdit & !this.isSave">
+                                <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'">{{ changeIsAdminChinese(scope.row.isAdminArray) }}</el-tag>
+                            </template>
+                            <template v-slot="scope" v-else-if="!this.isEdit & this.isSave">
+                                <el-select v-model="scope.row.isAdmin" placeholder="Selete">
+                                    <el-option v-for="item in isAdminArray" :key="item.value1" :label="item.label" :value="item.value1"></el-option>
+                                </el-select>
                             </template>
                         </el-table-column>
                         <el-table-column label="狀態" min-width="13%" align="center">
@@ -80,6 +85,16 @@ export default {
                 }
             ]),
             value: ref(''),
+            isAdminArray: ref([{
+                value1: 1,
+                label: '是'
+            },
+            {
+                value1: 0,
+                label: '否'
+            }
+            ]),
+            value1: ref(''),
         }
     },
     data() {

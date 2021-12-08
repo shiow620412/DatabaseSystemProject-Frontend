@@ -1,6 +1,5 @@
 <template>
 <div class="adminPage">
-    <el-text style="font-size: 50px;">Admin Page Test</el-text>
     <ManagementHeader />
     <ManagementAside />
     <router-view />
