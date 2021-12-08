@@ -5,16 +5,32 @@
             <p>{{index.name}}</p>
         </div>
     </div>
+    <subject :testTable="testTable"/>
 </template>
 
 <script>
+import subject from '../subject/subject.vue'
     export default {
         name: 'category',
         components: {
-            
+            subject
         },
         data(){
             return{
+                testTable:[
+                    {
+                        name: "tom"
+                    },
+                    {
+                        name: "amy"
+                    },
+                    {
+                        name: "hi"
+                    },
+                    {
+                        name: "132"
+                    },
+                ],
                 category_type: [
                 {
                     photo: require("../../assets/category1.png"),
