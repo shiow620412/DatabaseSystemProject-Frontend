@@ -9,7 +9,6 @@
             <el-button type="text" class="button">Operating</el-button>
         </el-card></a>
     </div>
-    <p>{{testTable.length}}</p>
 </template>
 
 <script>
