@@ -9,7 +9,7 @@
                 </el-col>
                 <el-col :span="14">
                     <div>
-                        <router-link to="/"><img class="home-image" src="../assets/logo.png" alt=""></router-link>
+                        <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
                     </div>
                 </el-col>
             </el-row>
@@ -29,7 +29,7 @@
                     <div>
                         <router-link to="/login" class="register-position">登入|註冊</router-link>
                         <router-link to="/member" class="member-position">會員中心</router-link>
-                        <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../assets/shoppingCart.png" alt=""></router-link>
+                        <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link>
                     </div>
                 </el-col>
                 <el-col :span="10">
@@ -40,11 +40,12 @@
             </el-row>
         </el-col>
     </el-row>
+    <router-view> </router-view>
 </template>
 
 <script>
     import { ref } from 'vue'
-    import {Search} from '../../node_modules/@element-plus/icons'
+    import {Search} from '@element-plus/icons'
     export default {
         name: 'Top',
         components: {

@@ -17,10 +17,10 @@
             <el-row>
                 <el-col :span="8"></el-col>
                 <el-col :span="4">
-                    <router-link to="/member/transactionRecord"><img src="../../../assets/list.png" alt="" class="image"/></router-link>
+                    <router-link to="/member/order"><img src="../../../assets/list.png" alt="" class="image"/></router-link>
                 </el-col>
                 <el-col :span="8">
-                    <router-link to="/member/transactionRecord"><p style="image-text">購物清單</p></router-link>
+                    <router-link to="/member/order"><p style="image-text">購物清單</p></router-link>
                 </el-col>
                 <el-col :span="16"></el-col>
             </el-row>
