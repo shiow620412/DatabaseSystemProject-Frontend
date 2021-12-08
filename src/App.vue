@@ -1,18 +1,29 @@
 <template>
+<<<<<<< HEAD
   <navheader/>
   <router-view/>
 </template>
 
 <script>
   import navheader from './components/navheader.vue'
+=======
 
+  <router-view/>
+</template>
+>>>>>>> origin/main
+
+<script>
   export default {
     name: 'App',
+<<<<<<< HEAD
     components: {
       navheader
     }
+=======
+>>>>>>> origin/main
   }
 </script>
+
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

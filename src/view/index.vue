@@ -4,7 +4,7 @@
 </template>
 
 <script>
-  import Category from '../components/category.vue'
+  import Category from '../components/category/category.vue'
   import Subject from '../components/subject.vue'
 
   export default {

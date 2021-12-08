@@ -4,7 +4,7 @@ import installElementPlus from './plugins/element'
 import router from "./router/index"
 
 
-const app = createApp(App).use(router);
+const app = createApp(App);
 installElementPlus(app);
 app.use(router);
 app.mount('#app');
