@@ -46,7 +46,7 @@ export default {
     data() {
         return {
             buttonArray: [{
-                link: '/management/',
+                link: '/management/main',
                 icon: 'el-icon-menu',
                 name: '系統首頁'
             }, {
@@ -54,13 +54,13 @@ export default {
                 icon: 'el-icon-user',
                 name: '會員管理'
             }, {
-                link: '/management/member',
+                link: '/management/order',
                 icon: 'el-icon-s-order',
                 name: '訂單管理'
             }, {
-                link: '/management/member',
+                link: '/management/product',
                 icon: 'el-icon-shopping-bag-2',
-                name: '商品上下架'
+                name: '商品管理'
             }]
         }
     }
