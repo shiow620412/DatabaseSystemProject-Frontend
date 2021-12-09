@@ -43,9 +43,6 @@
 <script>
 export default {
     name: 'aside',
-    components: {
-        // Location,
-    },
     data() {
         return {
             buttonArray: [{
@@ -70,30 +67,4 @@ export default {
 }
 </script>
 
-<style scoped>
-.aside-button {
-    background-color: #545c64;
-    border-color: #545c64;
-    color: #ffffff;
-}
-
-.aside-button:focus {
-    background-color: #545c64;
-    border-color: #545c64;
-    color: #ffffff;
-}
-
-.aside-button:hover {
-    background-color: #3f4449;
-    border-color: #3f4449;
-    color: #ffffff;
-}
-
-.aside-button:active {
-    background-color: #545c64;
-    border-color: #545c64;
-    color: #ffd04b;
-}
-
-/* rgb(255, 208, 75); background-color: rgb(84, 92, 100);" */
-</style>
+<style scoped lang="scss" src="./aside.scss"></style>
