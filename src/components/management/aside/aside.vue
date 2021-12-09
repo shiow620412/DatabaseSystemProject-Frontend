@@ -6,31 +6,12 @@
         </div>
         <div align="center" v-for="(item, index) in buttonArray" :key=index>
             <router-link :to="item.link">
-                <el-button class="aside-button" style="width: 37vh;height: 10vh;">
+                <el-button :class="(item.click === 0) ? 'aside-button' : 'aside-button-click'" style="width: 37vh;height: 10vh;" @click="simulationMenu(index)">
                     <h4 :class="item.icon" />
                     <span>{{ item.name }}</span>
                 </el-button>
             </router-link>
         </div>
-        <!-- <el-menu active-text-color="#ffd04b" background-color="#545c64" class="el-menu-vertical-demo" default-active="1" text-color="#fff" @open="handleOpen" @close="handleClose">
-            <router-link to="/management/">
-                <el-menu-item index="1">
-                    <h3 class="el-icon-menu" />
-                    <span>系統首頁</span>
-                </el-menu-item>
-            </router-link>
-            <router-link to="/management/member">
-                <el-menu-item index="2">
-                    <span>會員管理</span>
-                </el-menu-item>
-            </router-link>
-            <el-menu-item index="3">
-                <span>Navigator Three</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-                <span>Navigator Four</span>
-            </el-menu-item>
-        </el-menu> -->
     </el-col>
     <el-col :span="1"></el-col>
     <el-col :span="17">
@@ -41,6 +22,7 @@
 </template>
 
 <script>
+import asideController from "./aside.controller";
 export default {
     name: 'aside',
     data() {
@@ -48,22 +30,27 @@ export default {
             buttonArray: [{
                 link: '/management/main',
                 icon: 'el-icon-menu',
-                name: '系統首頁'
+                name: '系統首頁',
+                click: 1
             }, {
                 link: '/management/member',
                 icon: 'el-icon-user',
-                name: '會員管理'
+                name: '會員管理',
+                click: 0
             }, {
                 link: '/management/order',
                 icon: 'el-icon-s-order',
-                name: '訂單管理'
+                name: '訂單管理',
+                click: 0
             }, {
                 link: '/management/product',
                 icon: 'el-icon-shopping-bag-2',
-                name: '商品管理'
+                name: '商品管理',
+                click: 0
             }]
         }
-    }
+    },
+    methods: asideController,
 }
 </script>
 
