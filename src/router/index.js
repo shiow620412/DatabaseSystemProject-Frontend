@@ -3,16 +3,17 @@ import {
   createWebHistory
 } from 'vue-router'
 import index from '../view/index.vue';
-import register from '../components/register/register.vue'
+import register from '../components/register/register.vue';
 import login from '../components/login/login.vue';
 import Product from '../components/product/product.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 import indexHeader from "../components/header/header.vue";
-import memberAside from '../components/member/member/member.vue'
+import memberAside from '../components/member/aside/aside.vue';
 import adminHeader from '../view/management.vue';
 import member from '../components/management/member/member.vue';
-import information from "../components/member/information/information.vue"
-import order from "../components/member/order/order.vue"
+import creditCard from '../components/member/creditcard/creditcard.vue'
+import information from "../components/member/information/information.vue";
+import order from "../components/member/order/order.vue";
 
 const routes = [
   {
@@ -37,6 +38,10 @@ const routes = [
         {
           path: '/member/information',
           component: information,
+        },
+        {
+          path: '/member/creditCard',
+          component: creditCard,
         },
         {
           path: '/member/order',
