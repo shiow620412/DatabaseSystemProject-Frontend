@@ -5,46 +5,6 @@
             <el-col :span="12" style="margin-top: 20px;"><div><el-button @click="addCard()"> + 新增信用卡</el-button></div></el-col>
         </el-row>
         <hr>
-        <div v-if="isEditShow" class="hidden-div-edit">
-            <el-form :label-position="labelPosition" label-width="100px">
-                <el-form-item label="卡號">
-                    <el-input v-model="CardformLabelAlign.number" require></el-input>
-                </el-form-item>
-                <el-form-item label="安全碼">
-                    <el-input v-model="CardformLabelAlign.safeCode"></el-input>
-                </el-form-item>
-                <el-form-item label="年">
-                    <el-input v-model="CardformLabelAlign.year"></el-input>
-                </el-form-item>
-                <el-form-item label="月">
-                    <el-input v-model="CardformLabelAlign.month"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onEditSubmit()">Create</el-button>
-                    <el-button @click="windowsEditClose()">Cancel</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
-        <div v-if="isAddShow" class="hidden-div-add">
-            <el-form :label-position="labelPosition" label-width="100px">
-                <el-form-item label="卡號">
-                    <el-input v-model="CardformLabelAlign.number" require></el-input>
-                </el-form-item>
-                <el-form-item label="安全碼">
-                    <el-input v-model="CardformLabelAlign.safeCode"></el-input>
-                </el-form-item>
-                <el-form-item label="年">
-                    <el-input v-model="CardformLabelAlign.year"></el-input>
-                </el-form-item>
-                <el-form-item label="月">
-                    <el-input v-model="CardformLabelAlign.month"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onAddSubmit()">Create</el-button>
-                    <el-button @click="windowsAddClose()">Cancel</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
         <div class="order-div">
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="number" label="卡號" width="180" align="center"/>
@@ -57,6 +17,50 @@
                 </el-table-column>
             </el-table>
         </div>
+        <el-dialog v-model="isAddShow" title="修改信用卡" width="30%">
+            <el-form :model="form">
+                <el-form-item label="卡號">
+                    <el-input v-model="form.number" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="安全碼">
+                    <el-input v-model="form.safeCode" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="年">
+                    <el-input v-model="form.year" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="月">
+                    <el-input v-model="form.month" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="addClose()">Cancel</el-button>
+                    <el-button type="primary" @click="onAddSubmit()">Confirm</el-button>
+                </span>
+            </template>
+        </el-dialog>
+        <el-dialog v-model="isEditShow" title="修改信用卡" width="30%">
+            <el-form :model="form">
+                <el-form-item label="卡號">
+                    <el-input v-model="form.number" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="安全碼">
+                    <el-input v-model="form.safeCode" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="年">
+                    <el-input v-model="form.year" autocomplete="off"></el-input>
+                </el-form-item>
+                <el-form-item label="月">
+                    <el-input v-model="form.month" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="windowsEditClose()">Cancel</el-button>
+                    <el-button type="primary" @click="onEditSubmit()">Confirm</el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -72,11 +76,11 @@
                 isAddShow: false,
                 currentClick: 0,
                 labelPosition: 'right',
-                CardformLabelAlign: {
-                    number: '',
-                    safeCode: '',
-                    year: '',
-                    month: '',
+                form: {
+                    number: "",
+                    safeCode: "",
+                    year: "",
+                    month: "",
                 },
                 tableData: [
                     {
@@ -103,15 +107,13 @@
                 this.isAddShow = true;
             },
             onAddSubmit(){
-                this.tableData.push({number: this.CardformLabelAlign.number,deadline: this.CardformLabelAlign.year.toString()+'/'+this.CardformLabelAlign.month.toString()})
+                this.tableData.push({number: this.form.number,deadline: this.form.year+'/'+this.form.month})
                 this.isAddShow = false;
-                this.CardformLabelAlign.number = "";
-                this.CardformLabelAlign.safeCode = "";
-                this.CardformLabelAlign.year = "";
-                this.CardformLabelAlign.month = "";
+                this.clearForm();
             },
-            windowsAddClose(){
+            addClose(){
                 this.isAddShow = false;
+                this.clearForm();
             },
             handleEdit(index) {
                 this.isEditShow = true;
@@ -123,16 +125,20 @@
                 }
             },
             onEditSubmit(){
-                this.tableData[this.currentClick].number = this.CardformLabelAlign.number;
-                this.tableData[this.currentClick].deadline = this.CardformLabelAlign.year.toString()+'/'+this.CardformLabelAlign.month.toString();
+                this.tableData[this.currentClick].number = this.form.number;
+                this.tableData[this.currentClick].deadline = this.form.year.toString()+'/'+this.form.month.toString();
+                this.clearForm();
                 this.isEditShow = false;
             },
             windowsEditClose(){
                 this.isEditShow = false;
-                this.CardformLabelAlign.number = "";
-                this.CardformLabelAlign.safeCode = "";
-                this.CardformLabelAlign.year = "";
-                this.CardformLabelAlign.month = "";
+                this.clearForm();
+            },
+            clearForm(){
+                this.form.number = "";
+                this.form.safeCode = "";
+                this.form.year = "";
+                this.form.month = "";
             },
         },
     }
