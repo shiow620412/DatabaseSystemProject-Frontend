@@ -2,14 +2,19 @@
     <el-row class="top">
         <el-col :span="7">
             <el-row>
-                <el-col :span="10">
+                <el-col :span="5">
                     <div>
                         <!-- layout-margin -->
                     </div>
                 </el-col>
-                <el-col :span="14">
+                <el-col :span="16">
                     <div>
                         <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
+                    </div>
+                </el-col>
+                <el-col :span="3">
+                    <div>
+                        <!-- layout-margin -->
                     </div>
                 </el-col>
             </el-row>
@@ -25,16 +30,16 @@
         </el-col>
         <el-col :span="7">
             <el-row>
-                <el-col :span="14">
+                <el-col :span="8">
                     <div>
-                        <router-link to="/login" class="register-position">登入|註冊</router-link>
-                        <router-link to="/member" class="member-position">會員中心</router-link>
-                        <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link>
+                       <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link> 
+
                     </div>
                 </el-col>
-                <el-col :span="10">
+                <el-col :span="16">
                     <div>
-                        <!-- layout-margin -->
+                        <router-link to="/identify" class="register-position">登入|註冊</router-link>
+                        <router-link to="/member" class="member-position">會員中心</router-link>
                     </div>
                 </el-col>
             </el-row>
@@ -64,31 +69,31 @@
 
 <style>
     .top{
-        height: 150px;
+        height: 120px;
         width: 100%;
         z-index: 9999;
-        background: -webkit-linear-gradient(#FDC000,#FD5200);
+        background: #FAEDA7;
     }
     .shoppingCart-position{
+        top: 33px;
+        left: 10px;
         position: relative;
-        top: 80px;
-        right: 90px;
     }
     .shoppingCart-image{
         transition: 0.5s;
-        width: 20%;
+        width: 28%;
     }
     .shoppingCart-image:hover{
         transform: scale(1.2);
-    } 
+    }
     .register-position{
         position: relative;
-        top: -20px;
+        top: 10px;
         color: white;
     }
     .member-position{
         position: relative;
-        top: -20px;
+        top: 10px;
         left: 20px;
         color: white;
     }
@@ -99,7 +104,8 @@
         
     }
     .home-image{
-        width: 70%;
-        transform:translateY(50%);
+        width: 48%;
+        transform:translateY(55%);
+        
     }
 </style>

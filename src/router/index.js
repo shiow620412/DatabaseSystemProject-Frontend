@@ -3,8 +3,9 @@ import {
   createWebHistory
 } from 'vue-router'
 import index from '../view/index.vue';
-import register from '../components/register/register.vue'
-import login from '../components/login/login.vue';
+import identifyHeader from '../view/identifyHeader.vue'
+import register from '../components/user/register/register.vue'
+import login from '../components/user/login/login.vue';
 import Product from '../components/product/product.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 import indexHeader from "../components/header/header.vue";
@@ -13,6 +14,8 @@ import adminHeader from '../view/management.vue';
 import member from '../components/management/member/member.vue';
 import information from "../components/member/information/information.vue"
 import order from "../components/member/order/order.vue"
+import retrievePassword from '../components/user/retrievepassword/retrievePassword.vue'
+import resetPassword  from '../components/user/resetpassword/resetPassword.vue'
 
 const routes = [
   {
@@ -22,7 +25,8 @@ const routes = [
       path: '',
       alias: '/index',
       component: index
-    },{
+    },
+    {
       path: '/product',
       component: Product
     },
@@ -53,13 +57,29 @@ const routes = [
     }]
   },
   {
-    path: '/login',
-    component: login
+    path: '/identify',
+    component: identifyHeader,
+    redirect: '/identify/login',
+    children: [
+      {
+        path: '/identify/login',
+        component: login
+      },
+      {
+        path: '/identify/register',
+        component: register
+      },
+      {
+        path: '/identify/retrievePassword',
+        component: retrievePassword
+      },
+      {
+        path: '/identify/resetPassword',
+        component: resetPassword
+      }
+    ]
   },
-  {
-    path: '/register',
-    component: register
-  }]
+  ]
   
 
 const router = createRouter({
