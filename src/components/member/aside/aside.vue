@@ -1,7 +1,7 @@
 <template>
     <el-row style="margin-top: 20px;align: cenetr;">
         <el-col :span="2">
-            <div class="">1</div>
+            <div class=""></div>
         </el-col>
         <el-col :span="6">
             <router-link to="/member/information">
@@ -22,12 +22,18 @@
                     <span class="button-text ">交易紀錄</span>
                 </el-button>
             </router-link>
+            <router-link to="/member/password">
+                <el-button class="button-back">
+                    <p class="el-icon-edit-outline button-text"></p>
+                    <span class="button-text ">修改密碼</span>
+                </el-button>
+            </router-link>
         </el-col>
         <el-col :span="14">
             <div class=""><router-view/></div>
         </el-col>
         <el-col :span="2">
-            <div class="">4</div>
+            <div class=""></div>
         </el-col>
     </el-row>
 </template>

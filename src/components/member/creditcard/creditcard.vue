@@ -4,6 +4,7 @@
             <el-col :span="12" style="margin-top: 20px;"><div>我的信用卡</div></el-col>
             <el-col :span="12" style="margin-top: 20px;"><div><el-button @click="addCard()"> + 新增信用卡</el-button></div></el-col>
         </el-row>
+        <hr>
         <div v-if="isEditShow" class="hidden-div-edit">
             <el-form :label-position="labelPosition" label-width="100px">
                 <el-form-item label="卡號">
@@ -61,7 +62,7 @@
 
 <script>
     export default {
-        name: 'order',
+        name: 'creditCard',
         components: {
             
         },
@@ -104,6 +105,10 @@
             onAddSubmit(){
                 this.tableData.push({number: this.CardformLabelAlign.number,deadline: this.CardformLabelAlign.year.toString()+'/'+this.CardformLabelAlign.month.toString()})
                 this.isAddShow = false;
+                this.CardformLabelAlign.number = "";
+                this.CardformLabelAlign.safeCode = "";
+                this.CardformLabelAlign.year = "";
+                this.CardformLabelAlign.month = "";
             },
             windowsAddClose(){
                 this.isAddShow = false;
@@ -120,11 +125,14 @@
             onEditSubmit(){
                 this.tableData[this.currentClick].number = this.CardformLabelAlign.number;
                 this.tableData[this.currentClick].deadline = this.CardformLabelAlign.year.toString()+'/'+this.CardformLabelAlign.month.toString();
-
                 this.isEditShow = false;
             },
             windowsEditClose(){
                 this.isEditShow = false;
+                this.CardformLabelAlign.number = "";
+                this.CardformLabelAlign.safeCode = "";
+                this.CardformLabelAlign.year = "";
+                this.CardformLabelAlign.month = "";
             },
         },
     }

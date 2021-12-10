@@ -14,6 +14,7 @@ import member from '../components/management/member/member.vue';
 import creditCard from '../components/member/creditcard/creditcard.vue'
 import information from "../components/member/information/information.vue";
 import order from "../components/member/order/order.vue";
+import password from '../components/member/changePassword/changePassword.vue'
 
 const routes = [
   {
@@ -46,7 +47,11 @@ const routes = [
         {
           path: '/member/order',
           component: order,
-        }
+        },
+        {
+          path: '/member/password',
+          component: password,
+        },
       ]
     }]
   }, {

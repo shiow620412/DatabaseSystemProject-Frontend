@@ -66,7 +66,7 @@
     .top{
         height: 150px;
         width: 100%;
-        z-index: 9999;
+        z-index: 2;
         background: -webkit-linear-gradient(#FDC000,#FD5200);
     }
     .shoppingCart-position{
