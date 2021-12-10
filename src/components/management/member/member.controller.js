@@ -1,17 +1,7 @@
 export default {
-    setIndex,deleteProduct,addToPayArray,changeIsAdminChinese,clickEdit,changeStatusChinese
+    changeIsAdminChinese,changeStatusChinese,clickEdit
 }
 
-function setIndex(num) {
-    this.deleteIndex = num;
-}
-function deleteProduct() {
-    this.productArray.splice(this.deleteIndex, 1);
-    this.dialogVisible = false;
-}
-function addToPayArray(val) {
-    this.productOfChecked = val;
-}
 function changeIsAdminChinese(num) {
     if (num === 1) {
         return '是';

@@ -18,7 +18,7 @@
                             <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag>
                         </template>
                         <template v-slot="scope" v-else-if="!this.isEdit & this.isSave">
-                            <el-select v-model="scope.row.isAdmin" placeholder="Selete" size="medium" style="width: 60px">
+                            <el-select v-model="scope.row.isAdmin" placeholder="Select" size="medium" style="width: 60px">
                                 <el-option v-for="item in isAdminArray" :key="item.value1" :label="item.label" :value="item.value1"></el-option>
                             </el-select>
                         </template>
@@ -28,7 +28,7 @@
                             <el-tag :type="(scope.row.status === 1) ? 'success' : 'danger'" size="medium">{{ changeStatusChinese(scope.row.status) }}</el-tag>
                         </template>
                         <template v-slot="scope" v-else-if="!this.isEdit & this.isSave">
-                            <el-select v-model="scope.row.status" placeholder="Selete" size="medium">
+                            <el-select v-model="scope.row.status" placeholder="Select" size="medium">
                                 <el-option v-for="item in statusArray" :key="item.value" :label="item.label" :value="item.value"></el-option>
                             </el-select>
                         </template>
@@ -96,8 +96,6 @@ export default {
     },
     data() {
         return {
-            productOfChecked: [],
-            deleteIndex: 0,
             isEdit: true,
             isSave: false,
             isDelete: false,
