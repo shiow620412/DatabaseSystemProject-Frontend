@@ -1,24 +1,22 @@
 <template>
-<el-row>
-    <el-col :span="5" style="background-color: #545c64; height: 100vh;">
+<el-container>
+    <el-aside width="300px" style="background-color: #545c64; height: 100vh;">
         <div style="margin-top: 15px;margin-bottom: 10px;">
             <el-text style="font-size: 35px;color: #ffffff;">管理員系統</el-text>
         </div>
         <div align="center" v-for="(item, index) in buttonArray" :key=index>
-            <router-link :to="item.link">
-                <el-button :class="(item.click === 0) ? 'aside-button' : 'aside-button-click'" style="width: 37vh;height: 10vh;" @click="simulationMenu(index)">
-                    <h4 :class="item.icon" />
-                    <span>{{ item.name }}</span>
-                </el-button>
-            </router-link>
+            <el-button :class="(item.click === 0) ? 'aside-button' : 'aside-button-click'" style="width: 37vh;height: 10vh;font-size: 20px;" @click="simulationMenu(index) & this.$router.push(item.link)">
+                <span style="text-align: center" :class="item.icon">{{ item.name }}</span>
+            </el-button>
         </div>
-    </el-col>
-    <el-col :span="1"></el-col>
-    <el-col :span="17">
-        <router-view />
-    </el-col>
-    <el-col :span="1"></el-col>
-</el-row>
+    </el-aside>
+    <el-container>
+        <el-header style="text-align: right; font-size: 18px;">Hello, {{ this.adminName }}</el-header>
+        <el-main>
+            <router-view />
+        </el-main>
+    </el-container>
+</el-container>
 </template>
 
 <script>
@@ -27,6 +25,7 @@ export default {
     name: 'aside',
     data() {
         return {
+            adminName: 'Wind',
             buttonArray: [{
                 link: '/management/main',
                 icon: 'el-icon-menu',

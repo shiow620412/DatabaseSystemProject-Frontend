@@ -1,3 +1,8 @@
+.el-header {
+    background-color: #b3c0d1;
+    color: var(--el-text-color-primary);
+    line-height: 60px;
+}
 .aside-button {
     background-color: #545c64;
     border-color: #545c64;
@@ -21,7 +26,6 @@
         color: #ffd04b;
     }
 }
-
 .aside-button-click {
     background-color: #545c64;
     border-color: #545c64;
@@ -45,5 +49,3 @@
         color: #ffd04b;
     }
 }
-
-/* rgb(255, 208, 75); background-color: rgb(84, 92, 100);" */
