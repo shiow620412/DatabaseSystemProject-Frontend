@@ -1,30 +1,29 @@
 <template>
-<div>
-    <div>
+<el-container>
+    <el-header height="40px">
+        <!-- <el-row class="header" justify="center"> -->
         <div>
-            <el-row class="header" justify="center">
-                <div margin-top="20px">
-                    <el-text style="font-size: 25px;font-weight: bold">管理系統首頁</el-text>
-                </div>
-            </el-row>
-
-            <el-row justify="center">
-                <el-col v-for="(item, index) in ArrayList" :key="index" :span="8" :offset="index > 0 ? 2 : 0">
-                    <el-card :body-style="{ padding: '0px' }">
-                        <h1 :class="item.icon" class="image"></h1>
-                        <!-- <img :src="item.icon" class="image" /> -->
-                        <div style="padding: 14px">
-                            <span>{{ item.name }}</span>
-                            <div>
-                                {{ item.doc }}
-                            </div>
-                        </div>
-                    </el-card>
-                </el-col>
-            </el-row>
+            <el-text style="font-size: 25px;font-weight: bold">管理系統首頁</el-text>
         </div>
-    </div>
-</div>
+        <!-- </el-row> -->
+    </el-header>
+    <el-main>
+        <el-row justify="center">
+            <el-col v-for="(item, index) in ArrayList" :key="index" :span="8" :offset="index > 0 ? 2 : 0">
+                <el-card :body-style="{ padding: '0px' }">
+                    <h1 :class="item.icon" class="image"></h1>
+                    <!-- <img :src="item.icon" class="image" /> -->
+                    <div style="padding: 14px">
+                        <span>{{ item.name }}</span>
+                        <div>
+                            {{ item.doc }}
+                        </div>
+                    </div>
+                </el-card>
+            </el-col>
+        </el-row>
+    </el-main>
+</el-container>
 </template>
 
 <script>
