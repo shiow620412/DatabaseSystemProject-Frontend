@@ -9,6 +9,7 @@
                 </template>
             </el-table-column>
             <el-table-column label="訂單編號" prop="number" />
+            <el-table-column label="日期" prop="date" />
             <el-table-column label="總金額" prop="price" />
             <el-table-column label="訂單狀態" prop="state" />
         </el-table>
@@ -26,6 +27,7 @@
                 tableData: [
                 {
                     number: '16516153',
+                    date: "2020/03/12",
                     price: 1234,
                     state: '已出貨',
                     product: [
@@ -41,6 +43,7 @@
                 },
                 {
                     number: '46549887',
+                    date: "2021/06/19",
                     price: 4589,
                     state: '確認中',
                     product: [

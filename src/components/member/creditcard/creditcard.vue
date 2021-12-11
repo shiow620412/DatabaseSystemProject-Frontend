@@ -17,7 +17,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <el-dialog v-model="isAddShow" title="修改信用卡" width="30%">
+        <el-dialog v-model="isAddShow" title="新增信用卡" width="30%">
             <el-form :model="form">
                 <el-form-item label="卡號">
                     <el-input v-model="form.number" autocomplete="off"></el-input>
@@ -56,8 +56,8 @@
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="windowsEditClose()">Cancel</el-button>
-                    <el-button type="primary" @click="onEditSubmit()">Confirm</el-button>
+                    <el-button @click="windowsEditClose()">取消</el-button>
+                    <el-button type="primary" @click="onEditSubmit()">完成</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -85,18 +85,22 @@
                 tableData: [
                     {
                         number: '20160503',
+                        safeCode: 123,
                         deadline: '2013/02',
                     },
                     {
                         number: '20160502',
+                        safeCode: 456,
                         deadline: '2013/02',
                     },
                     {
                         number: '20160504',
+                        safeCode: 789,
                         deadline: '2013/02',
                     },
                     {
                         number: '20160501',
+                        safeCode: 461,
                         deadline: '2013/02',
                     },
                 ],
@@ -105,6 +109,7 @@
         methods: {
             addCard(){
                 this.isAddShow = true;
+                this.clearForm();
             },
             onAddSubmit(){
                 this.tableData.push({number: this.form.number,deadline: this.form.year+'/'+this.form.month})
@@ -118,6 +123,10 @@
             handleEdit(index) {
                 this.isEditShow = true;
                 this.currentClick = index;
+                this.form.number = this.tableData[this.currentClick].number;
+                this.form.safeCode = this.tableData[this.currentClick].safeCode;
+                this.form.year = this.tableData[this.currentClick].number;
+                this.form.month = this.tableData[this.currentClick].number;
             },
             handleDelete(index) {
                 if(confirm('確認刪除?')){

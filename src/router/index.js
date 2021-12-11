@@ -24,14 +24,16 @@ const routes = [
       path: '',
       alias: '/index',
       component: index
-    },{
+    },
+    {
       path: '/product',
       component: Product
     },
     {
       path: '/cart',
       component: cart
-    },{
+    },
+    {
       path: "/member",
       component: memberAside,
       redirect: "/member/information",
@@ -54,7 +56,8 @@ const routes = [
         },
       ]
     }]
-  }, {
+  }, 
+  {
     path: '/management',
     component: adminHeader,
     children: [{
