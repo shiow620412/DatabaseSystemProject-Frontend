@@ -1,5 +1,5 @@
 export default {
-    changeIsAdminChinese,changeStatusChinese,clickEdit
+    changeIsAdminChinese,changeStatusChinese,clickSave
 }
 
 function changeIsAdminChinese(num) {
@@ -16,6 +16,6 @@ function changeStatusChinese(num) {
         return '停權'
     }
 }
-function clickEdit(index, row) {
-    console.log(index, row);
+function clickSave(index) {
+    console.log(index);
 }
