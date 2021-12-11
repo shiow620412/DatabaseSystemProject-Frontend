@@ -80,7 +80,7 @@ export default {
                 total: 100,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }, {
                 orderID: 2,
                 memberID: 2,
@@ -88,7 +88,7 @@ export default {
                 total: 300,
                 paymentMethod: 'COD',
                 orderStatus: 2,
-                chick: false
+                click: false
             }, {
                 orderID: 3,
                 memberID: 3,
@@ -96,7 +96,7 @@ export default {
                 total: 1000,
                 paymentMethod: 'COD',
                 orderStatus: 2,
-                chick: false
+                click: false
             }, {
                 orderID: 4,
                 memberID: 4,
@@ -104,7 +104,7 @@ export default {
                 total: 5000,
                 paymentMethod: 'card',
                 orderStatus: 3,
-                chick: false
+                click: false
             }, {
                 orderID: 5,
                 memberID: 5,
@@ -112,7 +112,7 @@ export default {
                 total: 3000,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }, {
                 orderID: 6,
                 memberID: 5,
@@ -120,7 +120,7 @@ export default {
                 total: 3000,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }, {
                 orderID: 7,
                 memberID: 5,
@@ -128,7 +128,7 @@ export default {
                 total: 3000,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }, {
                 orderID: 8,
                 memberID: 5,
@@ -136,7 +136,7 @@ export default {
                 total: 3000,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }, {
                 orderID: 9,
                 memberID: 5,
@@ -144,7 +144,7 @@ export default {
                 total: 3000,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }, {
                 orderID: 10,
                 memberID: 5,
@@ -152,7 +152,7 @@ export default {
                 total: 3000,
                 paymentMethod: 'card',
                 orderStatus: 1,
-                chick: false
+                click: false
             }],
         }
     },

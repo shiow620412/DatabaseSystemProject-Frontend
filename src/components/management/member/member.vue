@@ -93,7 +93,7 @@ export default {
                 email: 'adm01@gmail.com',
                 isAdmin: 1,
                 status: 1,
-                chick: false
+                click: false
             }, {
                 memberID: 2,
                 name: 'test01',
@@ -101,7 +101,7 @@ export default {
                 email: 'test01@gmail.com',
                 isAdmin: 0,
                 status: 0,
-                chick: false
+                click: false
             }, {
                 memberID: 3,
                 name: 'admin02',
@@ -109,7 +109,7 @@ export default {
                 email: 'admin02@gmail.com',
                 isAdmin: 1,
                 status: 0,
-                chick: false
+                click: false
             }, {
                 memberID: 4,
                 name: 'admin03',
@@ -117,7 +117,7 @@ export default {
                 email: 'admin03@gmail.com',
                 isAdmin: 1,
                 status: 1,
-                chick: false
+                click: false
             }, {
                 memberID: 5,
                 name: 'test02',
@@ -125,7 +125,7 @@ export default {
                 email: 'test02@gmail.com',
                 isAdmin: 0,
                 status: 0,
-                chick: false
+                click: false
             }, {
                 memberID: 6,
                 name: 'test03',
@@ -133,7 +133,7 @@ export default {
                 email: 'test03@gmail.com',
                 isAdmin: 0,
                 status: 1,
-                chick: false
+                click: false
             }, {
                 memberID: 7,
                 name: 'test07',
@@ -141,7 +141,7 @@ export default {
                 email: 'test07@gmail.com',
                 isAdmin: 0,
                 status: 1,
-                chick: false
+                click: false
             }, {
                 memberID: 8,
                 name: 'admin08',
@@ -149,7 +149,7 @@ export default {
                 email: 'admin08@gmail.com',
                 isAdmin: 1,
                 status: 0,
-                chick: false
+                click: false
             }]
         }
     },
