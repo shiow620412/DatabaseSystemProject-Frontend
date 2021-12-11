@@ -1,24 +1,7 @@
 export default {
-    setIndex,deleteProduct,addToPayArray,changeIsAdminChinese,clickEdit,changeStatusChinese
+    changeStatusChinese,clickSave
 }
 
-function setIndex(num) {
-    this.deleteIndex = num;
-}
-function deleteProduct() {
-    this.productArray.splice(this.deleteIndex, 1);
-    this.dialogVisible = false;
-}
-function addToPayArray(val) {
-    this.productOfChecked = val;
-}
-function changeIsAdminChinese(num) {
-    if (num === 1) {
-        return '是';
-    } else {
-        return '否';
-    }
-}
 function changeStatusChinese(num) {
     if (num === 1) {
         return '確認中'
@@ -28,6 +11,6 @@ function changeStatusChinese(num) {
         return '訂單取消'
     }
 }
-function clickEdit(index, row) {
-    console.log(index, row);
+function clickSave(index) {
+    console.log(index);
 }
