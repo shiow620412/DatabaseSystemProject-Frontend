@@ -1,6 +1,6 @@
 import http from "./service.config";
 
-const prefix = "products";
+const prefix = "/products";
 const services = {
     getProducts
 }
