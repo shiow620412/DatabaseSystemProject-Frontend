@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import subject from '../subject/subject.vue'
+    import subject from '../subject/subject.vue'
+    import productService from "../../services/product.service"
     export default {
         name: 'category',
         components: {
@@ -17,19 +18,31 @@ import subject from '../subject/subject.vue'
         },
         data(){
             return{
-                testTable:[
+                testTable: [
                     {
-                        name: "tom"
+                        date: '2016-05-03',
+                        name: 'Tom',
+                        address: 'No. 189, Grove St, Los Angeles',
+                        stock: 10
                     },
                     {
-                        name: "amy"
+                        date: '2016-05-02',
+                        name: 'Tom',
+                        address: 'No. 189, Grove St, Los Angeles',
+                        stock: 16
                     },
                     {
-                        name: "hi"
+                        date: '2016-05-04',
+                        name: 'Tom',
+                        address: 'No. 189, Grove St, Los Angeles',
+                        stock: 3
                     },
                     {
-                        name: "132"
-                    },
+                        date: '2016-05-01',
+                        name: 'Tom',
+                        address: 'No. 189, Grove St, Los Angeles',
+                        stock: 56
+                    }
                 ],
                 category_type: [
                 {
@@ -53,6 +66,11 @@ import subject from '../subject/subject.vue'
                     name: "生活用品"
                 },]
             }
+        },
+        mounted(){
+            productService.getProducts().then(data => {
+                this.testTable = data
+            })
         }
     }
 </script>

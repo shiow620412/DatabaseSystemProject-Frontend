@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import userService from "../../services/user.service"
 export default {
     name: 'top',
     data() {
@@ -97,6 +98,12 @@ export default {
           }
         });
       },
+    },
+    mounted(){
+      console.log("123");
+      userService.login("admin","staff").then(data =>{
+        localStorage.setItem("token", data.token)
+      })
     }
   };
 </script>
