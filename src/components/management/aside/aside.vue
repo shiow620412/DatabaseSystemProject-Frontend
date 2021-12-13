@@ -5,7 +5,7 @@
             <el-text style="font-size: 35px;color: #ffffff;">管理員系統</el-text>
         </div>
         <div align="center" v-for="(item, index) in buttonArray" :key=index>
-            <el-button :class="(item.click === 0) ? 'aside-button' : 'aside-button-click'" style="width: 37vh;height: 10vh;font-size: 20px;" @click="simulationMenu(index) & this.$router.push(item.link)">
+            <el-button :class="(item.click === 0) ? 'aside-button' : 'aside-button-click'" style="width: 100%;height: 10vh;font-size: 20px;" @click="simulationMenu(index) & this.$router.push(item.link)">
                 <span style="text-align: center" :class="item.icon">{{ item.name }}</span>
             </el-button>
         </div>
