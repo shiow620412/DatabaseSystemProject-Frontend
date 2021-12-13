@@ -17,7 +17,7 @@
                 </el-table-column>
             </el-table>
         </div>
-        <el-dialog v-model="isAddShow" title="新增信用卡" width="30%">
+        <el-dialog v-model="isAddShow" title="新增信用卡" width="22%">
             <el-form :model="form">
                 <el-form-item label="卡號">
                     <el-input v-model="form.number" autocomplete="off"></el-input>
@@ -125,8 +125,8 @@
                 this.currentClick = index;
                 this.form.number = this.tableData[this.currentClick].number;
                 this.form.safeCode = this.tableData[this.currentClick].safeCode;
-                this.form.year = this.tableData[this.currentClick].number;
-                this.form.month = this.tableData[this.currentClick].number;
+                this.form.year = this.tableData[this.currentClick].deadline.split('/')[0];
+                this.form.month = this.tableData[this.currentClick].deadline.split('/')[1];
             },
             handleDelete(index) {
                 if(confirm('確認刪除?')){
