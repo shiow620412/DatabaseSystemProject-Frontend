@@ -41,7 +41,7 @@
     </el-col>
     <el-col :span="3"></el-col>
   </el-row>
-  <el-row>
+  <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="product-detail">
       <div v-html="content"></div>
