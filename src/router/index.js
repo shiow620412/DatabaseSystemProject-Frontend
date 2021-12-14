@@ -14,21 +14,23 @@ const routes = [
   {
     path: '',
     component: indexHeader,
-    children: [{
+    children: [
+      {
       path: '',
       alias: '/index',
       component: index
-    },
-    {
-      path: '/product',
-      component: Product
-    },
-    {
-      path: '/cart',
-      component: cart
-    }]
+      },
+      {
+        path: '/product',
+        component: Product
+      },
+      {
+        path: '/cart',
+        component: cart
+      },
+      memberRouter
+    ]
   },
-  memberRouter,
   managementRouter,
   identifyRouter
 ]
