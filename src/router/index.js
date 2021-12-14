@@ -7,12 +7,17 @@ import Product from '../components/product/product.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 import indexHeader from "../components/header/header.vue";
 import memberAside from '../components/member/aside/aside.vue';
-import adminHeader from '../view/management.vue';
-import member from '../components/management/member/member.vue';
 import creditCard from '../components/member/creditcard/creditcard.vue'
 import information from "../components/member/information/information.vue";
 import order from "../components/member/order/order.vue";
 import password from '../components/member/changePassword/changePassword.vue'
+
+import managementPage from '../view/management.vue';
+import mainManagement from '../components/management/main/main.vue';
+import memberManagement from '../components/management/member/member.vue';
+import orderManagement from '../components/management/order/order.vue';
+import productManagement from '../components/management/product/product.vue'
+
 import identifyRouter from "./identify.router";
 const routes = [
   {
@@ -57,10 +62,19 @@ const routes = [
   }, 
   {
     path: '/management',
-    component: adminHeader,
+    component: managementPage,
     children: [{
+      path: 'main',
+      component: mainManagement
+    }, {
       path: 'member',
-      component: member
+      component: memberManagement
+    }, {
+      path: 'order',
+      component: orderManagement
+    }, {
+      path: 'product',
+      component: productManagement
     }]
   },
   identifyRouter
