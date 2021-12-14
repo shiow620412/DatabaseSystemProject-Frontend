@@ -121,6 +121,10 @@
       /*test(){
         this.$router.push({path: '/'});
       }*/
+      mounted(){
+        console.log("");
+        
+      },
     }
   };
 </script>
