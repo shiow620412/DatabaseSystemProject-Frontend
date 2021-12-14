@@ -7,6 +7,11 @@
                         <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
                     </div>
                 </el-col>
+                <el-col :span="3">
+                    <div>
+                        <!-- layout-margin -->
+                    </div>
+                </el-col>
             </el-row>
         </el-col>
         <el-col :span="10" class="input-position">
@@ -64,6 +69,8 @@
         background-color: #FAEDA7; 
     }
     .shoppingCart-position{
+        top: 33px;
+        left: 10px;
         position: relative;
         top: 25px;
         right: -30px;
@@ -74,7 +81,7 @@
     }
     .shoppingCart-image:hover{
         transform: scale(1.2);
-    } 
+    }
     .register-position{
         position: relative;
         font-size: 18px;
