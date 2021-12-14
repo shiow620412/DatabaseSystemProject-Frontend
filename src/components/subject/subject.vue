@@ -6,10 +6,9 @@
             <div>
                 <p>{{i.name}}</p>
             </div>
-            <el-button type="text" class="button">Operating</el-button>
+            <p style="color: red;">$ {{i.price}}</p>
         </el-card></a>
     </div>
-    <p>{{testTable.length}}</p>
 </template>
 
 <script>
@@ -59,8 +58,8 @@
 
 <style>
     .subject-div-content{
-        width: 75%;
-        margin: 10px auto;
+        background-color: #EFFFE4;
+        height: 800px;
     }
     .subject-image{
         width: 100%;
@@ -76,6 +75,6 @@
     .return-top-button{
         position: fixed;
         left: 1380px;
-        top: 100px;
+        top: 50px;
     }
 </style>

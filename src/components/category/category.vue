@@ -1,11 +1,28 @@
 <template>
     <div class="category-div-content">
-        <div v-for="index in category_type" :key="index" style="display: inline-block;margin-left: 20px;">
-            <el-button class="category-button"><img :src="index.photo" style="width: 100%;"></el-button>
-            <p>{{index.name}}</p>
+        <div v-for="index in category_type" :key="index" style="display: inline-block;margin-left: 50px;">
+            <router-link to="/"><img :src="index.photo" style="width: 50px;height: 50px;margin: auto auto;"></router-link>
+            <p class="category-p">{{index.name}}</p>
         </div>
     </div>
-    <subject :testTable="testTable"/>
+    <el-row>
+        <el-col :span="4" style="background-color: #E4FFD3;height: 800px;">
+            <div style="width: 90%;margin: auto auto;">
+                <p style="position: positive;left: -20px;">> 新上市</p>
+                <p>> 有貨優先</p>
+                <p>> 價錢低到高</p>
+                <p>> 價錢高到低</p>
+                <el-row>
+                    <el-col :span="1"><div class="grid-content bg-purple"></div></el-col>
+                    <el-col :span="8"><div class="grid-content bg-purple"></div><el-input v-model="input1" /></el-col>
+                    <el-col :span="6"><div class="grid-content bg-purple-light">~</div></el-col>
+                    <el-col :span="8"><div class="grid-content bg-purple"></div><el-input v-model="input2" /></el-col>
+                    <el-col :span="1"><div class="grid-content bg-purple"></div></el-col>
+                </el-row>
+            </div>
+        </el-col>
+        <el-col :span="20"><div class=""><subject :testTable="testTable"/></div></el-col>
+    </el-row>
 </template>
 
 <script>
@@ -15,20 +32,53 @@ import subject from '../subject/subject.vue'
         components: {
             subject
         },
+        methods: {
+            
+        },
         data(){
             return{
+                input1: "",
+                input2: "",
                 testTable:[
                     {
-                        name: "tom"
+                        name: "tom",
+                        price: 100
                     },
                     {
-                        name: "amy"
+                        name: "tom",
+                        price: 100
                     },
                     {
-                        name: "hi"
+                        name: "karma",
+                        price: 1827
                     },
                     {
-                        name: "132"
+                        name: "amy",
+                        price: 100
+                    },
+                    {
+                        name: "hi",
+                        price: 100
+                    },
+                    {
+                        name: "132",
+                        price: 100
+                    },
+                    {
+                        name: "tom",
+                        price: 100
+                    },
+                    {
+                        name: "tom",
+                        price: 100
+                    },
+                    {
+                        name: "tom",
+                        price: 100
+                    },
+                    {
+                        name: "tom",
+                        price: 100
                     },
                 ],
                 category_type: [
@@ -45,7 +95,7 @@ import subject from '../subject/subject.vue'
                     name: "服裝"
                 },
                 {
-                    photo: require("../../assets/category4.jpg"),
+                    photo: require("../../assets/category4.png"),
                     name: "電腦"
                 },
                 {

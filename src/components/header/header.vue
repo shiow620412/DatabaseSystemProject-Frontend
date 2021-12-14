@@ -2,12 +2,7 @@
     <el-row class="top">
         <el-col :span="7">
             <el-row>
-                <el-col :span="5">
-                    <div>
-                        <!-- layout-margin -->
-                    </div>
-                </el-col>
-                <el-col :span="16">
+                <el-col :span="24">
                     <div>
                         <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
                     </div>
@@ -32,13 +27,12 @@
             <el-row>
                 <el-col :span="8">
                     <div>
-                       <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link> 
-
+                        <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link>
                     </div>
                 </el-col>
                 <el-col :span="16">
                     <div>
-                        <router-link to="/identify" class="register-position">登入|註冊</router-link>
+                        <router-link to="/login" class="register-position">登入|註冊</router-link>
                         <router-link to="/member" class="member-position">會員中心</router-link>
                     </div>
                 </el-col>
@@ -69,43 +63,43 @@
 
 <style>
     .top{
-        height: 120px;
+        height: 100px;
         width: 100%;
-        z-index: 9999;
-        background: #FAEDA7;
+        z-index: 2;
+        background-color: #FAEDA7; 
     }
     .shoppingCart-position{
         top: 33px;
         left: 10px;
         position: relative;
+        top: 25px;
+        right: -30px;
     }
     .shoppingCart-image{
         transition: 0.5s;
-        width: 28%;
+        width: 30%;
     }
     .shoppingCart-image:hover{
         transform: scale(1.2);
     }
     .register-position{
         position: relative;
+        font-size: 18px;
         top: 10px;
-        color: white;
+        color: #8851FC;
     }
     .member-position{
         position: relative;
+        font-size: 18px;
         top: 10px;
-        left: 20px;
-        color: white;
+        left: 10px;
+        color: #8851FC;
     }
     .input-position{
         margin: auto auto;
     }
-    .search-button{
-        
-    }
     .home-image{
-        width: 48%;
-        transform:translateY(55%);
-        
+        width: 40%;
+        transform:translateY(20%);
     }
 </style>
