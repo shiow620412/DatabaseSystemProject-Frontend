@@ -16,7 +16,38 @@
                 顯示出所有商品
                 修改商品(可以刪除商品跟改變商品狀態)
                 #需要加上換頁面或是無窮無窮滾動 -->
-                <el-button @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two')">編輯</el-button>
+                <!-- <el-button @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two')">編輯</el-button> -->
+
+                <div style="margin-bottom: 10px" align="right">
+                    <el-text style="font-size: 18px;font-weight: bold">搜尋: &nbsp;&nbsp;</el-text>
+                    <el-input style="width: 250px" placeholder="Search" class="search" v-model="search"></el-input>
+                </div>
+                <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'memberID' }" row-style="height: 10vh" max-height="490">
+                    <el-table-column prop="productID" label="商品ID" min-width="15%" align="center" sortable></el-table-column>
+                    <el-table-column prop="productName" label="商品名稱" min-width="25%" align="center" sortable></el-table-column>
+                    <el-table-column label="商品圖片" min-width="25%" align="center">
+                        <template #default="scope">
+                            <!-- <div class="image"><img :src="scope.row.photo"></div> -->
+                            <div class="demo-image__preview">
+                                <el-image style="width: 100px; height: 100px" :src="scope.row.photo" :preview-src-list="srcList" :initial-index="1">
+                                </el-image>
+                            </div>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="price" label="商品價格" min-width="25%" align="center"></el-table-column>
+                    <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
+                    <el-table-column label="操作" min-width="13%" align="center">
+                        <template #default="scope">
+                            <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two')" v-show="!scope.row.click">編輯</el-button>
+                            <el-button size="mini" @click="(scope.row.click = false) & clickSave(scope.$index)" v-show="scope.row.click">儲存</el-button>
+                            <!-- <el-button size="mini" @click="clickEdit(scope.$index, scope.row) & (this.isSave = true) & (this.isEdit = false) & (this.isDelete = true)" v-show="this.isEdit">編輯</el-button>
+                            <el-button size="mini" @click="(this.isSave = false) & (this.isEdit = true) & (this.isDelete = false)" v-show="this.isSave">儲存</el-button> -->
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
+                </el-pagination>
+
             </el-tab-pane>
             <el-tab-pane label="two" name="two" :disabled="!this.allowEdit">
                 <template #label>
@@ -61,7 +92,7 @@
                 <el-row>
                     <el-col :span="3"></el-col>
                     <el-col :span="18">
-                        <el-button style="width: auto" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
@@ -90,7 +121,7 @@
                             </el-col>
                             <el-col :span="6">
                                 <div class="pro_input_quantity">
-                                    <el-input-number v-model="num" @change="handleChange" :min="1" label="描述文字" disabled>
+                                    <el-input-number v-model="num" @change="handleChange" :min="1" :max=product.stock label="描述文字">
                                     </el-input-number>
                                 </div>
                             </el-col>
@@ -144,6 +175,49 @@ export default {
             readOnly: true,
             tabPosition: 'first',
             num: 1,
+            productArray: [{
+                productID: 0,
+                productName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
+                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                price: 515,
+                stock: 10,
+                describe: "txt url"
+            }, {
+                productID: 1,
+                productName: "商品1",
+                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                price: 515,
+                stock: 10,
+                describe: "txt url"
+            }, {
+                productID: 2,
+                productName: "商品2",
+                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                price: 515,
+                stock: 10,
+                describe: "txt url"
+            }, {
+                productID: 3,
+                productName: "商品3",
+                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                price: 515,
+                stock: 10,
+                describe: "txt url"
+            }, {
+                productID: 4,
+                productName: "商品4",
+                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                price: 515,
+                stock: 10,
+                describe: "txt url"
+            }, {
+                productID: 5,
+                productName: "商品5",
+                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                price: 515,
+                stock: 10,
+                describe: "txt url"
+            }],
             product: {
                 name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
                 price: 515,
@@ -158,6 +232,19 @@ export default {
         }
     },
     methods: productController,
+    computed: {
+        tables: function () {
+            var search = this.search;
+            if (search) {
+                return this.productArray.filter(function (dataNews) {
+                    return Object.keys(dataNews).some(function (key) {
+                        return String(dataNews[key]).toLowerCase().indexOf(search) > -1
+                    })
+                })
+            }
+            return this.productArray
+        }
+    }
 }
 </script>
 
