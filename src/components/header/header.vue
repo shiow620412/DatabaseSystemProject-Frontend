@@ -2,12 +2,7 @@
     <el-row class="top">
         <el-col :span="7">
             <el-row>
-                <el-col :span="10">
-                    <div>
-                        <!-- layout-margin -->
-                    </div>
-                </el-col>
-                <el-col :span="14">
+                <el-col :span="24">
                     <div>
                         <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
                     </div>
@@ -25,16 +20,15 @@
         </el-col>
         <el-col :span="7">
             <el-row>
-                <el-col :span="14">
+                <el-col :span="8">
                     <div>
-                        <router-link to="/login" class="register-position">登入|註冊</router-link>
-                        <router-link to="/member" class="member-position">會員中心</router-link>
                         <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link>
                     </div>
                 </el-col>
-                <el-col :span="10">
+                <el-col :span="16">
                     <div>
-                        <!-- layout-margin -->
+                        <router-link to="/login" class="register-position">登入|註冊</router-link>
+                        <router-link to="/member" class="member-position">會員中心</router-link>
                     </div>
                 </el-col>
             </el-row>
@@ -71,37 +65,34 @@
     }
     .shoppingCart-position{
         position: relative;
-        top: 40px;
-        right: 70px;
+        top: 25px;
+        right: -30px;
     }
     .shoppingCart-image{
         transition: 0.5s;
-        width: 15%;
+        width: 30%;
     }
     .shoppingCart-image:hover{
         transform: scale(1.2);
     } 
     .register-position{
         position: relative;
-        font-size: 15px;
-        top: -20px;
-        color: red;
+        font-size: 18px;
+        top: 10px;
+        color: #8851FC;
     }
     .member-position{
         position: relative;
-        font-size: 15px;
-        top: -20px;
-        left: 20px;
-        color: red;
+        font-size: 18px;
+        top: 10px;
+        left: 10px;
+        color: #8851FC;
     }
     .input-position{
         margin: auto auto;
     }
-    .search-button{
-        
-    }
     .home-image{
-        width: 70%;
+        width: 40%;
         transform:translateY(20%);
     }
 </style>

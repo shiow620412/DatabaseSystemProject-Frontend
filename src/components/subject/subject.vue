@@ -59,6 +59,7 @@
 <style>
     .subject-div-content{
         background-color: #EFFFE4;
+        height: 800px;
     }
     .subject-image{
         width: 100%;

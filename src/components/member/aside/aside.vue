@@ -30,7 +30,7 @@
             </router-link>
         </el-col>
         <el-col :span="14">
-            <div class=""><router-view/></div>
+            <div><router-view/></div>
         </el-col>
         <el-col :span="2">
             <div class=""></div>
