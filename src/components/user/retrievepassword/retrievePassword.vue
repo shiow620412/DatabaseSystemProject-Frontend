@@ -22,7 +22,13 @@
                         </el-col>
                         <el-col :span="3"></el-col>
                     </el-row>
-
+                    <el-row class="checkin_frame">
+                        <el-col :span="4"></el-col>
+                        <el-col :span="17">
+                            <el-button class="checkin" type="primary" @click="submitForm('ruleForm')">登入</el-button>
+                        </el-col>
+                        <el-col :span="3"></el-col>
+                    </el-row>
                 </el-main>
             </el-container>
         </el-col>
@@ -102,7 +108,7 @@
     .retrievePass_frame {
         position: relative;
         top: 100px;
-        height: 400px;
+        height: 350px;
         background-color: #FFF389;
     }
 
@@ -113,6 +119,16 @@
     }
 
     .email_frame {
-        margin-top: 30px;
+        margin-top: 50px;
+    }
+
+    .checkin_frame {
+      margin-top: 10px;
+    }
+
+    .checkin {
+        width: 100%;
+        color: #2C5F14;
+        background-color: #a4ff67;
     }
 </style>

@@ -5,7 +5,7 @@
       <el-container>
         <el-header>
           <div class="register_text">
-            <h3>登入會員</h3>
+            <h3>註冊會員</h3>
           </div>
         </el-header>
         <el-main>

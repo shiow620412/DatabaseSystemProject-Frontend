@@ -14,7 +14,7 @@
               <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="account_frame">
                 <el-form-item prop="account" label="帳號" :rules="[
                   { required: true, message: '請輸入帳號', trigger: 'blur' },
-                  { type: 'account', message: '請輸入正確的帳號', trigger: ['blur', 'change'] }
+                   { type: 'account', message: '請輸入正確的信箱', trigger: ['blur', 'change'] }
                 ]">
                   <el-input v-model="dynamicValidateForm.account"></el-input>
                 </el-form-item>
@@ -35,7 +35,7 @@
           <el-row class="checkin_frame">
             <el-col :span="4"></el-col>
             <el-col :span="17">
-              <el-button class="checkin" type="primary" @click="submitForm('ruleForm')">登入</el-button>
+              <el-button class="checkin" type="primary" @click="submitForm()">登入</el-button>
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
@@ -64,6 +64,24 @@
     </el-col>
     <el-col :span="7"></el-col>
   </el-row>
+  <!---
+  <el-form
+    :label-position="labelPosition"
+    label-width="100px"
+    :model="formLabelAlign"
+  >
+    <el-form-item label="Name">
+      <el-input v-model="formLabelAlign.name"></el-input>
+    </el-form-item>
+    <el-form-item label="Activity zone">
+      <el-input v-model="formLabelAlign.region"></el-input>
+    </el-form-item>
+    <el-form-item label="Activity form">
+      <el-input v-model="formLabelAlign.type"></el-input>
+    </el-form-item>
+  </el-form>
+  <button @click="test()">165654</button>
+  -->
 </template>
 
 <script>
@@ -73,56 +91,36 @@
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('請輸入密碼'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('請再次輸入密碼'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('兩次輸入不一致!'));
-        } else {
-          callback();
-        }
+        } 
       };
       return {
+        /*labelPosition: 'right',
+        formLabelAlign: {
+          name: '',
+          region: '',
+          type: '',
+        },*/
         ruleForm: {
           pass: '',
-          checkPass: '',
         },
         rules: {
           pass: [{
             validator: validatePass,
             trigger: 'blur'
-          }],
-          checkPass: [{
-            validator: validatePass2,
-            trigger: 'blur'
-          }],
+          }]
         },
         dynamicValidateForm: {
-          domains: [{
-            value: ''
-          }],
-          email: ''
+          account: ''
         },
       };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+      submitForm() {
+        this.$router.push({path: '/'});
       },
+      /*test(){
+        this.$router.push({path: '/'});
+      }*/
     }
   };
 </script>
