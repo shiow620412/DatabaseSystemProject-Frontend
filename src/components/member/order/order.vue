@@ -4,7 +4,7 @@
         <el-table :data="tableData" style="width: 100%;">
             <el-table-column type="expand">
                 <template #default="props">
-                    <p v-for="i in props.row.product" :key="i">{{i.name}} x {{i.stock}}</p>
+                    <p v-for="i in props.row.product" :key="i">{{i.name}} x {{i.quantity}}</p>
                     <el-button size="mini" type="danger" @click="handleDelete(props.$index)">Delete</el-button>
                 </template>
             </el-table-column>
@@ -33,11 +33,11 @@
                     product: [
                         {
                             name: "apple",
-                            stock: 3,
+                            quantity: 3,
                         },
                         {
                             name: "orange",
-                            stock: 30,
+                            quantity: 30,
                         },
                     ],
                 },
@@ -49,11 +49,11 @@
                     product: [
                         {
                             name: "banana",
-                            stock: 5,
+                            quantity: 5,
                         },
                         {
                             name: "grape",
-                            stock: 20,
+                            quantity: 20,
                         },
                     ],
                 }

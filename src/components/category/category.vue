@@ -1,11 +1,14 @@
 <template>
     <div class="category-div-content">
-        <div v-for="index in category_type" :key="index" style="display: inline-block;margin-left: 20px;">
-            <el-button class="category-button"><img :src="index.photo" style="width: 100%;"></el-button>
-            <p>{{index.name}}</p>
+        <div v-for="index in category_type" :key="index" style="display: inline-block;margin-left: 50px;">
+            <router-link to="/"><img :src="index.photo" style="width: 50px;height: 50px;margin: auto auto;">
+            <p>{{index.name}}</p></router-link>
         </div>
     </div>
-    <subject :testTable="testTable"/>
+    <el-row>
+        <el-col :span="6"><div class="" style="background-color: #E4FFD3;height: 800px;">123</div></el-col>
+        <el-col :span="18"><div class=""><subject :testTable="testTable"/></div></el-col>
+    </el-row>
 </template>
 
 <script>
@@ -15,20 +18,27 @@ import subject from '../subject/subject.vue'
         components: {
             subject
         },
+        methods: {
+            
+        },
         data(){
             return{
                 testTable:[
                     {
-                        name: "tom"
+                        name: "tom",
+                        price: 100
                     },
                     {
-                        name: "amy"
+                        name: "amy",
+                        price: 100
                     },
                     {
-                        name: "hi"
+                        name: "hi",
+                        price: 100
                     },
                     {
-                        name: "132"
+                        name: "132",
+                        price: 100
                     },
                 ],
                 category_type: [
@@ -45,7 +55,7 @@ import subject from '../subject/subject.vue'
                     name: "服裝"
                 },
                 {
-                    photo: require("../../assets/category4.jpg"),
+                    photo: require("../../assets/category4.png"),
                     name: "電腦"
                 },
                 {

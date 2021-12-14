@@ -1,17 +1,19 @@
 .category-div-content{
-    background-color: #F8F8F8;
-    height: 150px;
+    background-color: #D0FAB7;
+    height: 100px;
     padding-top: 25px;
     text-align: center;
 }
 .category-button{
-    width: 80px;
-    height: 80px;
+    width: 50px;
+    height: 50px;
 }
 .category-button:hover{
     transform: scale(1.2);
 }
 p{
+    position: relative;
+    bottom: 15px;
     text-align: center;
-    margin-bottom: 20px;
+    color: black;
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="information-div-content">
-        <h2 style="margin: auto auto">我的個人檔案</h2><hr>
+        <p style="margin: auto auto">我的個人檔案</p><hr>
         <el-descriptions class="margin-top" :column="1" size="medium" border>
             <template #extra>
             <el-button type="primary" size="medium" @click="clickEdit()">修改</el-button>
@@ -8,28 +8,28 @@
             <el-descriptions-item>
             <template #label>
                 <el-icon><user /></el-icon>
-                Username
+                姓名
             </template>
             {{userInfo.name}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
                 <el-icon><iphone /></el-icon>
-                Telephone
+                電話
             </template>
             {{userInfo.celephone}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
                 <el-icon><Message /></el-icon>
-                e-mail
+                信箱
             </template>
             {{userInfo.email}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
                 <el-icon><office-building /></el-icon>
-                Address
+                住址
             </template>
             {{userInfo.address}}
             </el-descriptions-item>

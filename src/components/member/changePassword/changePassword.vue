@@ -1,6 +1,6 @@
 <template>
     <div class="password-div-content">
-        <h2 style="margin: auto auto">修改密碼</h2><hr>
+        <p style="margin: auto auto">修改密碼</p><hr>
         <el-form :label-position="labelPosition" label-width="100px">
             <el-form-item label="原來密碼">
                 <el-input v-model="PasswordformLabelAlign.originPassword"></el-input>

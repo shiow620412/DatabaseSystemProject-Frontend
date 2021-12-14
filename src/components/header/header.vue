@@ -64,33 +64,35 @@
 
 <style>
     .top{
-        height: 150px;
+        height: 100px;
         width: 100%;
         z-index: 2;
-        background: -webkit-linear-gradient(#FDC000,#FD5200);
+        background-color: #FAEDA7; 
     }
     .shoppingCart-position{
         position: relative;
-        top: 80px;
-        right: 90px;
+        top: 40px;
+        right: 70px;
     }
     .shoppingCart-image{
         transition: 0.5s;
-        width: 20%;
+        width: 15%;
     }
     .shoppingCart-image:hover{
         transform: scale(1.2);
     } 
     .register-position{
         position: relative;
+        font-size: 15px;
         top: -20px;
-        color: white;
+        color: red;
     }
     .member-position{
         position: relative;
+        font-size: 15px;
         top: -20px;
         left: 20px;
-        color: white;
+        color: red;
     }
     .input-position{
         margin: auto auto;
@@ -100,6 +102,6 @@
     }
     .home-image{
         width: 70%;
-        transform:translateY(50%);
+        transform:translateY(20%);
     }
 </style>
