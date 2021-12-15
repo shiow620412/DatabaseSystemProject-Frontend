@@ -1,8 +1,8 @@
 <template>
     <div class="category-div-content">
-        <div v-for="index in category_type" :key="index" style="display: inline-block;margin-left: 50px;">
-            <router-link to="/"><img :src="index.photo" style="width: 50px;height: 50px;margin: auto auto;"></router-link>
-            <p class="category-p">{{index.name}}</p>
+        <div v-for="(i,index) in category_type" :key="index" style="display: inline-block;margin-left: 50px;">
+            <router-link to="/" @click="OnSelectProduct(index)"><img :src="i.photo" style="width: 50px;height: 50px;margin: auto auto;"></router-link>
+            <p class="category-p">{{i.name}}</p>
         </div>
     </div>
     <el-row>
@@ -21,88 +21,58 @@
                 </el-row>
             </div>
         </el-col>
-        <el-col :span="20"><div class=""><subject :testTable="testTable"/></div></el-col>
+        <el-col :span="20"><div class=""><subject :getTable="inputTable"/></div></el-col>
     </el-row>
 </template>
 
 <script>
 import subject from '../subject/subject.vue'
+import productService from "../../services/product.service"
+import CategoryController from './category.controller'
     export default {
         name: 'category',
         components: {
             subject
         },
-        methods: {
-            
-        },
+        methods: CategoryController,
         data(){
             return{
+                category: 0,
                 input1: "",
                 input2: "",
-                testTable:[
-                    {
-                        name: "tom",
-                        price: 100
-                    },
-                    {
-                        name: "tom",
-                        price: 100
-                    },
-                    {
-                        name: "karma",
-                        price: 1827
-                    },
-                    {
-                        name: "amy",
-                        price: 100
-                    },
-                    {
-                        name: "hi",
-                        price: 100
-                    },
-                    {
-                        name: "132",
-                        price: 100
-                    },
-                    {
-                        name: "tom",
-                        price: 100
-                    },
-                    {
-                        name: "tom",
-                        price: 100
-                    },
-                    {
-                        name: "tom",
-                        price: 100
-                    },
-                    {
-                        name: "tom",
-                        price: 100
-                    },
-                ],
+                inputTable:[],
                 category_type: [
-                {
-                    photo: require("../../assets/category1.png"),
-                    name: "熱銷"
-                },
-                {
-                    photo: require("../../assets/category2.png"),
-                    name: "食品"
-                },
-                {
-                    photo: require("../../assets/category3.png"),
-                    name: "服裝"
-                },
-                {
-                    photo: require("../../assets/category4.png"),
-                    name: "電腦"
-                },
-                {
-                    photo: require("../../assets/category5.png"),
-                    name: "生活用品"
-                },]
+                    {
+                        photo: require("../../assets/category1.png"),
+                        name: "水果"
+                    },
+                    {
+                        photo: require("../../assets/category2.png"),
+                        name: "食品"
+                    },
+                    {
+                        photo: require("../../assets/category3.png"),
+                        name: "電腦"
+                    },
+                    {
+                        photo: require("../../assets/category4.png"),
+                        name: "衣服"
+                    },
+                    {
+                        photo: require("../../assets/category5.png"),
+                        name: "日用品"
+                    },
+                    {
+                        photo: require("../../assets/category6.png"),
+                        name: "飲料"
+                    },
+                ]
             }
+        },
+        mounted(){
+            productService.getProducts().then(data => {
+                this.ResolveOverlongString(data);
+            })
         }
     }
 </script>

@@ -1,4 +1,3 @@
-
 import managementPage from '../view/management.vue';
 import mainManagement from '../components/management/main/main.vue';
 import memberManagement from '../components/management/member/member.vue';

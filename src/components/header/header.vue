@@ -32,8 +32,8 @@
                 </el-col>
                 <el-col :span="16">
                     <div>
-                        <router-link to="/login" class="register-position">登入|註冊</router-link>
-                        <router-link to="/member" class="member-position">會員中心</router-link>
+                        <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入|註冊</font></router-link>
+                        <router-link to="/member" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
                     </div>
                 </el-col>
             </el-row>
@@ -86,14 +86,14 @@
         position: relative;
         font-size: 18px;
         top: 10px;
-        color: #8851FC;
+        color: #F97E13;
     }
     .member-position{
         position: relative;
         font-size: 18px;
         top: 10px;
         left: 10px;
-        color: #8851FC;
+        color: #F97E13;
     }
     .input-position{
         margin: auto auto;
