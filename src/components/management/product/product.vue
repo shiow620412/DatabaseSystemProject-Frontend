@@ -40,8 +40,6 @@
                         <template #default="scope">
                             <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two')" v-show="!scope.row.click">編輯</el-button>
                             <el-button size="mini" @click="(scope.row.click = false) & clickSave(scope.$index)" v-show="scope.row.click">儲存</el-button>
-                            <!-- <el-button size="mini" @click="clickEdit(scope.$index, scope.row) & (this.isSave = true) & (this.isEdit = false) & (this.isDelete = true)" v-show="this.isEdit">編輯</el-button>
-                            <el-button size="mini" @click="(this.isSave = false) & (this.isEdit = true) & (this.isDelete = false)" v-show="this.isSave">儲存</el-button> -->
                         </template>
                     </el-table-column>
                 </el-table>
@@ -58,12 +56,12 @@
                 <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
-                        <div class="image"><img src="http://www.am1470.com/data/activities/4988_747715_1.jpg"></div>
+                        <div class="image"><img style="width: 100%;height: 100%" src="http://www.am1470.com/data/activities/4988_747715_1.jpg"></div>
                     </el-col>
 
                     <el-col :span="11" class="pro_intro">
-                        <div class="pro_name" style="text-align: center;">
-                            <el-input v-model="this.product.name" placeholder="請輸入商品名稱"></el-input>
+                        <div style="text-align: center;">
+                            <h1>商品名稱:&nbsp;&nbsp;<el-input v-model="this.product.name" placeholder="請輸入商品名稱" size="small" style="width: auto"></el-input></h1>
                         </div>
                         <el-row class="row_three">
 
@@ -105,12 +103,12 @@
                     </el-col>
                     <el-col :span="11" class="pro_intro">
                         <div class="pro_name">
-                            <h3>{{this.product.name}}</h3>
+                            <h3>{{ this.product.name }}</h3>
                         </div>
                         <el-row class="row_three">
                             <el-col :span="9">
                                 <div class="pro_price">
-                                    <h1>TWD {{this.product.price}}</h1>
+                                    <h1>TWD {{ this.product.price }}</h1>
                                 </div>
                             </el-col>
                             <el-col :span="15"></el-col>
@@ -121,12 +119,12 @@
                             </el-col>
                             <el-col :span="6">
                                 <div class="pro_input_quantity">
-                                    <el-input-number v-model="num" @change="handleChange" :min="1" :max=product.stock label="描述文字">
+                                    <el-input-number v-model="this.num" @change="handleChange" :min="1" :max="this.product.stock" label="描述文字">
                                     </el-input-number>
                                 </div>
                             </el-col>
                             <el-col :span="6">
-                                <div class="the_rest_of"><span>還剩下{{product.stock}}個</span></div>
+                                <div class="the_rest_of"><span>還剩下{{this.product.stock}}個</span></div>
                             </el-col>
                             <el-col :span="6"></el-col>
                         </el-row>
