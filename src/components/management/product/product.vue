@@ -12,25 +12,13 @@
                         選擇商品
                     </span>
                 </template>
-                <!-- 可以搜尋商品
-                顯示出所有商品
-                修改商品(可以刪除商品跟改變商品狀態)
-                #需要加上換頁面或是無窮無窮滾動 -->
-                <!-- <el-button @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two')">編輯</el-button> -->
-
                 <el-row style="margin-bottom: 10px">
                     <el-col :span="12" align="left">
-                        <!-- <span style="margin-bottom: 10px;display:flex; justify-content: left;"> -->
-                        <!-- <div style="width: 100%;height: 100%;" align="center"> -->
                         <el-button style="height: 100%;width: 25%" size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('add') & addProduct()">新增商品</el-button>
-                        <!-- </div> -->
-                        <!-- </span> -->
                     </el-col>
                     <el-col :span="12" align="right">
-                        <!-- <span style="margin-bottom: 10px;display:flex; justify-content: right;"> -->
                         <el-text style="font-size: 18px;font-weight: bold">搜尋: &nbsp;&nbsp;</el-text>
                         <el-input style="width: 250px" placeholder="Search" class="search" v-model="search"></el-input>
-                        <!-- </span> -->
                     </el-col>
                 </el-row>
                 <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'memberID' }" row-style="height: 10vh" max-height="450">
@@ -38,7 +26,6 @@
                     <el-table-column prop="productName" label="商品名稱" min-width="25%" align="center" sortable></el-table-column>
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
-                            <!-- <div class="image"><img :src="scope.row.photo"></div> -->
                             <div class="demo-image__preview">
                                 <el-image style="width: 100px; height: 100px" :src="scope.row.photo" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
@@ -68,26 +55,31 @@
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
                         <div class="image"><img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo"></div>
+                        <el-button style="width: 100%" @click="clickPhoto(this.index)">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
                     </el-col>
 
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: center;">
-                            <h1>商品名稱:&nbsp;&nbsp;<el-input v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" style="width: auto"></el-input>
+                            <h1>商品名稱:&nbsp;&nbsp;<textarea v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" style="width: auto"></textarea>
                             </h1>
                         </div>
-                        <el-row class="row_three">
-
-                            <h1>商品價格:&nbsp;&nbsp;</h1>
-                            <h1>TWD <el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格" size="small" style="width: auto" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                        <!-- <el-row class="row_three"> -->
+                        <div style="text-align: center;">
+                            <h1>商品價格:&nbsp;&nbsp;
+                                <span>TWD </span>
+                                <el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格" size="small" style="width: auto" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
-                        </el-row>
-                        <el-row class="row_three">
+                        </div>
+                        <!-- </el-row> -->
+                        <!-- <el-row class="row_three"> -->
+                        <div style="text-align: center;">
                             <h1>剩餘數量:&nbsp;&nbsp;
                                 <el-input v-model="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: auto" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
                                 </el-input>
                             </h1>
-                        </el-row>
+                            </div>
+                        <!-- </el-row> -->
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
@@ -101,9 +93,14 @@
                 </el-row>
                 <el-row>
                     <el-col :span="3"></el-col>
-                    <el-col :span="18">
-                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave() & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
+                    <!-- <el-col :span="18"> -->
+                    <el-col :span="9">
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickCancel(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">取消</el-button>
                     </el-col>
+                    <el-col :span="9">
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
+                    </el-col>
+                    <!-- </el-col> -->
                     <el-col :span="3"></el-col>
                 </el-row>
 

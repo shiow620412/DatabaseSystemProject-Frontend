@@ -2,7 +2,9 @@ export default {
     checkButton,
     addProduct,
     editProduct,
+    clickCancel,
     clickSave,
+    clickPhoto,
     checkPrice,
     checkStock
 }
@@ -32,18 +34,26 @@ function editProduct(num, item) {
     this.index = num;
 }
 
+function clickCancel(num) {
+    console.log(num);
+}
+
 function clickSave(num) {
+    console.log(num);
+}
+
+function clickPhoto(num) {
     console.log(num)
 }
 
 function checkPrice(num) {
     if (num < 0) {
-        this.operationProduct.price = 0
+        this.operationProduct.price = 0;
     }
 }
 
 function checkStock(num) {
     if (num < 0) {
-        this.operationProduct.stock = 0
+        this.operationProduct.stock = 0;
     }
 }
