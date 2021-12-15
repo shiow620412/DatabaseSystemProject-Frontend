@@ -5,7 +5,7 @@
                 <el-col :span="5"></el-col>
                 <el-col :span="16">
                     <div>
-                        <router-link to="/"><img class="home-image" src="../assets/logo.png" alt=""></router-link>
+                        <router-link to="/"><img class="login_logo" src="../assets/logo.png" alt=""></router-link>
                     </div>
                 </el-col>
                 <el-col :span="3"></el-col>
@@ -26,6 +26,6 @@
     }
     .login_logo{
         width: 48%;
-        transform:translateY(55%);
+        transform:translateY(40%);
     }
 </style>

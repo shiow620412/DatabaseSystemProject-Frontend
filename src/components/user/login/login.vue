@@ -139,6 +139,7 @@
 
   .login_frame {
     position: relative;
+    border-radius: 20px;
     top: 70px;
     height: 450px;
     background-color: #FFF389;

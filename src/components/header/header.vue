@@ -32,7 +32,7 @@
                 </el-col>
                 <el-col :span="16">
                     <div>
-                        <router-link to="/login" class="register-position">登入|註冊</router-link>
+                        <router-link to="/identify/login" class="register-position">登入|註冊</router-link>
                         <router-link to="/member" class="member-position">會員中心</router-link>
                     </div>
                 </el-col>

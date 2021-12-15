@@ -155,6 +155,7 @@
     position: relative;
     top: 30px;
     height: 520px;
+    border-radius: 20px;
     background-color: #FFF389;
   }
 
