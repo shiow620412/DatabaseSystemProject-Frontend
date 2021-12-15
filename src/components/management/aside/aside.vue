@@ -1,6 +1,6 @@
 <template>
 <el-container>
-    <el-aside width="300px" style="background-color: #545c64; height: 100vh;">
+    <el-aside width="300px" style="background-color: #545c64;">
         <div style="margin-top: 15px;margin-bottom: 10px;">
             <el-text style="font-size: 35px;color: #ffffff;">管理員系統</el-text>
         </div>
