@@ -21,7 +21,7 @@
                 </el-row>
             </div>
         </el-col>
-        <el-col :span="20"><div class=""><subject :getTable="inputTable"/></div></el-col>
+        <el-col :span="20"><div class=""><subject :getTable="inputTable" @custom-event-trigger="RequestNewPage"/></div></el-col>
     </el-row>
 </template>
 
@@ -37,6 +37,8 @@ import CategoryController from './category.controller'
         methods: CategoryController,
         data(){
             return{
+                max_page: 0,
+                current_page: 1,
                 category: 0,
                 input1: "",
                 input2: "",
@@ -71,7 +73,7 @@ import CategoryController from './category.controller'
         },
         mounted(){
             productService.getProducts().then(data => {
-                this.ResolveOverlongString(data);
+                this.ResolveOverlongString(data, 0);
             })
         }
     }

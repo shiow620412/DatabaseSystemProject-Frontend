@@ -1,4 +1,5 @@
 <template>
+    <ul v-infinite-scroll="load" style="margin-block-start: 0em;padding-inline-start: 0px;">
     <a href="#max-height"><el-button type="info" class="return-top-button">回到頂部</el-button></a> 
     <div class="subject-div-content">
         <a href="https://www.youtube.com/"><el-card class="card" v-for="i in getTable" :key="i" id="max-height">
@@ -9,6 +10,7 @@
             <p style="color: red;">$ {{i.Price}}</p>
         </el-card></a>
     </div>
+    </ul>
 </template>
 
 <script>
@@ -18,10 +20,12 @@
             
         },
         methods: {
-            
+            load(){
+                this.$emit('custom-event-trigger')
+            }
         },
         props:{
-            getTable: Array
+            getTable: Array,
         },
         data() {
             return {
