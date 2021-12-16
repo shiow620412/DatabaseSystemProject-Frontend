@@ -3,6 +3,31 @@
   margin-bottom: 20px;
 }
 
+.pro_name_textarea_div {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  flex-flow: row wrap;
+}
+
+.pro_name_textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  height: 100px;
+  max-height: 100px;
+  min-height: 100px;
+  border: 1px solid #DCDCDC;
+}
+
+.pro_info_div {
+  height: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  flex-flow: row wrap;
+}
+
 .product-briefing {
   margin-top: 20px;
 }
@@ -11,6 +36,7 @@
   background-color: #ffffff;
   margin-left: auto;
   margin-right: auto;
+  flex-flow: row wrap;
 }
 
 .image {
@@ -45,14 +71,20 @@
   font-size: 14pt;
   margin-top: 8px;
   font-weight: bold;
+  flex-flow: row wrap;
+  text-align: center;
 }
 
 .pro_input_quantity {
-  margin-left: 2%;
+  margin-top: 8px;
+  flex-flow: row wrap;
+  text-align: center;
 }
 
 .the_rest_of {
   margin: 10px;
+  flex-flow: row wrap;
+  text-align: center;
 }
 
 .add_procar {
@@ -65,4 +97,30 @@
   background-color: #ffffff;
   margin-top: 40px;
   margin-bottom: 40px;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+.avatar-uploader-icon svg {
+  margin-top: 74px; /* (178px - 28px) / 2 - 1px */
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }

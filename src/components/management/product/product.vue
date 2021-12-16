@@ -42,7 +42,6 @@
                 </el-table>
                 <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
                 </el-pagination>
-
             </el-tab-pane>
             <el-tab-pane label="two" name="two" :disabled="!this.allowEdit">
                 <template #label>
@@ -54,32 +53,35 @@
                 <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
-                        <div class="image"><img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo"></div>
-                        <el-button style="width: 100%" @click="clickPhoto(this.index)">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
+                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" limit="1" :on-success="handleAvatarSuccess" :on-remove="handleRemove" :on-progress="checkImg" :on-exceed="handleExceed">
+                            <div class="image" v-if="this.productArray[this.index].photo">
+                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo" />
+                            </div>
+                            <div class="image" v-else>
+                                <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
+                            </div>
+                            <el-button style="width: 100%" @click="clickPhoto(this.index)">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
+                        </el-upload>
                     </el-col>
 
                     <el-col :span="11" class="pro_intro">
-                        <div style="text-align: center;">
-                            <h1>商品名稱:&nbsp;&nbsp;<textarea v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" style="width: auto"></textarea>
+                        <div style="text-align: left;" class="pro_name_textarea_div">
+                            <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" style="width: 100%;max-height: 100px;"></el-input> -->
+                            <h1>商品名稱:&nbsp;&nbsp;<textarea v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea"></textarea>
                             </h1>
                         </div>
-                        <!-- <el-row class="row_three"> -->
-                        <div style="text-align: center;">
+                        <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
-                                <span>TWD </span>
-                                <el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格" size="small" style="width: auto" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                                <span style="font-weight: normal;">NT$</span><el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
-                        <!-- </el-row> -->
-                        <!-- <el-row class="row_three"> -->
-                        <div style="text-align: center;">
+                        <div style="text-align: left;" class="pro_info_div">
                             <h1>剩餘數量:&nbsp;&nbsp;
-                                <el-input v-model="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: auto" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
+                                <el-input v-model="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
                                 </el-input>
                             </h1>
-                            </div>
-                        <!-- </el-row> -->
+                        </div>
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
@@ -93,14 +95,9 @@
                 </el-row>
                 <el-row>
                     <el-col :span="3"></el-col>
-                    <!-- <el-col :span="18"> -->
-                    <el-col :span="9">
-                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickCancel(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">取消</el-button>
-                    </el-col>
-                    <el-col :span="9">
+                    <el-col :span="18">
                         <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
                     </el-col>
-                    <!-- </el-col> -->
                     <el-col :span="3"></el-col>
                 </el-row>
 
@@ -123,19 +120,17 @@
                             <el-col :span="15"></el-col>
                         </el-row>
                         <el-row class="row_three">
-                            <el-col :span="6">
+                            <el-col :span="8">
                                 <div class="quantity_text"><span>數量</span></div>
                             </el-col>
-                            <el-col :span="6">
+                            <el-col :span="8">
                                 <div class="pro_input_quantity">
-                                    <el-input-number v-model="num" @change="handleChange" :min="1" :max="this.productArray[this.index].stock" label="描述文字">
-                                    </el-input-number>
+                                    <el-input-number style="width: 100%" size="small" v-model="num" @change="handleChange" :min="1" :max="this.productArray[this.index].stock" label="描述文字" />
                                 </div>
                             </el-col>
-                            <el-col :span="6">
+                            <el-col :span="8">
                                 <div class="the_rest_of"><span>還剩下{{ this.productArray[this.index].stock }}個</span></div>
                             </el-col>
-                            <el-col :span="6"></el-col>
                         </el-row>
                         <el-row class="add_procar">
                             <el-col :span="4"></el-col>

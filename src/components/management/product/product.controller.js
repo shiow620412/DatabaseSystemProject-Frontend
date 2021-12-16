@@ -6,7 +6,11 @@ export default {
     clickSave,
     clickPhoto,
     checkPrice,
-    checkStock
+    checkStock,
+    handleAvatarSuccess,
+    handleRemove,
+    checkImg,
+    handleExceed,
 }
 
 function checkButton(clickButton) {
@@ -36,6 +40,7 @@ function editProduct(num, item) {
 
 function clickCancel(num) {
     console.log(num);
+    this.previewImage = null;
 }
 
 function clickSave(num) {
@@ -56,4 +61,28 @@ function checkStock(num) {
     if (num < 0) {
         this.operationProduct.stock = 0;
     }
+}
+
+function handleAvatarSuccess(res, file) {
+    this.imageUrl = URL.createObjectURL(file.raw);
+    this.productArray[this.index].photo = URL.createObjectURL(file.raw);
+}
+
+function handleRemove(file, fileList) {
+    console.log(file, fileList);
+    this.imageUrl = '';
+    this.productArray[this.index].photo = '';
+}
+
+function checkImg() {
+    if (this.productArray[this.index].photo !== '') {
+        console.log('error')
+    }
+}
+
+function handleExceed(files, fileList) {
+    console.log(files, fileList);
+    this.$message.warning (
+        `只能夠上傳一張照片`
+    )
 }
