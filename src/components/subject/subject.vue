@@ -1,6 +1,6 @@
 <template>
     <ul v-infinite-scroll="load" style="margin-block-start: 0em;padding-inline-start: 0px;">
-    <a href="#max-height"><el-button type="info" class="return-top-button">回到頂部</el-button></a> 
+    <a href="#max-height"><el-button type="info" class="return-top-button el-icon-upload2"><p>TOP</p></el-button></a> 
     <div class="subject-div-content">
         <a href="https://www.youtube.com/"><el-card class="card" v-for="i in getTable" :key="i" id="max-height">
             <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="subject-image"/>
@@ -78,8 +78,8 @@
     }
     .return-top-button{
         position: fixed;
-        left: 1380px;
-        top: 50px;
+        left: 1440px;
+        top: 0px;
         background-color: #E4FFD3;
         color: black;
     }

@@ -3,12 +3,6 @@ import productService from '../../services/product.service'
 export default {
     ResolveOverlongString,
     OnSelectProduct,
-    OnfruitSelected,
-    OnfoodSelected,
-    OncomputerSelected,
-    OnclotheSelected,
-    OnSuppliesSelected,
-    OndrinkSelected,
     RequestNewPage,
 }
 
@@ -36,74 +30,12 @@ function ResolveOverlongString(input, action){
     }
 }
 
-// 搜尋所有商品
 function OnSelectProduct(order){
-    switch(order){
-        case 0:
-            this.OnfruitSelected();
-            break;
-        case 1:
-            this.OnfoodSelected();
-            break;
-        case 2:
-            this.OncomputerSelected();
-            break;
-        case 3:
-            this.OnclotheSelected();
-            break;
-        case 4:
-            this.OnSuppliesSelected();
-            break;
-        case 5:
-            this.OndrinkSelected();
-            break;
-        default:
-            break;
-    }
+    productService.getProductsBycategory(order).then(data => {
+        this.ResolveOverlongString(data, 0);
+    })
     this.category = order;
     this.current_page = 1;
-}
-
-// 搜尋水果商品
-function OnfruitSelected(){
-    productService.getProductsByfruit().then(data => {
-        this.ResolveOverlongString(data, 0);
-    })
-}
-
-// 搜尋食品商品
-function OnfoodSelected(){
-    productService.getProductsByfood().then(data => {
-        this.ResolveOverlongString(data, 0);
-    })
-}
-
-// 搜尋電腦商品
-function OncomputerSelected(){
-    productService.getProductsBycomputer().then(data => {
-        this.ResolveOverlongString(data, 0);
-    })
-}
-
-// 搜尋衣服商品
-function OnclotheSelected(){
-    productService.getProductsByclothe().then(data => {
-        this.ResolveOverlongString(data, 0);
-    })
-}
-
-// 搜尋日常用品商品
-function OnSuppliesSelected(){
-    productService.getProductsBySupplies().then(data => {
-        this.ResolveOverlongString(data, 0);
-    })
-}
-
-// 搜尋飲料商品
-function OndrinkSelected(){
-    productService.getProductsBydrink().then(data => {
-        this.ResolveOverlongString(data, 0);
-    })
 }
 
 function RequestNewPage(){
