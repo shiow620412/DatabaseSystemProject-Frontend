@@ -60,17 +60,18 @@
       return {
         content: "<p>123</p>",
         num: 1,
-        product: {
-          picture: require("../../assets/al.jpg"),
-          name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-          price: 515,
-          stock: 10,
-          describe: {
-            src1: "文字敘述",
-            src2: "http:www...",
-            src3: "Image"
-          }
-        },
+        // product: {
+        //   picture: require("../../assets/al.jpg"),
+        //   name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
+        //   price: 515,
+        //   stock: 10,
+        //   describe: {
+        //     src1: "文字敘述",
+        //     src2: "http:www...",
+        //     src3: "Image"
+        //   }
+        // },
+        product: this.accept,
         // product: {
         //   picture: this.acceptPhoto,
         //   name: this.acceptName,

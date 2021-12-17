@@ -67,12 +67,13 @@
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
                             <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" :acceptName="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
-                            <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
+                                <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
                             </h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
-                                <span style="font-weight: normal;">NT$</span><el-input v-model="this.productArray[this.index].price" :acceptPrice="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                                <span style="font-weight: normal;">NT$</span>
+                                <el-input v-model="this.productArray[this.index].price" :acceptPrice="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
@@ -102,8 +103,9 @@
                     <el-col :span="3"></el-col>
                 </el-row>
 
-                <p style="color: black;font-size: 25px;font-weight: bold;" :accept="testData">商品詳情頁面模擬</p>
-                <productPage />
+                <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
+                <productPage :accept="this.productArray[this.index]" />
+                <!-- <productPage :acceptPhoto="this.productArray[this.index].photo" :acceptName="this.productArray[this.index].productName" :acceptPrice="this.productArray[this.index].price" :acceptStock="this.productArray[this.index].stock" :acceptDescription="this.productArray[this.index].description" /> -->
                 <!-- <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
@@ -158,7 +160,9 @@
 </template>
 
 <script>
-import { VueEditor } from 'vue3-editor';
+import {
+    VueEditor
+} from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
 // import imageService from '../../../services/image.service'
