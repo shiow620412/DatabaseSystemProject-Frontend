@@ -104,7 +104,7 @@
                 </el-row>
 
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <productPage :accept="this.productArray[this.index]" />
+                <productPage :product="this.productArray[this.index]" />
                 <!-- <productPage :acceptPhoto="this.productArray[this.index].photo" :acceptName="this.productArray[this.index].productName" :acceptPrice="this.productArray[this.index].price" :acceptStock="this.productArray[this.index].stock" :acceptDescription="this.productArray[this.index].description" /> -->
                 <!-- <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
@@ -220,8 +220,8 @@ export default {
                 productID: 5,
                 productName: "商品5",
                 photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
+                price: 1000,
+                stock: 1,
                 description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
             }],
             operationProduct: {
