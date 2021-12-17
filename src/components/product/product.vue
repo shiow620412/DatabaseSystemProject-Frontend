@@ -8,6 +8,7 @@
       <div class="pro_name">
         <h3>{{this.product.name}}</h3>
       </div>
+      <p>{{ accept }}</p>
       <el-row class="row_three">
         <el-col :span="9">
           <div class="pro_price">
@@ -53,6 +54,8 @@
 <script>
   export default {
     name: 'top',
+    // props: ["acceptPhoto","acceptName","acceptPrice","acceptStock","acceptDescription"],
+    props: ["accept"],
     data() {
       return {
         content: "<p>123</p>",
@@ -68,6 +71,13 @@
             src3: "Image"
           }
         },
+        // product: {
+        //   picture: this.acceptPhoto,
+        //   name: this.acceptName,
+        //   price: this.props.acceptPrice,
+        //   stock: this.props.acceptStock,
+        //   describe: this.props.acceptDescription
+        // }
       };
     },
     methods: {

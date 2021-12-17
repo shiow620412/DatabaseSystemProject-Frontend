@@ -1,3 +1,4 @@
+import imageService from '../../../services/image.service'
 export default {
     checkButton,
     addProduct,
@@ -11,6 +12,7 @@ export default {
     handleRemove,
     checkImg,
     handleExceed,
+    handleImageAdded
 }
 
 function checkButton(clickButton) {
@@ -85,4 +87,15 @@ function handleExceed(files, fileList) {
     this.$message.warning (
         `只能夠上傳一張照片`
     )
+}
+
+function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    imageService.uploadImage(formData).then((result) => {
+        const url = result.imageUrl;
+        Editor.insertEmbed(cursorLocation, "image", url);
+        resetUploader();
+    });
 }

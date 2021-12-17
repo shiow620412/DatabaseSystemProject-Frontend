@@ -55,7 +55,7 @@
                     <el-col :span="7" class="pro_Image">
                         <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" limit="1" :on-success="handleAvatarSuccess" :on-remove="handleRemove" :on-progress="checkImg" :on-exceed="handleExceed">
                             <div class="image" v-if="this.productArray[this.index].photo">
-                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo" />
+                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo" :acceptPhoto="this.productArray[this.index].photo" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
@@ -66,19 +66,19 @@
 
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
-                            <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" style="width: 100%;max-height: 100px;"></el-input> -->
-                            <h1>商品名稱:&nbsp;&nbsp;<textarea v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea"></textarea>
+                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" :acceptName="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
+                            <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
                             </h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
-                                <span style="font-weight: normal;">NT$</span><el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                                <span style="font-weight: normal;">NT$</span><el-input v-model="this.productArray[this.index].price" :acceptPrice="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>剩餘數量:&nbsp;&nbsp;
-                                <el-input v-model="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
+                                <el-input v-model="this.productArray[this.index].stock" :acceptStock="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
                                 </el-input>
                             </h1>
                         </div>
@@ -88,7 +88,8 @@
                 <el-row>
                     <el-col :span="3"></el-col>
                     <el-col :span="18" class="product-detail">
-                        <vue-editor v-model="this.productArray[this.index].description"></vue-editor>
+                        <vue-editor v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor>
+                        <!-- <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor> -->
                         <!-- <div v-text="this.productArray[this.index].description"></div> -->
                     </el-col>
                     <el-col :span="3"></el-col>
@@ -101,8 +102,9 @@
                     <el-col :span="3"></el-col>
                 </el-row>
 
-                <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <el-row class="product-briefing">
+                <p style="color: black;font-size: 25px;font-weight: bold;" :accept="testData">商品詳情頁面模擬</p>
+                <productPage />
+                <!-- <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
                         <div class="image"><img :src="this.productArray[this.index].photo"></div>
@@ -148,7 +150,7 @@
                         <div class="ql-editor" v-html="this.productArray[this.index].description"></div>
                     </el-col>
                     <el-col :span="3"></el-col>
-                </el-row>
+                </el-row> -->
             </el-tab-pane>
         </el-tabs>
     </el-main>
@@ -156,14 +158,15 @@
 </template>
 
 <script>
-import {
-    VueEditor
-} from 'vue3-editor';
-import productController from './product.controller.js'
+import { VueEditor } from 'vue3-editor';
+import productController from './product.controller';
+import productPage from '../../product/product.vue';
+// import imageService from '../../../services/image.service'
 export default {
     name: 'product',
     components: {
         VueEditor,
+        productPage,
     },
     data() {
         return {
@@ -225,6 +228,7 @@ export default {
                 stock: 0,
                 description: ''
             },
+            testData: "Test send data"
         }
     },
     methods: productController,
@@ -240,7 +244,12 @@ export default {
             }
             return this.productArray
         }
-    }
+    },
+    // mounted() {
+    //     imageService.getImage().then(data => {
+    //         this.ResolveOverlongString(data, 0);
+    //     })
+    // }
 }
 </script>
 

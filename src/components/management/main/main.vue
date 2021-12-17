@@ -27,6 +27,7 @@
 </template>
 
 <script>
+// ref link: https://github.com/J-T-McC/vue3-chartjs
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
 export default {
     name: 'main',
