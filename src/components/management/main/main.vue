@@ -10,6 +10,7 @@
     <el-main>
         <el-row :gutter="12" justify="center">
             <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
+                <router-link :to="item.link">
                 <el-card shadow="always">
                     <!-- <span :class="item.icon" class="image"></span> -->
                     <vue3-chart-js v-bind="{ ...item.chartData }" />
@@ -20,6 +21,7 @@
                         </div> -->
                     </div>
                 </el-card>
+                </router-link>
             </el-col>
         </el-row>
     </el-main>
@@ -78,16 +80,19 @@ export default {
     data() {
         return {
             ArrayList: [{
+                link: '/management/member',
                 icon: 'el-icon-user',
                 chartData: this.memberNumber,
                 name: '會員管理',
                 doc: '正常會員：3 \n 停權會員：2'
             }, {
+                link: '/management/order',
                 icon: 'el-icon-s-order',
                 chartData: this.orderNumber,
                 name: '訂單管理',
                 doc: '交易完成：2 \n 交易取消：1 \n 確認中：2'
             }, {
+                link: 'product',
                 icon: 'el-icon-shopping-bag-2',
                 chartData: this.product,
                 name: '商品管理',
