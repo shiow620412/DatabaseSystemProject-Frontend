@@ -66,7 +66,7 @@
                     <span class="total-price-title">合計：</span>
                     <span class="total-price">{{ getTotalPrice }}元</span>
                 </span>
-                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</el-button>
+                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'" @click="test">結帳</el-button>
             </div>
         </div>
     </div>
