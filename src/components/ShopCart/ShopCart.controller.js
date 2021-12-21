@@ -1,5 +1,5 @@
 export default {
-    setIndex,deleteProduct,addToPayArray,test
+    setIndex,deleteProduct,addToPayArray
 }
 
 function setIndex(num) {
@@ -11,7 +11,4 @@ function deleteProduct() {
 }
 function addToPayArray(val) {999
     this.productOfChecked = val;
-}
-function test() {
-    console.log(this.productOfChecked);
 }

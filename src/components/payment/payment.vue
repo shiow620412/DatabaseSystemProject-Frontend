@@ -13,7 +13,7 @@
     </el-row>
   </el-container> -->
 
-  <div class="content">
+  <div class="content" @sendData="getProductArray">
     <ul>
       <el-table width="100%" :data="dataTable" :header-cell-style="{background:'#FCA96D',color:'#000000'}">
         <el-table-column label="商品圖片" min-width="10%" align="center">
@@ -38,7 +38,7 @@
       <el-col :span="14"></el-col>
       <el-col :span="6">運費</el-col>
       <el-col :span="4">
-        <span class="freight_text" >$ {{ dataTable[0].freight }}</span>
+        <span class="freight_text" >$ {{ this.freight }}</span>
       </el-col>
     </el-row>
     <el-row> 
@@ -47,7 +47,7 @@
         <span class="total-price-title">合計</span>
       </el-col>
       <el-col :span="4">
-        <span class="total-price">{{ getTotalPrice + this.dataTable[0].freight }} 元</span>
+        <span class="total-price">{{ getTotalPrice + this.freight }} 元</span>
       </el-col>
     </el-row>
     <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">下訂單</el-button>    
@@ -67,8 +67,12 @@
 <script>
   export default {
     name: 'payment',
+    // props: {
+    //   dataTable: Array
+    // },
     data() {
       return {
+        freight: 80,
         totalPice:[],
         dataTable: [{
             productID: 1,
@@ -98,8 +102,11 @@
     computed: {
       getTotalPrice() {
         return this.dataTable.reduce((x, y) => x + y.price * y.quantity, 0)
+      },
+      getCheckQuantity() {
+        return this.dataTable.reduce((x, y) => x + y.quantity, 0)
       }
-    }
+    },
   };
 </script>
 
