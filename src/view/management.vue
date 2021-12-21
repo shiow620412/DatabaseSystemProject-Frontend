@@ -1,6 +1,5 @@
 <template>
 <div class="adminPage">
-    <ManagementHeader />
     <ManagementAside />
 </div>
 </template>
