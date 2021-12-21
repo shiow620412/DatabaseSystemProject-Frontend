@@ -11,16 +11,16 @@
         <el-row :gutter="12" justify="center">
             <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
                 <router-link :to="item.link">
-                <el-card shadow="always">
-                    <!-- <span :class="item.icon" class="image"></span> -->
-                    <vue3-chart-js v-bind="{ ...item.chartData }" />
-                    <div style="padding: 14px">
-                        <span style="font-weight: bold;font-size: 25px;margin-top: 20px;">{{ item.name }}</span>
-                        <!-- <div>
+                    <el-card shadow="always">
+                        <!-- <span :class="item.icon" class="image"></span> -->
+                        <vue3-chart-js v-bind="{ ...item.chartData }" />
+                        <div style="padding: 14px">
+                            <span style="font-weight: bold;font-size: 25px;margin-top: 20px;">{{ item.name }}</span>
+                            <!-- <div>
                             {{ item.doc }}
                         </div> -->
-                    </div>
-                </el-card>
+                        </div>
+                    </el-card>
                 </router-link>
             </el-col>
         </el-row>
@@ -42,7 +42,7 @@ export default {
             data: {
                 labels: ["正常", "停權"],
                 datasets: [{
-                    backgroundColor: ["rgb(127,255,0)","rgb(255,77,64)"],
+                    backgroundColor: ["rgb(127,255,0)", "rgb(255,77,64)"],
                     data: [3, 2]
                 }, ],
             },
