@@ -13,7 +13,7 @@
     </el-row>
   </el-container> -->
 
-  <div class="content" @sendData="getProductArray">
+  <div class="content">
     <ul>
       <el-table width="100%" :data="dataTable" :header-cell-style="{background:'#FCA96D',color:'#000000'}">
         <el-table-column label="商品圖片" min-width="10%" align="center">
@@ -50,7 +50,7 @@
         <span class="total-price">{{ getTotalPrice + this.freight }} 元</span>
       </el-col>
     </el-row>
-    <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">下訂單</el-button>    
+    <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">下訂單</el-button>
 
   </div>
   <!--
@@ -67,9 +67,6 @@
 <script>
   export default {
     name: 'payment',
-    // props: {
-    //   dataTable: Array
-    // },
     data() {
       return {
         freight: 80,
@@ -103,9 +100,9 @@
       getTotalPrice() {
         return this.dataTable.reduce((x, y) => x + y.price * y.quantity, 0)
       },
-      getCheckQuantity() {
-        return this.dataTable.reduce((x, y) => x + y.quantity, 0)
-      }
+      // getTest() {
+      //   return this.$route.query.dataTable;
+      // }
     },
   };
 </script>
