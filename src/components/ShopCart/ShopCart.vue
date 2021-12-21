@@ -12,7 +12,7 @@
     <div class="content" v-if="productArray.length > 0">
         <ul>
             <el-table :data="productArray" style="width: 100%;font-size: 15px" @selection-change="addToPayArray">
-                <el-table-column type="selection" label="選取" min-width="10%" align="center"></el-table-column>
+                <el-table-column type="selection" label="選取" min-width="10%" align="center" @change="test()"></el-table-column>
                 <el-table-column label="商品圖片" min-width="30%" align="center">
                     <template v-slot="scope">
                         <el-image :src="scope.row.photo"></el-image>
@@ -66,7 +66,7 @@
                     <span class="total-price-title">合計：</span>
                     <span class="total-price">{{ getTotalPrice }}元</span>
                 </span>
-                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</el-button>
+                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'" :disabled="this.productOfChecked.length === 0 ? true : false">結帳</el-button>
             </div>
         </div>
     </div>
