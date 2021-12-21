@@ -1,13 +1,16 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/api',
-  headers: { 'Content-Type': 'application/json' },
+    //   baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://prj.inf.saihs.edu.tw:8787/api',
+    headers: {
+        'Content-Type': 'application/json'
+    },
 })
 
 instance.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
-    if(token){
+    if (token) {
         config.headers.Authorization = `Bearer ${token}`
     }
     return config;

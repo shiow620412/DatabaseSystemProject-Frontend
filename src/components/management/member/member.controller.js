@@ -1,6 +1,9 @@
-import memberManagementService from '../../services/memberManagement.service'
+// import memberService from '../../../services/admin/user.service'
+
 export default {
-    changeIsAdminChinese,changeStatusChinese,clickSave
+    changeIsAdminChinese,
+    changeStatusChinese,
+    clickSave
 }
 
 function changeIsAdminChinese(num) {
@@ -10,6 +13,7 @@ function changeIsAdminChinese(num) {
         return '否';
     }
 }
+
 function changeStatusChinese(num) {
     if (num === 1) {
         return '正常'
@@ -17,7 +21,7 @@ function changeStatusChinese(num) {
         return '停權'
     }
 }
+
 function clickSave(index) {
     console.log(index);
-    console.log(memberManagementService);
 }
