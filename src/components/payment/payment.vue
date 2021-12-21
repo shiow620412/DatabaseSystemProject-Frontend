@@ -38,7 +38,7 @@
       <el-col :span="14"></el-col>
       <el-col :span="6">運費</el-col>
       <el-col :span="4">
-        <span class=>$ {{ dataTable[0].freight }}</span>
+        <span class="freight_text" >$ {{ dataTable[0].freight }}</span>
       </el-col>
     </el-row>
     <el-row> 
@@ -130,7 +130,7 @@
     color: #424242;
     line-height: 70px;
   }
-  .AA{
+  .freight_text{
     margin-left: 12%;
   }
   .total-price{
