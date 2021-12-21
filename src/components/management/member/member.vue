@@ -57,6 +57,7 @@ import {
     ref
 } from 'vue'
 import memberController from "./member.controller";
+// import memberManagementService from '../../services/memberManagement.service'
 export default {
     name: 'member',
     setup() {
@@ -166,6 +167,9 @@ export default {
             }
             return this.memberArray
         }
+    },
+    mounted() {
+        // memberManagementService.getMember
     }
 }
 </script>

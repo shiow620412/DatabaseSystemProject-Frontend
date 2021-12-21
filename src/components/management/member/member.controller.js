@@ -1,3 +1,4 @@
+import memberManagementService from '../../services/memberManagement.service'
 export default {
     changeIsAdminChinese,changeStatusChinese,clickSave
 }
@@ -18,4 +19,5 @@ function changeStatusChinese(num) {
 }
 function clickSave(index) {
     console.log(index);
+    console.log(memberManagementService);
 }
