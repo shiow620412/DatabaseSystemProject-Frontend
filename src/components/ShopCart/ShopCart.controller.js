@@ -4,6 +4,7 @@ export default {
 
 function setIndex(num) {
     this.deleteIndex = num;
+    this.dialogVisible = true;
 }
 function deleteProduct() {
     this.productArray.splice(this.deleteIndex, 1);
