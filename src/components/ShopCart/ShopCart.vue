@@ -12,7 +12,7 @@
     <div class="content" v-if="productArray.length > 0">
         <ul>
             <el-table :data="productArray" style="width: 100%;font-size: 15px" @selection-change="addToPayArray">
-                <el-table-column type="selection" label="選取" min-width="10%" align="center" @change="test()"></el-table-column>
+                <el-table-column type="selection" label="選取" min-width="10%" align="center"></el-table-column>
                 <el-table-column label="商品圖片" min-width="30%" align="center">
                     <template v-slot="scope">
                         <el-image :src="scope.row.photo"></el-image>
@@ -38,7 +38,7 @@
                     <template v-slot="scope">
                         <!-- <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="dialogVisible = true"></el-button> -->
                         <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="setIndex(scope.$index) & (dialogVisible = true)"></el-button>
-                        <el-dialog v-model="dialogVisible" width="30%">
+                        <!-- <el-dialog v-model="dialogVisible" width="30%">
                             <span>您確定要將此商品從購物車中移除嗎?</span>
                             <template #footer>
                                 <span class="dialog-footer">
@@ -46,10 +46,19 @@
                                     <el-button type="primary" @click="deleteProduct()">確定</el-button>
                                 </span>
                             </template>
-                        </el-dialog>
+                        </el-dialog> -->
                     </template>
                 </el-table-column>
             </el-table>
+            <el-dialog v-model="dialogVisible" title="Tips" width="30%">
+                <span>確定要刪除嗎?</span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button @click="dialogVisible = false">Cancel</el-button>
+                        <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+                    </span>
+                </template>
+            </el-dialog>
         </ul>
 
         <div style="height: 20px; background-color: #f5f5f5"></div>
