@@ -28,9 +28,18 @@ const routes = [
         path: '/cart',
         component: cart
       },
+      {
+        path:'/product/:id',
+        component: Product
+      },
+      {
+        path:'/category/:category',
+        component: index
+      },
       memberRouter
     ]
   },
+ 
   managementRouter,
   identifyRouter
 ]

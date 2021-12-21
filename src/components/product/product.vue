@@ -2,16 +2,16 @@
   <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="7" class="pro_Image">
-      <div class="image"><img :src="this.product.picture"></div>
+      <div class="image"><img src="../../assets/al.jpg"></div>
     </el-col>
     <el-col :span="11" class="pro_intro">
       <div class="pro_name">
-        <h3>{{this.product.name}}</h3>
+        <h3>{{this.product.ProductName}}</h3>
       </div>
       <el-row class="row_three">
         <el-col :span="9">
           <div class="pro_price">
-            <h1>NT$ {{this.product.price}}</h1>
+            <h1>$ {{this.product.Price}}</h1>
           </div>
         </el-col>
         <el-col :span="15"></el-col>
@@ -22,12 +22,12 @@
         </el-col>
         <el-col :span="6">
           <div class="pro_input_quantity">
-            <el-input-number v-model="num" @change="handleChange" :min="1" :max=product.stock label="描述文字">
+            <el-input-number v-model="num" @change="handleChange" :min="1" :max="this.product.Stock" label="描述文字">
             </el-input-number>
           </div>
         </el-col>
         <el-col :span="6">
-          <div class="the_rest_of"><span>還剩下{{product.stock}}個</span></div>
+          <div class="the_rest_of"><span>還剩下{{this.product.Stock}}個</span></div>
         </el-col>
         <el-col :span="6"></el-col>
       </el-row>
@@ -51,30 +51,26 @@
 </template>
 
 <script>
+import productService from "../../services/product.service"
   export default {
     name: 'top',
     data() {
       return {
         content: "<p>123</p>",
         num: 1,
-        product: {
-          picture: require("../../assets/al.jpg"),
-          name: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-          price: 515,
-          stock: 10,
-          describe: {
-            src1: "文字敘述",
-            src2: "http:www...",
-            src3: "Image"
-          }
-        },
+        product: {},
       };
     },
     methods: {
       handleChange(value) {
         console.log(value);
       }
-    }
+    },
+    mounted() {
+      productService.getProductdetail(this.$route.params.id).then(data => {
+          this.product = data;
+      })
+    },
   };
 </script>
 

@@ -2,14 +2,15 @@ import productService from '../../services/product.service'
 
 export default {
     ResolveOverlongString,
-    OnSelectProduct,
+    OnSelectCategoy,
     RequestNewPage,
+    changefilter
 }
 
 // 處理字串過長問題
 function ResolveOverlongString(input, action){
-    this.max_page = parseInt(input.numOfPage);
-    input.filterResult.forEach(element => {
+    this.max_page = parseInt(input.pages);
+    input.result.forEach(element => {
         if(element.ProductName.length>12){
             element.ProductName = element.ProductName.substr(0, 12)+"...";
         }else{
@@ -18,10 +19,10 @@ function ResolveOverlongString(input, action){
     });
     switch(action){
         case 0:
-            this.inputTable = input.filterResult;
+            this.inputTable = input.result;
             break;
         case 1:
-            input.filterResult.forEach(element => {
+            input.result.forEach(element => {
                 this.inputTable.push(element)
             });
             break;
@@ -30,8 +31,8 @@ function ResolveOverlongString(input, action){
     }
 }
 
-function OnSelectProduct(order){
-    productService.getProductsBycategory(order).then(data => {
+function OnSelectCategoy(order, filter, min, max){
+    productService.getProductsBycategory(order+1,filter, min, max).then(data => {
         this.ResolveOverlongString(data, 0);
     })
     this.category = order;
@@ -39,10 +40,26 @@ function OnSelectProduct(order){
 }
 
 function RequestNewPage(){
+    console.log("receive!");
     this.current_page += 1;
-    if(this.current_page < this.max_page){
-        productService.getNewProductPage(this.category, this.current_page).then(data => {
+    if(this.current_page <= this.max_page && this.category!=-1){
+        productService.getNewProductPage(this.category+1, this.current_page).then(data => {
             this.ResolveOverlongString(data, 1);
         })
     }
+    else if(this.current_page < this.max_page){
+        productService.getNewProductPage(this.category+1, this.current_page).then(data => {
+            this.ResolveOverlongString(data, 1);
+        })
+    }
+}
+
+function changefilter(input, min, max){
+    if(input[4]==='1'){
+        this.filter = this.filter.substr(0, 4)+'1';
+    }
+    else{
+        this.filter = input;
+    }
+    this.OnSelectCategoy(this.category, this.filter, min, max);
 }

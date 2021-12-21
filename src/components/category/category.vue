@@ -1,24 +1,25 @@
 <template>
     <div class="category-div-content">
-        <div v-for="(i,index) in category_type" :key="index" style="display: inline-block;margin-left: 50px;">
-            <router-link to="/" @click="OnSelectProduct(index)"><img :src="i.photo" style="width: 50px;height: 50px;margin: auto auto;"></router-link>
+        <div v-for="(i,index) in category_type" :key="i" style="display: inline-block;margin-left: 50px;">
+            <router-link :to="`/category/${index+1}`" @click="OnSelectCategoy(index, '00000')"><img :src="i.photo" style="width: 50px;height: 50px;margin: auto auto;"></router-link>
             <p class="category-p">{{i.name}}</p>
         </div>
     </div>
     <el-row>
         <el-col :span="4" style="background-color: #E4FFD3;height: 800px;">
             <div style="width: 90%;margin: auto auto;">
-                <p style="position: positive;left: -20px;">> 新上市</p>
-                <p>> 有貨優先</p>
-                <p>> 價錢低到高</p>
-                <p>> 價錢高到低</p>
+                <router-link style="text-decoration: none;" to="/" @click="changefilter('10000')"><p style="position: positive;left: -20px;">> 新上市</p></router-link>
+                <router-link style="text-decoration: none;" to="/" @click="changefilter('01000')"><p style="position: positive;left: -20px;">> 有貨優先</p></router-link>
+                <router-link style="text-decoration: none;" to="/" @click="changefilter('00100')"><p style="position: positive;left: -20px;">> 價錢低到高</p></router-link>
+                <router-link style="text-decoration: none;" to="/" @click="changefilter('00010')"><p style="position: positive;left: -20px;">> 價錢高到低</p></router-link>
                 <el-row>
                     <el-col :span="1"><div class="grid-content bg-purple"></div></el-col>
                     <el-col :span="8"><div class="grid-content bg-purple"></div><el-input v-model="input1" /></el-col>
                     <el-col :span="6"><div class="grid-content bg-purple-light">~</div></el-col>
                     <el-col :span="8"><div class="grid-content bg-purple"></div><el-input v-model="input2" /></el-col>
                     <el-col :span="1"><div class="grid-content bg-purple"></div></el-col>
-                </el-row>
+                </el-row><br>
+                <el-button @click="changefilter('00001',this.input1,this.input2)">搜尋</el-button>
             </div>
         </el-col>
         <el-col :span="20"><div class=""><subject :getTable="inputTable" @custom-event-trigger="RequestNewPage"/></div></el-col>
@@ -37,9 +38,10 @@ import CategoryController from './category.controller'
         methods: CategoryController,
         data(){
             return{
+                filter: "00000",
                 max_page: 0,
                 current_page: 1,
-                category: 0,
+                category: -1,
                 input1: "",
                 input2: "",
                 inputTable:[],
@@ -72,9 +74,18 @@ import CategoryController from './category.controller'
             }
         },
         mounted(){
-            productService.getProducts().then(data => {
-                this.ResolveOverlongString(data, 0);
-            })
+            if(this.$route.params.category){
+                console.log("page "+this.$route.params.category);
+                productService.getProductsBycategory(this.$route.params.category).then(data => {
+                    this.ResolveOverlongString(data, 0);
+                    this.category = parseInt(this.$route.params.category)-1;
+                })
+            }else{
+                console.log("Home");
+                productService.getProducts().then(data => {
+                    this.ResolveOverlongString(data, 0);
+                })
+            }
         }
     }
 </script>

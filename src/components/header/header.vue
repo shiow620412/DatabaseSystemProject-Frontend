@@ -18,7 +18,7 @@
             <div>
                 <el-input v-model="input" placeholder="Please Search Product">
                 <template #append>
-                    <el-button><el-icon><Search/></el-icon></el-button>
+                    <el-button @click="search"><el-icon><Search/></el-icon></el-button>
                 </template>
                 </el-input>
             </div>
@@ -32,8 +32,31 @@
                 </el-col>
                 <el-col :span="16">
                     <div>
-                        <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入|註冊</font></router-link>
-                        <router-link to="/member" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
+                        <el-row>
+                            <el-col :span="12">
+                                <div>
+                                    <el-row>
+                                        <el-col :span="12">
+                                            <div>
+                                                <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
+                                            </div>
+                                        </el-col>
+                                        <el-col :span="12">
+                                            <div>
+                                                <router-link to="/identify/register" class="register-position"><font face="DFKai-sb">註冊</font></router-link>
+                                            </div>
+                                        </el-col>
+                                    </el-row>
+                                </div>
+                            </el-col>
+                            <el-col :span="12">
+                                <div>
+                                    <router-link to="/member" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <!-- <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入|註冊</font></router-link>
+                        <router-link to="/member" class="member-position"><font face="DFKai-sb">會員中心</font></router-link> -->
                     </div>
                 </el-col>
             </el-row>

@@ -4,25 +4,39 @@ const prefix = "/products";
 const services = {
     getProducts,
     getProductsBycategory,
+    getProductdetail,
     getNewProductPage
 }
-function getProductsBycategory(type)
+function getProductsBycategory(type, filter, min, max)
 {
-    const url = prefix + "/categories/"+(type+1).toString();
+    let url = prefix + "/category/"+type.toString();
+    if(filter!='00000'){
+        url += "?";
+        if(filter[0]==='1'){url += "filter=Id&";}
+        if(filter[1]==='1'){url += "filter=Stock&";}
+        if(filter[2]==='1'){url += "filter=Price&sort=ASC&";}
+        if(filter[3]==='1'){url += "filter=Price&sort=DESC&";}
+        if(filter[4]==='1'){url += "minPrice="+min+"&maxPrice="+max+"&";}
+    }
 
     return http.get(url);
 }
 function getProducts(){
-    const url = prefix + "/sales";
+    let url = prefix + "/sales";
+
+    return http.get(url);
+}
+function getProductdetail(id){
+    let url = prefix + "/"+id;
 
     return http.get(url);
 }
 function getNewProductPage(_type, _page){
     if(_type===0){
-        const url = prefix + "/sales?page="+_page.toString();
+        let url = prefix + "/sales?page="+_page.toString();
         return http.get(url);
     }else{
-        const url = prefix + "/categories/"+(_type).toString()+"?page="+_page.toString();
+        let url = prefix + "/category/"+(_type).toString()+"?page="+_page.toString();
         return http.get(url);
     }
 }
