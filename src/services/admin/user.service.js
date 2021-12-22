@@ -2,8 +2,8 @@ import http from "../service.config";
 
 const prefix = "/admin";
 const services = {
-    getMembers
-    // banUser
+    getMembers,
+    modifyUser
 }
 
 function getMembers() {
@@ -12,13 +12,13 @@ function getMembers() {
     return http.get(url);
 }
 
-// function banUser(id, status) {
-//     const url = prefix + "/users/";
+function modifyUser(userId, status) {
+    const url = prefix + "/users/";
 
-//     return http.post(url + id + status, {
-//         id,
-//         status
-//     });
-// }
+    return http.put(url + userId + "/" + status, {
+        userId,
+        status
+    });
+}
 
 export default services
