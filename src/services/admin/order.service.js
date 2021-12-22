@@ -1,22 +1,21 @@
 import http from "../service.config";
 
-const prefix = "/admin";
+const prefix = "/admin/orders";
 const services = {
     getOrders,
     modifyOrder
 }
 
 function getOrders() {
-    const url = prefix + "/users";
-
-    return http.get(url);
+    return http.get(prefix);
 }
 
-function modifyOrder(orderId) {
-    const url = prefix + "/users/";
+function modifyOrder(orderId,status) {
+    const url = prefix + "/";
 
-    return http.put(url + orderId, {
-        orderId
+    return http.put(url + orderId + "/" + status, {
+        orderId,
+        status
     });
 }
 
