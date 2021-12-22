@@ -1,19 +1,17 @@
 import http from "../service.config";
 
-const prefix = "/admin";
+const prefix = "/admin/users";
 const services = {
     getMembers,
     modifyUser
 }
 
 function getMembers() {
-    const url = prefix + "/users";
-
-    return http.get(url);
+    return http.get(prefix);
 }
 
 function modifyUser(userId, status) {
-    const url = prefix + "/users/";
+    const url = prefix + "/";
 
     return http.put(url + userId + "/" + status, {
         userId,

@@ -24,9 +24,8 @@ function changeStatusChinese(num) {
 }
 
 function changeUserStatus(id, status) {
-    memberService.modifyUser(id, status)
+    memberService.modifyUser(id, status);
     // .then(data => {
-
     // }).catch((error) => {
     //     alert(error.response.data.message)
     // })
