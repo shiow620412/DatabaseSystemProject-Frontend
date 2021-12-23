@@ -23,23 +23,11 @@ function changeStatusChinese(num) {
     }
 }
 
-function changeUserStatus(id, status) {
-    memberService.modifyUser(id, status);
-    // .then(data => {
-    // }).catch((error) => {
-    //     alert(error.response.data.message)
-    // })
+function changeUserStatus(id, isAdminStatus, isBanStatus) {
+    memberService.modifyUser(id, isAdminStatus, isBanStatus);
 }
 
-function clickSave(index, userId, status) {
+function clickSave(index, userId, isAdminStatus, isBanStatus) {
     console.log(index);
-    console.log(userId);
-    console.log(status);
-    let tempStatus = '';
-    if (status === 0) {
-        tempStatus = 'unban';
-    } else {
-        tempStatus = 'ban';
-    }
-    changeUserStatus(userId, tempStatus);
+    changeUserStatus(userId, isAdminStatus, isBanStatus);
 }

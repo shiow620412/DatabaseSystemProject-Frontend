@@ -16,15 +16,15 @@
             <el-table-column prop="Email" label="信箱" min-width="25%" align="center"></el-table-column>
             <el-table-column label="是否為管理員" min-width="15%" align="center">
                 <template v-slot="scope">
-                        <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag>
-                    <!-- <template v-if="!scope.row.click">
+                        <!-- <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag> -->
+                    <template v-if="!scope.row.click">
                         <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag>
                     </template>
                     <template v-else-if="scope.row.click">
                         <el-select v-model="scope.row.isAdmin" placeholder="Select" size="medium" style="width: 60px">
                             <el-option v-for="item in isAdminArray" :key="item.value1" :label="item.label" :value="item.value1"></el-option>
                         </el-select>
-                    </template> -->
+                    </template>
                 </template>
             </el-table-column>
             <el-table-column label="狀態" min-width="13%" align="center">
@@ -42,7 +42,7 @@
             <el-table-column label="操作" min-width="13%" align="center">
                 <template #default="scope">
                     <el-button size="mini" @click="(scope.row.click = true)" v-show="!scope.row.click">編輯</el-button>
-                    <el-button size="mini" @click="(scope.row.click = false) & clickSave(scope.$index, scope.row.MemberID, scope.row.isBan)" v-show="scope.row.click">儲存</el-button>
+                    <el-button size="mini" @click="(scope.row.click = false) & clickSave(scope.$index, scope.row.MemberID, scope.row.isAdmin, scope.row.isBan)" v-show="scope.row.click">儲存</el-button>
                 </template>
             </el-table-column>
         </el-table>

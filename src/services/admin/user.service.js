@@ -10,12 +10,12 @@ function getMembers() {
     return http.get(prefix);
 }
 
-function modifyUser(userId, status) {
+function modifyUser(userId, isAdminStatus, isBanStatus) {
     const url = prefix + "/";
 
-    return http.put(url + userId + "/" + status, {
-        userId,
-        status
+    return http.put(url + userId + "/operate", {
+        "isAdmin": isAdminStatus,
+        "isBan": isBanStatus
     });
 }
 
