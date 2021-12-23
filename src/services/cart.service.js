@@ -6,23 +6,23 @@ const services = {
     postProductToCart,
     modifyProductQuantityInCart,
 }
-function deleteProductOfCart(data)
+function deleteProductOfCart(productID)
 {
     return http.get(url,{
-        data
+        productID
     });
 }
 
-function postProductToCart(data)
+function postProductToCart(productID,quantity)
 {
     return http.post(url,{
-        data
+        productID,quantity
     });
 }
-function modifyProductQuantityInCart(data)
+function modifyProductQuantityInCart(productID,quantity)
 {
     return http.put(url,{
-        data
+        productID,quantity
     });
 }
 export default services
