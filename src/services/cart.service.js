@@ -19,7 +19,7 @@ function postProductToCart(data)
         data
     });
 }
-function modifyProductQuantityInCart(id)
+function modifyProductQuantityInCart(data)
 {
     return http.put(url,{
         data
