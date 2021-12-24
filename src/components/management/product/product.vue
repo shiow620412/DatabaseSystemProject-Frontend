@@ -34,9 +34,12 @@
                     </el-table-column>
                     <el-table-column prop="price" label="商品價格" min-width="25%" align="center"></el-table-column>
                     <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
-                    <el-table-column label="操作" min-width="13%" align="center">
+                    <el-table-column label="操作" min-width="20%" align="center">
                         <template #default="scope">
+                            <div align="center">
                             <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row)">編輯</el-button>
+                            <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.productID)" type="danger">刪除</el-button>
+                            </div>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -105,54 +108,6 @@
 
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
                 <productPage :product="this.productArray[this.index]" />
-                <!-- <productPage :acceptPhoto="this.productArray[this.index].photo" :acceptName="this.productArray[this.index].productName" :acceptPrice="this.productArray[this.index].price" :acceptStock="this.productArray[this.index].stock" :acceptDescription="this.productArray[this.index].description" /> -->
-                <!-- <el-row class="product-briefing">
-                    <el-col :span="3"></el-col>
-                    <el-col :span="7" class="pro_Image">
-                        <div class="image"><img :src="this.productArray[this.index].photo"></div>
-                    </el-col>
-                    <el-col :span="11" class="pro_intro">
-                        <div class="pro_name">
-                            <h3>{{this.productArray[this.index].productName}}</h3>
-                        </div>
-                        <el-row class="row_three">
-                            <el-col :span="9">
-                                <div class="pro_price">
-                                    <h1>NT$ {{ this.productArray[this.index].price }}</h1>
-                                </div>
-                            </el-col>
-                            <el-col :span="15"></el-col>
-                        </el-row>
-                        <el-row class="row_three">
-                            <el-col :span="8">
-                                <div class="quantity_text"><span>數量</span></div>
-                            </el-col>
-                            <el-col :span="8">
-                                <div class="pro_input_quantity">
-                                    <el-input-number style="width: 100%" size="small" v-model="num" @change="handleChange" :min="1" :max="this.productArray[this.index].stock" label="描述文字" />
-                                </div>
-                            </el-col>
-                            <el-col :span="8">
-                                <div class="the_rest_of"><span>還剩下{{ this.productArray[this.index].stock }}個</span></div>
-                            </el-col>
-                        </el-row>
-                        <el-row class="add_procar">
-                            <el-col :span="4"></el-col>
-                            <el-col :span="8"><br><br>
-                                <el-button type="success">加入購物車</el-button>
-                            </el-col>
-                            <el-col :span="12"></el-col>
-                        </el-row>
-                    </el-col>
-                    <el-col :span="3"></el-col>
-                </el-row>
-                <el-row class="product-briefing">
-                    <el-col :span="3"></el-col>
-                    <el-col :span="18" class="product-detail">
-                        <div class="ql-editor" v-html="this.productArray[this.index].description"></div>
-                    </el-col>
-                    <el-col :span="3"></el-col>
-                </el-row> -->
             </el-tab-pane>
         </el-tabs>
     </el-main>

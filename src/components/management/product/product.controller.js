@@ -3,6 +3,7 @@ export default {
     checkButton,
     addProduct,
     editProduct,
+    deleteProduct,
     clickCancel,
     clickSave,
     clickPhoto,
@@ -34,10 +35,15 @@ function addProduct() {
     this.index = this.productArray.length - 1;
 }
 
-function editProduct(num, item) {
-    console.log(num);
+function editProduct(index, item) {
+    console.log(index);
     console.log(item);
-    this.index = num;
+    this.index = index;
+}
+
+function deleteProduct(index, id) {
+    console.log(index);
+    console.log(id);
 }
 
 function clickCancel(num) {
