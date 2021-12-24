@@ -17,7 +17,7 @@
                 <el-icon><iphone /></el-icon>
                 電話
             </template>
-            {{userInfo.celephone}}
+            {{userInfo.phone}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
@@ -40,7 +40,7 @@
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="電話">
-                    <el-input v-model="form.celephone" autocomplete="off"></el-input>
+                    <el-input v-model="form.phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="信箱">
                     <el-input v-model="form.email" autocomplete="off"></el-input>
@@ -78,7 +78,7 @@ import {
             clickEdit(){
                 this.isEditShow = true;
                 this.form.name = this.userInfo.name;
-                this.form.celephone = this.userInfo.celephone;
+                this.form.phone = this.userInfo.phone;
                 this.form.email = this.userInfo.email;
                 this.form.address = this.userInfo.address;
             },
@@ -89,14 +89,14 @@ import {
             onEditSubmit(){
                 this.isEditShow = false;
                 this.userInfo.name = this.form.name;
-                this.userInfo.celephone = this.form.celephone;
+                this.userInfo.phone = this.form.phone;
                 this.userInfo.email = this.form.email;
                 this.userInfo.address = this.form.address;
                 this.cleanEdit();
             },
             cleanEdit(){
                 this.form.name = '';
-                this.form.celephone = '';
+                this.form.phone = '';
                 this.form.email = '';
                 this.form.address = '';
             }
@@ -107,13 +107,13 @@ import {
                 labelPosition: 'right',
                 userInfo:{
                     name: 'kooriookami',
-                    celephone: '18100000000',
+                    phone: '18100000000',
                     email: '123@gmail.com',
                     address: 'No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province',
                 },
                 form: {
                     name: '',
-                    celephone: '',
+                    phone: '',
                     email: '',
                     address: '',
                 },

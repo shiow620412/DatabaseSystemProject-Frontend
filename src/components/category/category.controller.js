@@ -4,7 +4,8 @@ export default {
     ResolveOverlongString,
     OnSelectCategoy,
     RequestNewPage,
-    changefilter
+    changefilter,
+    searchByName
 }
 
 // 處理字串過長問題
@@ -31,6 +32,13 @@ function ResolveOverlongString(input, action){
     }
 }
 
+function searchByName(name){
+    this.isSearch = 1;
+    productService.getProductBySearch(name).then(data => {
+        this.ResolveOverlongString(data, 0);
+    })
+}
+
 function OnSelectCategoy(order, filter, min, max){
     productService.getProductsBycategory(order+1,filter, min, max).then(data => {
         this.ResolveOverlongString(data, 0);
@@ -43,7 +51,7 @@ function RequestNewPage(){
     console.log("receive!");
     this.current_page += 1;
     if(this.current_page <= this.max_page && this.category!=-1){
-        productService.getNewProductPage(this.category+1, this.current_page).then(data => {
+        productService.getNewProductPage(this.category+1, this.current_page, this.filter, this.input1, this.input2).then(data => {
             this.ResolveOverlongString(data, 1);
         })
     }

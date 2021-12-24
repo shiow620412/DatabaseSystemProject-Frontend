@@ -51,12 +51,10 @@
                             </el-col>
                             <el-col :span="12">
                                 <div>
-                                    <router-link to="/member" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
+                                    <router-link to="/" @click="checkLogin()" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
                                 </div>
                             </el-col>
                         </el-row>
-                        <!-- <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入|註冊</font></router-link>
-                        <router-link to="/member" class="member-position"><font face="DFKai-sb">會員中心</font></router-link> -->
                     </div>
                 </el-col>
             </el-row>
@@ -79,7 +77,20 @@
             }
         },
         methods: {
-            
+            search(){
+                console.log("push data");
+                this.eventBus.emit("click-send-msg", this.input);
+                this.$router.push({
+                    path: "/index",
+                    query: {
+                        q: this.input
+                    }
+                })
+            },
+            checkLogin(){
+                if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
+                else{this.$router.push({path: "/identify"});}
+            }
         },
     }
 </script>

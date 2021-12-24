@@ -8,7 +8,7 @@
     <el-row>
         <el-col :span="4" style="background-color: #E4FFD3;height: 800px;">
             <div style="width: 90%;margin: auto auto;">
-                <router-link style="text-decoration: none;" to="/" @click="changefilter('10000')"><p style="position: positive;left: -20px;">> 新上市</p></router-link>
+                <router-link style="text-decoration: none;" :to="{query: {id:true}}" @click="changefilter('10000')"><p style="position: positive;left: -20px;">> 新上市</p></router-link>
                 <router-link style="text-decoration: none;" to="/" @click="changefilter('01000')"><p style="position: positive;left: -20px;">> 有貨優先</p></router-link>
                 <router-link style="text-decoration: none;" to="/" @click="changefilter('00100')"><p style="position: positive;left: -20px;">> 價錢低到高</p></router-link>
                 <router-link style="text-decoration: none;" to="/" @click="changefilter('00010')"><p style="position: positive;left: -20px;">> 價錢高到低</p></router-link>
@@ -38,6 +38,7 @@ import CategoryController from './category.controller'
         methods: CategoryController,
         data(){
             return{
+                isSearch: 0,
                 filter: "00000",
                 max_page: 0,
                 current_page: 1,
@@ -74,13 +75,23 @@ import CategoryController from './category.controller'
             }
         },
         mounted(){
+            console.log(this.$route.query.q);
+            this.eventBus.on("click-send-msg", (msgData) => (
+                this.searchByName(msgData.toString())
+            ));
             if(this.$route.params.category){
                 console.log("page "+this.$route.params.category);
-                productService.getProductsBycategory(this.$route.params.category).then(data => {
+                productService.getProductsBycategory(this.$route.params.category,this.filter,this.input1,this.input2).then(data => {
                     this.ResolveOverlongString(data, 0);
                     this.category = parseInt(this.$route.params.category)-1;
                 })
-            }else{
+            }
+            else if(this.$route.query.q){
+                productService.getProductBySearch(this.$route.query.q).then(data => {
+                    this.ResolveOverlongString(data, 0);
+                })
+            }
+            else{
                 console.log("Home");
                 productService.getProducts().then(data => {
                     this.ResolveOverlongString(data, 0);
