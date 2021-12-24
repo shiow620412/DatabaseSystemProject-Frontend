@@ -1,9 +1,18 @@
 import orderService from '../../../services/admin/order.service'
 
 export default {
+    changePaymentChinese,
     changeStatusChinese,
     modifyOrder,
     clickSave
+}
+
+function changePaymentChinese(num) {
+    if (num === 1) {
+        return '信用卡'
+    } else if (num === 2) {
+        return '貨到付款'
+    }
 }
 
 function changeStatusChinese(num) {

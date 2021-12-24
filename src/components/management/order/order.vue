@@ -11,13 +11,17 @@
         <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'memberID' }" row-style="height: 10vh" max-height="490">
             <el-table-column prop="OrderID" label="訂單編號" min-width="15%" align="center" sortable></el-table-column>
             <el-table-column prop="MemberID" label="會員ID" min-width="25%" align="center" sortable></el-table-column>
-            <el-table-column prop="Date" label="日期" min-width="25%" align="center"></el-table-column>
+            <el-table-column prop="Date" label="日期" min-width="30%" align="center"></el-table-column>
             <el-table-column label="總金額" min-width="25%" align="center">
                 <template v-slot="scope">
                     <p>&#36; {{ scope.row.Total }}</p>
                 </template>
             </el-table-column>
-            <el-table-column prop="PaymentMethod" label="付款方式" min-width="25%" align="center"></el-table-column>
+            <el-table-column label="付款方式" min-width="20%" align="center">
+                <template v-slot="scope">
+                    <span>{{ changePaymentChinese(scope.row.PaymentMethod) }}</span>
+                </template>
+            </el-table-column>
             <el-table-column label="狀態" min-width="18%" align="center">
                 <template v-slot="scope">
                     <template v-if="!scope.row.click">
