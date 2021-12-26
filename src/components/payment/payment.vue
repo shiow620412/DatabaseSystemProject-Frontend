@@ -7,13 +7,18 @@
             <el-image class="pay_image" :src="scope.row.photo"></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="itemName" min-width="45%" align="center" />
+        <el-table-column prop="itemName" min-width="35%" align="center" />
+        <el-table-column prop="price" label="單價" min-width="10%" align="center">
+          <template v-slot="scope">
+            <p>&#36; {{ scope.row.price }}</p>
+          </template>
+        </el-table-column>>
         <el-table-column prop="quantity" label="數量" min-width="5%" align="center">
           <template v-slot="scope">
             <p>x {{ scope.row.quantity }}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="價格" min-width="10%" align="center">
+        <el-table-column prop="all_price" label="總共" min-width="10%" align="center">
           <template v-slot="scope">
             <p>&#36; {{ scope.row.price * scope.row.quantity }}</p>
           </template>
@@ -24,10 +29,16 @@
       <el-row>
         <el-col :span="14"><span style="color:#0093e9; font-weight:bold;">寄送資訊</span></el-col>
         <el-col :span="10">
-          <el-button type="primary" border-radius=8px; @click="clickEdit()">修改</el-button>
+          <el-button border-radius=8px; @click="clickEdit()">修改</el-button>
         </el-col>
       </el-row>
       <el-row>
+        <el-col :span="8"></el-col>
+        <el-col :span="10" style="text-align:left;">姓名： {{send_Info.customer_name}}</el-col>
+        <el-col :span="6"></el-col>
+        <el-col :span="8"></el-col>
+        <el-col :span="10" style="text-align:left;">電話： {{send_Info.phone}}</el-col>
+        <el-col :span="6"></el-col>
         <el-col :span="8"></el-col>
         <el-col :span="10" style="text-align:left;">住址： {{send_Info.address}}</el-col>
         <el-col :span="6"></el-col>
@@ -155,16 +166,16 @@
             productID: 1,
             photo: require("../../assets/show1.jpg"),
             itemName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-            quantity: 3,
             price: 100,
+            quantity: 3,
             // freight:80,
           },
           {
             productID: 2,
             photo: require("../../assets/show2.jpg"),
             itemName: "-198498484｜ 96LINE.TW 韓國代購",
+            price: 800,
             quantity: 5,
-            price: 1089,
             // freight:80,
           },
         ],
@@ -324,7 +335,7 @@
     line-height: 45px;
     width: 1223px;
     margin: 0 auto;
-    background-color: #f7eed7;
+    background-color: #ffffff;
   }
 
   .payment_choose {
