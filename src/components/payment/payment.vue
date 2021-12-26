@@ -1,18 +1,4 @@
 <template>
-  <!-- <el-container>
-    <el-header style="background-color: #FCA96D"></el-header>
-    <el-row class="product-briefing" v-for="i in dataTable" :key="i">
-      <el-col :span="3"></el-col>
-      <el-col :span="4">
-        <div><img class="pay_image" :src="i.photo" ></div>
-      </el-col>
-      <el-col :span="6" style="margin: auto auto;"><p>{{i.itemName}}</p></el-col>
-      <el-col :span="3" style="margin: auto auto;">{{i.quantity}}個</el-col>
-      <el-col :span="3" style="margin: auto auto;">$ {{i.price*i.quantity}}</el-col>
-      <el-col :span="1"></el-col>
-    </el-row>
-  </el-container> -->
-
   <div class="content">
     <ul>
       <el-table width="100%" :data="dataTable" :header-cell-style="{background:'#FCA96D',color:'#000000'}">
@@ -22,22 +8,24 @@
           </template>
         </el-table-column>
         <el-table-column prop="itemName" min-width="45%" align="center" />
-        <el-table-column prop="quantity" label="數量"  min-width="5%" align="center">
+        <el-table-column prop="quantity" label="數量" min-width="5%" align="center">
           <template v-slot="scope">
-            <el-text>x {{ scope.row.quantity }}</el-text>
+            <p>x {{ scope.row.quantity }}</p>
           </template>
         </el-table-column>
-        <el-table-column prop="price" label="價格"  min-width="10%" align="center">
+        <el-table-column prop="price" label="價格" min-width="10%" align="center">
           <template v-slot="scope">
-            <el-text>&#36; {{ scope.row.price * scope.row.quantity }}</el-text>
+            <p>&#36; {{ scope.row.price * scope.row.quantity }}</p>
           </template>
         </el-table-column>>
       </el-table>
     </ul>
     <div class="send_content" style="border:1px #cccccc solid; padding-bottom:4px;" cellpadding="10" border='1'>
       <el-row>
-        <el-col :span="14"><span  style="color:#0093e9; font-weight:bold;">寄送資訊</span></el-col>
-        <el-col :span="10"><el-button type="primary" border-radius=8px; @click="clickEdit()">修改</el-button></el-col>
+        <el-col :span="14"><span style="color:#0093e9; font-weight:bold;">寄送資訊</span></el-col>
+        <el-col :span="10">
+          <el-button type="primary" border-radius=8px; @click="clickEdit()">修改</el-button>
+        </el-col>
       </el-row>
       <el-row>
         <el-col :span="8"></el-col>
@@ -45,51 +33,57 @@
         <el-col :span="6"></el-col>
       </el-row>
     </div>
-    <div class="payment_choose" style="border:1px #cccccc solid;" cellpadding="10" border='1'>
+    <div class="payment_choose" style="border:1px #cccccc solid; padding-bottom:15px;" cellpadding="10" border='1'>
       <el-row>
-        <el-col :span="8" style="color:#0093e9; position: relative; left: 152px; font-weight:bold;">付款方式</el-col>
+        <el-col :span="8" style="color:#0093e9; text-align:right; font-weight:bold;">
+          <span style="position: relative; right:20px;">付款方式</span></el-col>
         <el-col :span="16">
-          <el-tabs type="card" @tab-click="handleClick" stretch="true">
+          <el-tabs type="card" @tab-click="handleClick">
             <el-tab-pane label="貨到付款">
-              <el-radio-group v-model="radio"  style="margin-right: 550px;">
-                <el-radio :label="scs">貨到付款</el-radio>
-              </el-radio-group>
+              <el-row>
+                <el-col :span="5">
+                  <span>貨到付款</span>
+                </el-col>
+                <el-col :span="5">
+                  <el-radio v-model="radio1">貨到付款</el-radio>
+                </el-col>
+                <el-col :span="14"></el-col>
+              </el-row>
             </el-tab-pane>
             <el-tab-pane label="信用卡">
-              <el-radio-group v-model="radio"  style="margin-right: 550px;">
-                <el-radio :label="scs">信用卡</el-radio>
-              </el-radio-group>
+              <el-row>
+                <el-col :span="5">
+                  <span>選擇付款帳戶</span>
+                </el-col>
+                <el-col :span="3">
+                  <el-radio v-model="radio2">信用卡</el-radio>
+                </el-col>
+                <el-col :span="8">
+                  <el-select :data="insert_card" v-model="value" filterable placeholder="Choose a credit card">
+                    <el-option v-for="item in insert_card" :key="item.number" :label="item.label" :value="item.number">
+                    </el-option>
+                  </el-select>
+                </el-col>
+                <el-col :span="8">
+                  <div style="text-align:left;">
+                    <el-button @click="clickAdd()">＋ 使用新信用卡付款</el-button>
+                  </div>
+                </el-col>
+              </el-row>
             </el-tab-pane>
           </el-tabs>
-          </el-col>
+        </el-col>
       </el-row>
-      <!-- <el-row >
-          <el-col :span="8"></el-col>
-          <el-col :span="10" style="text-align:left;">
-            <div>
-              <el-radio-group v-model="tabPosition" @tab-click="handleClick" style="margin-bottom: 30px" stretch="true">
-                <el-radio-button label="top">top</el-radio-button>
-                <el-radio-button label="right">right</el-radio-button>
-              </el-radio-group>
-              <el-tabs :tab-position="tabPosition" style="height: 200px" stretch="true">
-            <el-tab-pane label="貨到付款"> </el-tab-pane>
-            <el-tab-pane label="信用卡">Config</el-tab-pane>
-              </el-tabs>
-            </div>
-          </el-col>
-          <el-col :span="6"></el-col>
-        </el-row> -->
     </div>
-
-    <div class="summarize"  style="border:1px #cccccc solid;" cellpadding="10" border='1'>
+    <div class="summarize" style="border:1px #cccccc solid;" cellpadding="10" border='1'>
       <el-row width="100%" :data="send_Info" :header-cell-style="{background:'#FCA96D',color:'#000000'}">
         <el-col :span="8"></el-col>
         <el-col :span="12">運費</el-col>
         <el-col :span="4">
-          <span class="freight_text" >$ {{ this.freight }}</span>
+          <span class="freight_text">$ {{ this.freight }}</span>
         </el-col>
       </el-row>
-      <el-row> 
+      <el-row>
         <el-col :span="8"></el-col>
         <el-col :span="12">
           <span class="total-price-title">合計</span>
@@ -98,29 +92,53 @@
           <span class="total-price">{{ getTotalPrice + this.freight }} 元</span>
         </el-col>
       </el-row>
-      <div style="padding-bottom:10px;"><el-button type="success" >結帳</el-button></div>
-   </div>
+      <div style="padding-bottom:10px;">
+        <el-button type="success">結帳</el-button>
+      </div>
+    </div>
   </div>
-  
- <!-- style="border:3px #FFD382 dashed;" cellpadding="10" border='1' -->
   <div>
     <el-dialog v-model="isEditShow" title="修改" width="30%">
       <el-form :model="form">
         <el-form-item label="姓名">
-            <el-input v-model="form.customer_name" autocomplete="off"></el-input>
+          <el-input v-model="form.customer_name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="電話">
-            <el-input v-model="form.phone" autocomplete="off"></el-input>
+          <el-input v-model="form.phone" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="住址">
-            <el-input v-model="form.address" autocomplete="off"></el-input>
+          <el-input v-model="form.address" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
-          <span class="dialog-footer">
-              <el-button @click="windowsEditClose()">取消</el-button>
-              <el-button type="primary" @click="onEditSubmit()">完成</el-button>
-          </span>
+        <span class="dialog-footer">
+          <el-button @click="windowsEditClose()">取消</el-button>
+          <el-button type="primary" @click="onEditSubmit()">完成</el-button>
+        </span>
+      </template>
+    </el-dialog>
+  </div>
+  <div>
+    <el-dialog v-model="isAddShow" title="使用新信用卡付款" width="30%">
+      <el-form :model="Form">
+        <el-form-item label="卡號">
+          <el-input v-model="Form.number" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="安全碼">
+          <el-input v-model="Form.safeCode" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="年">
+          <el-input v-model="Form.year" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="月">
+          <el-input v-model="Form.month" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="addClose()">取消</el-button>
+          <el-button type="primary" @click="onAddSubmit()">完成</el-button>
+        </span>
       </template>
     </el-dialog>
   </div>
@@ -128,11 +146,11 @@
 
 <script>
   export default {
-    name: 'payment',    
+    name: 'payment',
     data() {
       return {
         freight: 80,
-        totalPice:[],
+        totalPice: [],
         dataTable: [{
             productID: 1,
             photo: require("../../assets/show1.jpg"),
@@ -150,14 +168,12 @@
             // freight:80,
           },
         ],
-        // defineComponent:{
-        //   radio1: 'New York',
-        // },
-        // radio1: 'New York',
-        radio: 'scs',
+        radio1: 'COD',
+        radio2: 'Card',
+        choice: 0,
         isEditShow: false,
-        tabPosition: 'left',
-        send_Info:{
+        isAddShow: false,
+        send_Info: {
           accountNum: 515,
           customer_name: "黃XX",
           phone: '091561156',
@@ -167,35 +183,86 @@
           customer_name: '',
           phone: '',
           address: '',
-        },         
+        },
+        Form: {
+          number: "",
+          safeCode: "",
+          year: "",
+          month: "",
+        },
+        insert_card: [{
+            number: '20160503',
+            safeCode: 123,
+            deadline: '2013/02',
+          },
+          {
+            number: '20160502',
+            safeCode: 456,
+            deadline: '2013/02',
+          },
+          {
+            number: '20160504',
+            safeCode: 789,
+            deadline: '2013/02',
+          },
+          {
+            number: '20160501',
+            safeCode: 461,
+            deadline: '2013/02',
+          },
+        ],
+        value: '',
       }
     },
     methods: {
-      handleClick(tab, event) {
-        console.log(tab, event)
+      handleClick(tab) {
+        console.log(tab.uid);
       },
-      clickEdit(){
-          this.isEditShow = true;
-          this.form.customer_name = this.send_Info.customer_name;
-          this.form.phone = this.send_Info.phone;
-          this.form.address = this.send_Info.address;
+      clickEdit() {
+        this.isEditShow = true;
+        this.form.customer_name = this.send_Info.customer_name;
+        this.form.phone = this.send_Info.phone;
+        this.form.address = this.send_Info.address;
       },
-      windowsEditClose(){
-          this.isEditShow = false;
-          this.cleanEdit();
+      windowsEditClose() {
+        this.isEditShow = false;
+        this.cleanEdit();
       },
-      onEditSubmit(){
-          this.isEditShow = false;
-          this.send_Info.customer_name = this.form.customer_name;
-          this.send_Info.phone = this.form.phone;
-          this.send_Info.address = this.form.address;
-          this.cleanEdit();
+      onEditSubmit() {
+        this.isEditShow = false;
+        this.send_Info.customer_name = this.form.customer_name;
+        this.send_Info.phone = this.form.phone;
+        this.send_Info.address = this.form.address;
+        this.cleanEdit();
       },
-      cleanEdit(){
-          this.form.customer_name = '';
-          this.form.phone = '';
-          this.form.address = '';
-      }
+      cleanEdit() {
+        this.form.customer_name = '';
+        this.form.phone = '';
+        this.form.address = '';
+      },
+
+      clickAdd() {
+        this.isAddShow = true;
+        this.clearForm();
+      },
+
+      onAddSubmit() {
+        this.insert_card.push({
+          number: this.Form.number
+        })
+        this.isAddShow = false;
+        this.clearForm();
+      },
+      addClose() {
+        this.isAddShow = false;
+        this.clearForm();
+      },
+      clearForm() {
+        this.Form.number = "";
+        this.Form.safeCode = "";
+        this.Form.year = "";
+        this.Form.month = "";
+      },
     },
     // methods: ShopCartController,
     // computed: {
@@ -216,61 +283,71 @@
 
 <style scoped>
   ul {
-      list-style-type: none;
-      padding: 0;
+    list-style-type: none;
+    padding: 0;
   }
+
   .product-briefing {
     height: 100px;
-    border-style:solid;
+    border-style: solid;
     background-color: #FFC093;
   }
+
   .pay_image {
     width: 50%;
     margin-top: 8px;
     background-color: #000000;
     background-color: #b0c9d8;
   }
+
   .content {
     width: 1225px;
     margin: 0 auto;
     background-color: #fff;
   }
+
   .content ul {
     background-color: #fff;
     color: #424242;
     line-height: 70px;
   }
-  .freight_text{
+
+  .freight_text {
     margin-left: 12%;
   }
-  .total-price{
+
+  .total-price {
     margin-left: 22%;
   }
-  .send_content{
+
+  .send_content {
     line-height: 45px;
     width: 1223px;
     margin: 0 auto;
     background-color: #f7eed7;
   }
-  .payment_choose{
+
+  .payment_choose {
     width: 1223px;
     line-height: 45px;
     margin: 0 auto;
     background-color: #fff;
   }
-  .summarize{
+
+  .summarize {
     width: 1223px;
     line-height: 45px;
     margin: 0 auto;
     background-color: #fff;
   }
-  .total-price-title{
-    color: #ff6700;
-    /* size: 25px; */
-  }
-  .total-price{
+
+  .total-price-title {
     color: #ff6700;
     /* size: 25px; */
   }
 
+  .total-price {
+    color: #ff6700;
+    /* size: 25px; */
+  }
 </style>
