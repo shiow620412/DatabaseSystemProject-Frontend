@@ -29,6 +29,10 @@
                     <span class="button-text ">修改密碼</span>
                 </el-button>
             </router-link>
+            <el-button class="button-back" @click="logout()">
+                <p class="el-icon-edit-outline button-text"></p>
+                <span class="button-text ">登出</span>
+            </el-button>
         </el-col>
         <el-col :span="14" style="background-color: #EFFFE4;">
             <br>
@@ -45,6 +49,14 @@
         name: 'information',
         components: {
 
+        },
+        methods: {
+            logout(){
+                if(confirm("確定登出?")){
+                    localStorage.removeItem("token");
+                    this.$router.push({path: "/identify"});
+                }
+            }
         },
     }
 </script>

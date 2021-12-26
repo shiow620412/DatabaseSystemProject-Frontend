@@ -3,11 +3,14 @@ import http from "./service.config"
 const prefix = "/user";
 const services = {
     login,
+    register,
+    findPassword,
     getInformation,
     EditInformation,
     getCreditCard,
     DeleteCreditCard,
-    AddCreditCard
+    AddCreditCard,
+    ChangePassword
 }
 function login(account, password){
     const url = prefix + "/login";
@@ -15,6 +18,23 @@ function login(account, password){
     return http.post(url, {
         account,
         password
+    });
+}
+function register(email, account, password, name){
+    const url = prefix + "/register";
+
+    return http.post(url, {
+        email,
+        account,
+        password,
+        name
+    });
+}
+function findPassword(email){
+    const url = prefix + "/findPassword";
+
+    return http.get(url, {
+        email
     });
 }
 function getInformation(){
@@ -54,6 +74,14 @@ function AddCreditCard(cardNumber, securityCode, year, month){
         securityCode,
         year,
         month
+    });
+}
+function ChangePassword(oldPassword, newPassword){
+    const url = prefix + "/password";
+
+    return http.put(url, {
+        oldPassword,
+        newPassword
     });
 }
 

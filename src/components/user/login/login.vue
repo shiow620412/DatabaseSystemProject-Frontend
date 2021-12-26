@@ -12,7 +12,7 @@
           <el-row>
             <el-col :span="21">
               <el-form :model="dynamicValidateForm" label-width="100px" class="account_frame">
-                <el-form-item prop="account" label="帳號">
+                <el-form-item label="帳號" prop="account">
                   <el-input v-model="dynamicValidateForm.account"></el-input>
                 </el-form-item>
               </el-form>
@@ -32,7 +32,7 @@
           <el-row class="checkin_frame">
             <el-col :span="4"></el-col>
             <el-col :span="17">
-              <el-button class="checkin" type="primary" @click="submitForm()">登入</el-button>
+              <el-button class="checkin" type="primary" @click="login(dynamicValidateForm.account, ruleForm.pass)">登入</el-button>
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
@@ -66,7 +66,7 @@
 <script>
 import loginController from './login.controller'
   export default {
-    name: 'top',
+    name: 'login',
     data() {
       return {
         ruleForm: {
@@ -77,17 +77,9 @@ import loginController from './login.controller'
         },
       };
     },
-    methods: {
-      submitForm() {
-        loginController.login(this.dynamicValidateForm.account, this.ruleForm.pass);
-      },
-      /*test(){
-        this.$router.push({path: '/'});
-      }*/
-      mounted(){
-        console.log("");
-        
-      },
+    methods: loginController,
+    mounted(){
+      
     }
   };
 </script>

@@ -11,11 +11,8 @@
                 <el-main>
                     <el-row>
                         <el-col :span="21">
-                            <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="email_frame">
-                                <el-form-item prop="email" label="信箱" :rules="[
-                                    { required: true, message: '請輸入信箱', trigger: 'blur' },
-                                    { type: 'email', message: '請輸入正確的信箱', trigger: ['blur', 'change'] }
-                                ]">
+                            <el-form label-width="100px" class="email_frame">
+                                <el-form-item prop="email" label="信箱">
                                     <el-input v-model="dynamicValidateForm.email"></el-input>
                                 </el-form-item>
                             </el-form>
@@ -25,7 +22,7 @@
                     <el-row class="checkin_frame">
                         <el-col :span="4"></el-col>
                         <el-col :span="17">
-                            <el-button class="checkin" type="primary" @click="submitForm('ruleForm')">登入</el-button>
+                            <el-button class="checkin" type="primary" @click="submitForm(dynamicValidateForm.email)">送出</el-button>
                         </el-col>
                         <el-col :span="3"></el-col>
                     </el-row>
@@ -37,62 +34,23 @@
 </template>
 
 <script>
+  import UserService from '../../../services/user.service'
   export default {
     name: '',
     data() {
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('請輸入密碼'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('請再次輸入密碼'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('兩次輸入不一致!'));
-        } else {
-          callback();
-        }
-      };
       return {
-        ruleForm: {
-          pass: '',
-          checkPass: '',
-          age: ''
-        },
-        rules: {
-          pass: [{
-            validator: validatePass,
-            trigger: 'blur'
-          }],
-          checkPass: [{
-            validator: validatePass2,
-            trigger: 'blur'
-          }],
-        },
         dynamicValidateForm: {
-          domains: [{
-            value: ''
-          }],
-          email: ''
+          email: '',
         },
       };
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+      submitForm(email) {
+        UserService.findPassword(email).then(data => {
+          alert(data.Password);
+        }).catch((error) => {
+          console.log(error.response.data.message);
+        })
       },
     }
   };

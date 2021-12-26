@@ -12,19 +12,17 @@
                 <el-input v-model="PasswordformLabelAlign.againPassword"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">修改</el-button>
+                <el-button type="primary" @click="OnSubmit(PasswordformLabelAlign.originPassword, PasswordformLabelAlign.newPassword, PasswordformLabelAlign.againPassword)">修改</el-button>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
 <script>
+    import UserService from '../../../services/user.service'
     export default {
         name: 'password',
         components: {
-            
-        },
-        methods: {
             
         },
         data(){
@@ -35,11 +33,27 @@
                     newPassword: '',
                     againPassword: '',
                 },
-                form: {
-                    name: '',
-                },
             }
-        }
+        },
+        methods: {
+            OnSubmit(originPassword, newPassword, againPassword){
+                if(newPassword===againPassword){
+                    UserService.ChangePassword(originPassword, newPassword).then(data => {
+                        alert(data.message);
+                        this.clearForm();
+                    }).catch((error) => {
+                        alert(error.response.data.message);
+                    })
+                }else{
+                    alert("驗證密碼請保持跟新密碼一致");
+                }
+            },
+            clearForm(){
+                this.PasswordformLabelAlign.originPassword = '';
+                this.PasswordformLabelAlign.newPassword = '';
+                this.PasswordformLabelAlign.againPassword = '';
+            }
+        },
     }
 </script>
 
