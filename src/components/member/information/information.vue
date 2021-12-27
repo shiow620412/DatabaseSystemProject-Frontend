@@ -10,28 +10,28 @@
                 <el-icon><user /></el-icon>
                 姓名
             </template>
-            {{userInfo.name}}
+            {{userInfo.Name}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
                 <el-icon><iphone /></el-icon>
                 電話
             </template>
-            {{userInfo.celephone}}
+            {{userInfo.Phone}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
                 <el-icon><Message /></el-icon>
                 信箱
             </template>
-            {{userInfo.email}}
+            {{userInfo.Email}}
             </el-descriptions-item>
             <el-descriptions-item>
             <template #label>
                 <el-icon><office-building /></el-icon>
                 住址
             </template>
-            {{userInfo.address}}
+            {{userInfo.Address}}
             </el-descriptions-item>
         </el-descriptions>
         <el-dialog v-model="isEditShow" title="修改個人資料" width="30%">
@@ -40,7 +40,7 @@
                     <el-input v-model="form.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="電話">
-                    <el-input v-model="form.celephone" autocomplete="off"></el-input>
+                    <el-input v-model="form.phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="信箱">
                     <el-input v-model="form.email" autocomplete="off"></el-input>
@@ -52,7 +52,7 @@
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="windowsEditClose()">取消</el-button>
-                    <el-button type="primary" @click="onEditSubmit()">完成</el-button>
+                    <el-button type="primary" @click="onEditSubmit(this.form.email, this.form.name, this.form.address, this.form.phone)">完成</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -66,6 +66,7 @@ import {
   Message,
   OfficeBuilding,
 } from '@element-plus/icons'    
+import UserService from '../../../services/user.service'
     export default {
         name: 'information',
         components: {
@@ -77,43 +78,44 @@ import {
         methods: {
             clickEdit(){
                 this.isEditShow = true;
-                this.form.name = this.userInfo.name;
-                this.form.celephone = this.userInfo.celephone;
-                this.form.email = this.userInfo.email;
-                this.form.address = this.userInfo.address;
+                this.form.Name = this.userInfo.Name;
+                this.form.Phone = this.userInfo.Phone;
+                this.form.Email = this.userInfo.Email;
+                this.form.Address = this.userInfo.Address;
             },
             windowsEditClose(){
                 this.isEditShow = false;
                 this.cleanEdit();
             },
-            onEditSubmit(){
+            onEditSubmit(email, name, address, phone){
                 this.isEditShow = false;
-                this.userInfo.name = this.form.name;
-                this.userInfo.celephone = this.form.celephone;
-                this.userInfo.email = this.form.email;
-                this.userInfo.address = this.form.address;
+                this.userInfo.Name = this.form.Name;
+                this.userInfo.Phone = this.form.Phone;
+                this.userInfo.Email = this.form.Email;
+                this.userInfo.Address = this.form.Address;
+                UserService.EditInformation(email, name, address, phone);
                 this.cleanEdit();
             },
             cleanEdit(){
-                this.form.name = '';
-                this.form.celephone = '';
-                this.form.email = '';
-                this.form.address = '';
+                this.form.Name = '';
+                this.form.Phone = '';
+                this.form.Email = '';
+                this.form.Address = '';
             }
+        },
+        mounted() {
+            UserService.getInformation().then(data => {
+                this.userInfo = data;
+            })
         },
         data(){
             return{
                 isEditShow: false,
                 labelPosition: 'right',
-                userInfo:{
-                    name: 'kooriookami',
-                    celephone: '18100000000',
-                    email: '123@gmail.com',
-                    address: 'No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province',
-                },
+                userInfo:{},
                 form: {
                     name: '',
-                    celephone: '',
+                    phone: '',
                     email: '',
                     address: '',
                 },
