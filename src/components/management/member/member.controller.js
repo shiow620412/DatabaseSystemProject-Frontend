@@ -1,5 +1,10 @@
+import memberService from '../../../services/admin/user.service'
+
 export default {
-    changeIsAdminChinese,changeStatusChinese,clickSave
+    changeIsAdminChinese,
+    changeStatusChinese,
+    changeUserStatus,
+    clickSave
 }
 
 function changeIsAdminChinese(num) {
@@ -9,13 +14,20 @@ function changeIsAdminChinese(num) {
         return '否';
     }
 }
+
 function changeStatusChinese(num) {
-    if (num === 1) {
+    if (num === 0) {
         return '正常'
     } else {
         return '停權'
     }
 }
-function clickSave(index) {
+
+function changeUserStatus(id, isAdminStatus, isBanStatus) {
+    memberService.modifyUser(id, isAdminStatus, isBanStatus);
+}
+
+function clickSave(index, userId, isAdminStatus, isBanStatus) {
     console.log(index);
+    changeUserStatus(userId, isAdminStatus, isBanStatus);
 }
