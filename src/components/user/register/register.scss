@@ -1,0 +1,59 @@
+.frame {
+    background-color: #EFFFE4;
+    height: 600px;
+    width: 100%;
+}
+
+.login_frame {
+    position: relative;
+    top: 30px;
+    height: 520px;
+    border-radius: 20px;
+    background-color: #FFF389;
+}
+
+.register_text {
+    height: 100%;
+    width: 100%;
+    font-size: 20pt;
+}
+
+.email_frame {
+    margin-top: 30px;
+}
+
+.account_frame {
+    margin-top: 10px;
+}
+
+.password_frame {
+    margin-top: 10px;
+}
+
+.check_pass_frame {
+    margin-top: 10px;
+}
+
+.checkin_frame {
+    margin-top: 10px;
+}
+
+.checkin {
+    width: 100%;
+    color: #2C5F14;
+    background-color: #a4ff67;
+}
+
+.text {
+    font-weight: bold;
+    color: #9ca1a1;
+}
+
+.subject_link {
+    font-weight: bold;
+    color: #2C5F14;
+}
+
+.jump_page {
+    top: 20px;
+}

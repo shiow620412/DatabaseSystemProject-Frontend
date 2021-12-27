@@ -11,8 +11,8 @@
         <el-main>
           <el-row>
             <el-col :span="21">
-              <el-form label-width="100px" class="email_frame">
-                <el-form-item prop="email" label="信箱" >
+              <el-form :model="dynamicValidateForm" label-width="100px" ref="dynamicValidateForm" class="email_frame">
+                <el-form-item label="信箱" prop="email">
                   <el-input v-model="dynamicValidateForm.email"></el-input>
                 </el-form-item>
               </el-form>
@@ -21,8 +21,8 @@
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form label-width="100px" class="account_frame">
-                <el-form-item prop="account" label="帳號">
+              <el-form :model="dynamicValidateForm" label-width="100px" ref="dynamicValidateForm" class="account_frame">
+                <el-form-item label="帳號" prop="account">
                   <el-input v-model="dynamicValidateForm.account"></el-input>
                 </el-form-item>
               </el-form>
@@ -78,14 +78,26 @@
 <script>
   import UserService from '../../../services/user.service'
   export default {
-    name: 'top',
+    name: 'register',
     data() {
       return {
+        ruleForm: {
+          pass: '',
+          checkPass: ''
+        },
+        rules: {
+          pass: [{
+            validator: validatePass,
+            trigger: 'blur'
+          }],
+          checkPass: [{
+            validator: validatePass2,
+            trigger: 'blur'
+          }],
+        },
         dynamicValidateForm: {
-          email: '',
-          account: '',
-          password: '',
-          name: ''
+          email:'',
+          account:'',
         },
       };
     },
@@ -103,64 +115,4 @@
   };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  .frame {
-    background-color: #EFFFE4;
-    height: 600px;
-    width: 100%;
-  }
-
-  .login_frame {
-    position: relative;
-    top: 30px;
-    height: 520px;
-    background-color: #FFF389;
-  }
-
-  .register_text {
-    height: 100%;
-    width: 100%;
-    font-size: 20pt;
-  }
-
-  .email_frame {
-    margin-top: 30px;
-  }
-
-  .account_frame {
-    margin-top: 10px;
-  }
-
-  .password_frame {
-    margin-top: 10px;
-  }
-
-  .check_pass_frame {
-    margin-top: 10px;
-  }
-
-  .checkin_frame {
-    margin-top: 10px;
-  }
-
-  .checkin {
-    width: 100%;
-    color: #2C5F14;
-    background-color: #a4ff67;
-  }
-
-  .text {
-    font-weight: bold;
-    color: #9ca1a1;
-  }
-
-  .subject_link {
-    font-weight: bold;
-    color: #2C5F14;
-  }
-
-  .jump_page {
-    top: 20px;
-  }
-</style>
+<style scoped lang="scss" src="./register.scss"></style>

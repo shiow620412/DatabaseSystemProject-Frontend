@@ -65,7 +65,7 @@
                     <span class="total-price-title">合計：</span>
                     <span class="total-price">{{ getTotalPrice }}元</span>
                 </span>
-                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'" :disabled="this.productOfChecked.length === 0 ? true : false">結帳</el-button>
+                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'" :disabled="this.productOfChecked.length === 0 ? true : false" @click="this.$router.push({path: '/payment', query: { dataTable: this.productOfChecked }})">買單</el-button>
             </div>
         </div>
     </div>
@@ -82,6 +82,7 @@
 import { ref } from 'vue'
 import ShopCartController from "./ShopCart.controller";
 export default {
+    emits: ['sendDataToPayment'],
     name: 'ShopCart',
     setup() {
         return {

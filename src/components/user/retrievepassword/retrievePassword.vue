@@ -67,6 +67,7 @@
         position: relative;
         top: 100px;
         height: 350px;
+        border-radius: 20px;
         background-color: #FFF389;
     }
 
