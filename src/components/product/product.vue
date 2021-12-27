@@ -54,9 +54,6 @@
 import productService from "../../services/product.service"
   export default {
     name: 'top',
-    props: {
-        product: Array,
-    },
     data() {
       return {
         content: "<p>123</p>",

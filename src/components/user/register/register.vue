@@ -76,10 +76,28 @@
 </template>
 
 <script>
-  import UserService from '../../../services/user.service'
   export default {
     name: 'register',
     data() {
+      var validatePass = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('請輸入密碼'));
+        } else {
+          if (this.ruleForm.checkPass !== '') {
+            this.$refs.ruleForm.validateField('checkPass');
+          }
+          callback();
+        }
+      };
+      var validatePass2 = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('請再次輸入密碼'));
+        } else if (value !== this.ruleForm.pass) {
+          callback(new Error('兩次輸入不一致!'));
+        } else {
+          callback();
+        }
+      };
       return {
         ruleForm: {
           pass: '',
@@ -102,14 +120,15 @@
       };
     },
     methods: {
-      submitForm(email, account, password, name) {
-        UserService.register(email, account, password, name).then(data => {
-          console.log(data);
-          this.$router.push({path: '/'});
-          alert("註冊成功");
-        }).catch((error) => {
-          alert(error.response.data.message);
-        })
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
       },
     }
   };
