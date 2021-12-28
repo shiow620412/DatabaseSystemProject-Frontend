@@ -3,15 +3,15 @@ import http from "../service.config";
 const prefix = "/admin/users";
 const services = {
     getMembers,
-    modifyMember,
-    getAllMembersStatus
+    modifyUser,
+    getAllMemberStatus
 }
 
 function getMembers() {
     return http.get(prefix);
 }
 
-function modifyMember(userId, isAdminStatus, isBanStatus) {
+function modifyUser(userId, isAdminStatus, isBanStatus) {
     const url = prefix + "/";
 
     return http.put(url + userId + "/operate", {
@@ -20,7 +20,7 @@ function modifyMember(userId, isAdminStatus, isBanStatus) {
     });
 }
 
-function getAllMembersStatus() {
+function getAllMemberStatus() {
     const url = prefix + "/status";
 
     return http.get(url);
