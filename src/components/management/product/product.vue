@@ -32,13 +32,13 @@
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="price" label="商品價格" min-width="25%" align="center"></el-table-column>
-                    <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
+                    <el-table-column prop="Price" label="商品價格" min-width="25%" align="center"></el-table-column>
+                    <el-table-column prop="Stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
                     <el-table-column label="操作" min-width="20%" align="center">
                         <template #default="scope">
                             <div align="center">
                             <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row)">編輯</el-button>
-                            <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.productID)" type="danger">刪除</el-button>
+                            <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.ProductID)" type="danger">刪除</el-button>
                             </div>
                         </template>
                     </el-table-column>
@@ -57,8 +57,8 @@
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
                         <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" limit="1" :on-success="handleAvatarSuccess" :on-remove="handleRemove" :on-progress="checkImg" :on-exceed="handleExceed">
-                            <div class="image" v-if="this.productArray[this.index].thumbnail">
-                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].thumbnail" />
+                            <div class="image" v-if="this.productArray[this.index].Thumbnail">
+                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].Thumbnail" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
@@ -69,18 +69,20 @@
 
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
-                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].name" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input></h1>
+                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
+                                <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
+                            </h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
                                 <span style="font-weight: normal;">NT$</span>
-                                <el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                                <el-input v-model="this.productArray[this.index].Price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].Price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>剩餘數量:&nbsp;&nbsp;
-                                <el-input v-model="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
+                                <el-input v-model="this.productArray[this.index].Stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].Stock)">
                                 </el-input>
                             </h1>
                         </div>
@@ -119,8 +121,6 @@ import {
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
 // import imageService from '../../../services/image.service'
-import getProductService from '../../../services/product.service'
-
 export default {
     name: 'product',
     components: {
@@ -136,58 +136,58 @@ export default {
             tabName: "新增商品",
             num: 1,
             index: 0,
-            productArray: [],
-            // productArray: [{
-            //     productID: 0,
-            //     productName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-            //     price: 515,
-            //     stock: 10,
-            //     description: "<p>txt url</p><p class='ql-align-center'>product <span style='color: rgb(230, 100, 0);'>description</span></p>"
-            // }, {
-            //     productID: 1,
-            //     productName: "商品1",
-            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-            //     price: 515,
-            //     stock: 10,
-            //     description: "<p>txt url</p>"
-            // }, {
-            //     productID: 2,
-            //     productName: "商品2",
-            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-            //     price: 515,
-            //     stock: 10,
-            //     description: "p class='ql-align-center'>product2 <span style='color: rgb(230, 0, 255);'>description</span></p>"
-            // }, {
-            //     productID: 3,
-            //     productName: "商品3",
-            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-            //     price: 515,
-            //     stock: 10,
-            //     description: "<p>txt url</p>"
-            // }, {
-            //     productID: 4,
-            //     productName: "商品4",
-            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-            //     price: 515,
-            //     stock: 10,
-            //     description: "<p>txt url</p>"
-            // }, {
-            //     productID: 5,
-            //     productName: "商品5",
-            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-            //     price: 1000,
-            //     stock: 1,
-            //     description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
-            // }],
-            // operationProduct: {
-            //     productID: 0,
-            //     productName: '',
-            //     photo: '',
-            //     price: 0,
-            //     stock: 0,
-            //     description: ''
-            // },
+            productArray: [{
+                ProductID: 0,
+                ProductName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
+                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                Price: 515,
+                Stock: 10,
+                description: "<p>txt url</p><p class='ql-align-center'>product <span style='color: rgb(230, 100, 0);'>description</span></p>"
+            }, {
+                ProductID: 1,
+                ProductName: "商品1",
+                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                Price: 515,
+                Stock: 10,
+                description: "<p>txt url</p>"
+            }, {
+                ProductID: 2,
+                ProductName: "商品2",
+                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                Price: 515,
+                Stock: 10,
+                description: "p class='ql-align-center'>product2 <span style='color: rgb(230, 0, 255);'>description</span></p>"
+            }, {
+                ProductID: 3,
+                ProductName: "商品3",
+                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                Price: 515,
+                Stock: 10,
+                description: "<p>txt url</p>"
+            }, {
+                ProductID: 4,
+                ProductName: "商品4",
+                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                Price: 515,
+                Stock: 10,
+                description: "<p>txt url</p>"
+            }, {
+                ProductID: 5,
+                ProductName: "商品5",
+                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+                Price: 1000,
+                Stock: 1,
+                description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
+            }],
+            operationProduct: {
+                ProductID: 0,
+                ProductName: '',
+                Thumbnail: '',
+                Price: 0,
+                Stock: 0,
+                description: ''
+            },
+            testData: "Test send data"
         }
     },
     methods: productController,
@@ -195,24 +195,20 @@ export default {
         tables: function () {
             var search = this.search;
             if (search) {
-                return this.productArray.result.filter(function (dataNews) {
+                return this.productArray.filter(function (dataNews) {
                     return Object.keys(dataNews).some(function (key) {
                         return String(dataNews[key]).toLowerCase().indexOf(search) > -1
                     })
                 })
             }
-            return this.productArray.result
+            return this.productArray
         }
     },
-    mounted() {
-        getProductService.getProducts().then(data => {
-            this.productArray = data
-        })
+    // mounted() {
     //     imageService.getImage().then(data => {
     //         this.ResolveOverlongString(data, 0);
     //     })
-    }
-
+    // }
 }
 </script>
 

@@ -1,5 +1,4 @@
 import imageService from '../../../services/image.service'
-// import productService from '../../../services/admin/product.service'
 export default {
     checkButton,
     addProduct,
