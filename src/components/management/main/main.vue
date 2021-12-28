@@ -22,6 +22,14 @@
                     </el-card>
                 </router-link>
             </el-col>
+            <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
+                <el-button type="cord" shadow="always" @click="getPageID(item.pageID) & this.$router.push(item.link)">
+                    <vue3-chart-js v-bind="{ ...item.chartData }" />
+                    <div style="padding: 14px">
+                        <span style="font-weight: bold;font-size: 25px;margin-top: 20px;">{{ item.name }}</span>
+                    </div>
+                </el-button>
+            </el-col>
         </el-row>
         <p>memberNumber:  {{ this.memberNumber }}</p>
         <!-- <p>{{ this.memberNumber.data.datasets[0].data }}</p> -->
