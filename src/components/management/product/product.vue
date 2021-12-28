@@ -21,19 +21,19 @@
                         <el-input style="width: 250px" placeholder="Search" class="search" v-model="search"></el-input>
                     </el-col>
                 </el-row>
-                <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'memberID' }" row-style="height: 10vh" max-height="450">
-                    <el-table-column prop="productID" label="商品ID" min-width="15%" align="center" sortable></el-table-column>
-                    <el-table-column prop="productName" label="商品名稱" min-width="25%" align="center" sortable></el-table-column>
+                <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'ProductID' }" row-style="height: 10vh" max-height="450">
+                    <el-table-column prop="ProductID" label="商品ID" min-width="15%" align="center" sortable></el-table-column>
+                    <el-table-column prop="ProductName" label="商品名稱" min-width="25%" align="center" sortable></el-table-column>
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
                             <div class="demo-image__preview">
-                                <el-image style="width: 100px; height: 100px" :src="scope.row.photo" :preview-src-list="srcList" :initial-index="1">
+                                <el-image style="width: 100px; height: 100px" :src="scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="price" label="商品價格" min-width="25%" align="center"></el-table-column>
-                    <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
+                    <el-table-column prop="Price" label="商品價格" min-width="25%" align="center"></el-table-column>
+                    <!-- <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column> -->
                     <el-table-column label="操作" min-width="13%" align="center">
                         <template #default="scope">
                             <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row)">編輯</el-button>
@@ -54,8 +54,8 @@
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
                         <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" limit="1" :on-success="handleAvatarSuccess" :on-remove="handleRemove" :on-progress="checkImg" :on-exceed="handleExceed">
-                            <div class="image" v-if="this.productArray[this.index].photo">
-                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo" :acceptPhoto="this.productArray[this.index].photo" />
+                            <div class="image" v-if="this.productArray[this.index].thumbnail">
+                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].thumbnail" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
@@ -66,20 +66,18 @@
 
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
-                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" :acceptName="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
-                                <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
-                            </h1>
+                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].name" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input></h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
                                 <span style="font-weight: normal;">NT$</span>
-                                <el-input v-model="this.productArray[this.index].price" :acceptPrice="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                                <el-input v-model="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>剩餘數量:&nbsp;&nbsp;
-                                <el-input v-model="this.productArray[this.index].stock" :acceptStock="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
+                                <el-input v-model="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
                                 </el-input>
                             </h1>
                         </div>
@@ -89,7 +87,7 @@
                 <el-row>
                     <el-col :span="3"></el-col>
                     <el-col :span="18" class="product-detail">
-                        <vue-editor v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor>
+                        <vue-editor v-model="this.productArray[this.index].description"></vue-editor>
                         <!-- <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor> -->
                         <!-- <div v-text="this.productArray[this.index].description"></div> -->
                     </el-col>
@@ -105,54 +103,6 @@
 
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
                 <productPage :product="this.productArray[this.index]" />
-                <!-- <productPage :acceptPhoto="this.productArray[this.index].photo" :acceptName="this.productArray[this.index].productName" :acceptPrice="this.productArray[this.index].price" :acceptStock="this.productArray[this.index].stock" :acceptDescription="this.productArray[this.index].description" /> -->
-                <!-- <el-row class="product-briefing">
-                    <el-col :span="3"></el-col>
-                    <el-col :span="7" class="pro_Image">
-                        <div class="image"><img :src="this.productArray[this.index].photo"></div>
-                    </el-col>
-                    <el-col :span="11" class="pro_intro">
-                        <div class="pro_name">
-                            <h3>{{this.productArray[this.index].productName}}</h3>
-                        </div>
-                        <el-row class="row_three">
-                            <el-col :span="9">
-                                <div class="pro_price">
-                                    <h1>NT$ {{ this.productArray[this.index].price }}</h1>
-                                </div>
-                            </el-col>
-                            <el-col :span="15"></el-col>
-                        </el-row>
-                        <el-row class="row_three">
-                            <el-col :span="8">
-                                <div class="quantity_text"><span>數量</span></div>
-                            </el-col>
-                            <el-col :span="8">
-                                <div class="pro_input_quantity">
-                                    <el-input-number style="width: 100%" size="small" v-model="num" @change="handleChange" :min="1" :max="this.productArray[this.index].stock" label="描述文字" />
-                                </div>
-                            </el-col>
-                            <el-col :span="8">
-                                <div class="the_rest_of"><span>還剩下{{ this.productArray[this.index].stock }}個</span></div>
-                            </el-col>
-                        </el-row>
-                        <el-row class="add_procar">
-                            <el-col :span="4"></el-col>
-                            <el-col :span="8"><br><br>
-                                <el-button type="success">加入購物車</el-button>
-                            </el-col>
-                            <el-col :span="12"></el-col>
-                        </el-row>
-                    </el-col>
-                    <el-col :span="3"></el-col>
-                </el-row>
-                <el-row class="product-briefing">
-                    <el-col :span="3"></el-col>
-                    <el-col :span="18" class="product-detail">
-                        <div class="ql-editor" v-html="this.productArray[this.index].description"></div>
-                    </el-col>
-                    <el-col :span="3"></el-col>
-                </el-row> -->
             </el-tab-pane>
         </el-tabs>
     </el-main>
@@ -166,6 +116,8 @@ import {
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
 // import imageService from '../../../services/image.service'
+import getProductService from '../../../services/product.service'
+
 export default {
     name: 'product',
     components: {
@@ -181,58 +133,58 @@ export default {
             tabName: "新增商品",
             num: 1,
             index: 0,
-            productArray: [{
-                productID: 0,
-                productName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p><p class='ql-align-center'>product <span style='color: rgb(230, 100, 0);'>description</span></p>"
-            }, {
-                productID: 1,
-                productName: "商品1",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                productID: 2,
-                productName: "商品2",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "p class='ql-align-center'>product2 <span style='color: rgb(230, 0, 255);'>description</span></p>"
-            }, {
-                productID: 3,
-                productName: "商品3",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                productID: 4,
-                productName: "商品4",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                productID: 5,
-                productName: "商品5",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 1000,
-                stock: 1,
-                description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
-            }],
-            operationProduct: {
-                productID: 0,
-                productName: '',
-                photo: '',
-                price: 0,
-                stock: 0,
-                description: ''
-            },
-            testData: "Test send data"
+            productArray: [],
+            // productArray: [{
+            //     productID: 0,
+            //     productName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
+            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+            //     price: 515,
+            //     stock: 10,
+            //     description: "<p>txt url</p><p class='ql-align-center'>product <span style='color: rgb(230, 100, 0);'>description</span></p>"
+            // }, {
+            //     productID: 1,
+            //     productName: "商品1",
+            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+            //     price: 515,
+            //     stock: 10,
+            //     description: "<p>txt url</p>"
+            // }, {
+            //     productID: 2,
+            //     productName: "商品2",
+            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+            //     price: 515,
+            //     stock: 10,
+            //     description: "p class='ql-align-center'>product2 <span style='color: rgb(230, 0, 255);'>description</span></p>"
+            // }, {
+            //     productID: 3,
+            //     productName: "商品3",
+            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+            //     price: 515,
+            //     stock: 10,
+            //     description: "<p>txt url</p>"
+            // }, {
+            //     productID: 4,
+            //     productName: "商品4",
+            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+            //     price: 515,
+            //     stock: 10,
+            //     description: "<p>txt url</p>"
+            // }, {
+            //     productID: 5,
+            //     productName: "商品5",
+            //     photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
+            //     price: 1000,
+            //     stock: 1,
+            //     description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
+            // }],
+            // operationProduct: {
+            //     productID: 0,
+            //     productName: '',
+            //     photo: '',
+            //     price: 0,
+            //     stock: 0,
+            //     description: ''
+            // },
         }
     },
     methods: productController,
@@ -240,20 +192,24 @@ export default {
         tables: function () {
             var search = this.search;
             if (search) {
-                return this.productArray.filter(function (dataNews) {
+                return this.productArray.result.filter(function (dataNews) {
                     return Object.keys(dataNews).some(function (key) {
                         return String(dataNews[key]).toLowerCase().indexOf(search) > -1
                     })
                 })
             }
-            return this.productArray
+            return this.productArray.result
         }
     },
-    // mounted() {
+    mounted() {
+        getProductService.getProducts().then(data => {
+            this.productArray = data
+        })
     //     imageService.getImage().then(data => {
     //         this.ResolveOverlongString(data, 0);
     //     })
-    // }
+    }
+
 }
 </script>
 
