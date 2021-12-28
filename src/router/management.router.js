@@ -1,4 +1,3 @@
-
 import managementPage from '../view/management.vue';
 import mainManagement from '../components/management/main/main.vue';
 import memberManagement from '../components/management/member/member.vue';
@@ -7,6 +6,7 @@ import productManagement from '../components/management/product/product.vue'
 const router = {
     path: '/management',
     component: managementPage,
+    redirect: "/management/main",
     children: [{
       path: 'main',
       component: mainManagement

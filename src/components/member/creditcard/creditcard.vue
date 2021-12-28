@@ -7,11 +7,11 @@
         <hr>
         <div class="order-div">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="number" label="卡號" width="180" align="center"/>
-                <el-table-column prop="deadline" label="到期日" width="180" align="center"/>
+                <el-table-column prop="CreditCardNumber" label="卡號" width="180" align="center"/>
+                <el-table-column prop="ExpireYear" label="年" width="180" align="center"/>
+                <el-table-column prop="ExpireMonth" label="月" width="180" align="center"/>
                 <el-table-column align="right">
                 <template #default="scope">
-                    <el-button size="mini" @click="handleEdit(scope.$index)">Edit</el-button>
                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index)">Delete</el-button>
                 </template>
                 </el-table-column>
@@ -20,44 +20,22 @@
         <el-dialog v-model="isAddShow" title="新增信用卡" width="22%">
             <el-form :model="form">
                 <el-form-item label="卡號">
-                    <el-input v-model="form.number" autocomplete="off"></el-input>
+                    <el-input v-model="form.CreditCardNumber" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="安全碼">
-                    <el-input v-model="form.safeCode" autocomplete="off"></el-input>
+                    <el-input v-model="form.SecurityCode" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="年">
-                    <el-input v-model="form.year" autocomplete="off"></el-input>
+                    <el-input v-model="form.ExpireYear" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="月">
-                    <el-input v-model="form.month" autocomplete="off"></el-input>
+                    <el-input v-model="form.ExpireMonth" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="addClose()">Cancel</el-button>
-                    <el-button type="primary" @click="onAddSubmit()">Confirm</el-button>
-                </span>
-            </template>
-        </el-dialog>
-        <el-dialog v-model="isEditShow" title="修改信用卡" width="30%">
-            <el-form :model="form">
-                <el-form-item label="卡號">
-                    <el-input v-model="form.number" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="安全碼">
-                    <el-input v-model="form.safeCode" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="年">
-                    <el-input v-model="form.year" autocomplete="off"></el-input>
-                </el-form-item>
-                <el-form-item label="月">
-                    <el-input v-model="form.month" autocomplete="off"></el-input>
-                </el-form-item>
-            </el-form>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="windowsEditClose()">取消</el-button>
-                    <el-button type="primary" @click="onEditSubmit()">完成</el-button>
+                    <el-button @click="addClose()">取消</el-button>
+                    <el-button type="primary" @click="onAddSubmit()">確認</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -65,6 +43,7 @@
 </template>
 
 <script>
+    import UserService from '../../../services/user.service'
     export default {
         name: 'creditCard',
         components: {
@@ -72,39 +51,22 @@
         },
         data(){
             return{
-                isEditShow: false,
                 isAddShow: false,
                 currentClick: 0,
                 labelPosition: 'right',
                 form: {
-                    number: "",
-                    safeCode: "",
-                    year: "",
-                    month: "",
+                    CreditCardNumber: "",
+                    SecurityCode: "",
+                    ExpireYear: "",
+                    ExpireMonth: "",
                 },
-                tableData: [
-                    {
-                        number: '20160503',
-                        safeCode: 123,
-                        deadline: '2013/02',
-                    },
-                    {
-                        number: '20160502',
-                        safeCode: 456,
-                        deadline: '2013/02',
-                    },
-                    {
-                        number: '20160504',
-                        safeCode: 789,
-                        deadline: '2013/02',
-                    },
-                    {
-                        number: '20160501',
-                        safeCode: 461,
-                        deadline: '2013/02',
-                    },
-                ],
+                tableData: [],
             }
+        },
+        mounted() {
+            UserService.getCreditCard().then(data => {
+                this.tableData = data;
+            })
         },
         methods: {
             addCard(){
@@ -112,7 +74,8 @@
                 this.clearForm();
             },
             onAddSubmit(){
-                this.tableData.push({number: this.form.number,deadline: this.form.year+'/'+this.form.month})
+                this.tableData.push({CreditCardNumber: this.form.CreditCardNumber,ExpireYear: this.form.ExpireYear, ExpireMonth: this.form.ExpireMonth});
+                UserService.AddCreditCard(this.form.CreditCardNumber, this.form.SecurityCode, parseInt(this.form.ExpireYear), parseInt(this.form.ExpireMonth));
                 this.isAddShow = false;
                 this.clearForm();
             },
@@ -120,32 +83,15 @@
                 this.isAddShow = false;
                 this.clearForm();
             },
-            handleEdit(index) {
-                this.isEditShow = true;
-                this.currentClick = index;
-                this.form.number = this.tableData[this.currentClick].number;
-                this.form.safeCode = this.tableData[this.currentClick].safeCode;
-                this.form.year = this.tableData[this.currentClick].deadline.split('/')[0];
-                this.form.month = this.tableData[this.currentClick].deadline.split('/')[1];
-            },
             handleDelete(index) {
                 if(confirm('確認刪除?')){
+                    UserService.DeleteCreditCard(this.tableData[index].CreditCardNumber);
                     this.tableData.splice(index, 1);
                 }
             },
-            onEditSubmit(){
-                this.tableData[this.currentClick].number = this.form.number;
-                this.tableData[this.currentClick].deadline = this.form.year.toString()+'/'+this.form.month.toString();
-                this.clearForm();
-                this.isEditShow = false;
-            },
-            windowsEditClose(){
-                this.isEditShow = false;
-                this.clearForm();
-            },
             clearForm(){
-                this.form.number = "";
-                this.form.safeCode = "";
+                this.form.CreditCardNumber = "";
+                this.form.SecurityCode = "";
                 this.form.year = "";
                 this.form.month = "";
             },

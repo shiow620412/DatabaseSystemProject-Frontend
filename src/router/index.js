@@ -2,7 +2,7 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router'
-import index from '../view/index.vue';
+import index from '../components/category/category.vue';
 import Product from '../components/product/product.vue';
 import cart from '../components/ShopCart/ShopCart.vue';
 import indexHeader from "../components/header/header.vue";
@@ -33,9 +33,18 @@ const routes = [
         path: '/cart',
         component: cart
       },
+      {
+        path:'/product/:id',
+        component: Product
+      },
+      {
+        path:'/category/:category',
+        component: index
+      },
       memberRouter
     ]
   },
+ 
   managementRouter,
   identifyRouter
 ]
