@@ -11,11 +11,8 @@
         <el-main>
           <el-row>
             <el-col :span="21">
-              <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="account_frame">
-                <el-form-item prop="account" label="帳號" :rules="[
-                  { required: true, message: '請輸入帳號', trigger: 'blur' },
-                   { type: 'account', message: '請輸入正確的信箱', trigger: ['blur', 'change'] }
-                ]">
+              <el-form :model="dynamicValidateForm" label-width="100px" class="account_frame">
+                <el-form-item label="帳號" prop="account">
                   <el-input v-model="dynamicValidateForm.account"></el-input>
                 </el-form-item>
               </el-form>
@@ -24,7 +21,7 @@
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="password_frame">
+              <el-form :model="ruleForm" status-icon label-width="100px" class="password_frame">
                 <el-form-item label="密碼" prop="pass">
                   <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
                 </el-form-item>
@@ -35,7 +32,7 @@
           <el-row class="checkin_frame">
             <el-col :span="4"></el-col>
             <el-col :span="17">
-              <el-button class="checkin" type="primary" @click="submitForm()">登入</el-button>
+              <el-button class="checkin" type="primary" @click="login(dynamicValidateForm.account, ruleForm.pass)">登入</el-button>
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
@@ -64,67 +61,25 @@
     </el-col>
     <el-col :span="7"></el-col>
   </el-row>
-  <!---
-  <el-form
-    :label-position="labelPosition"
-    label-width="100px"
-    :model="formLabelAlign"
-  >
-    <el-form-item label="Name">
-      <el-input v-model="formLabelAlign.name"></el-input>
-    </el-form-item>
-    <el-form-item label="Activity zone">
-      <el-input v-model="formLabelAlign.region"></el-input>
-    </el-form-item>
-    <el-form-item label="Activity form">
-      <el-input v-model="formLabelAlign.type"></el-input>
-    </el-form-item>
-  </el-form>
-  <button @click="test()">165654</button>
-  -->
 </template>
 
 <script>
+import loginController from './login.controller'
   export default {
-    name: 'top',
+    name: 'login',
     data() {
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('請輸入密碼'));
-        } 
-      };
       return {
-        /*labelPosition: 'right',
-        formLabelAlign: {
-          name: '',
-          region: '',
-          type: '',
-        },*/
         ruleForm: {
           pass: '',
-        },
-        rules: {
-          pass: [{
-            validator: validatePass,
-            trigger: 'blur'
-          }]
         },
         dynamicValidateForm: {
           account: ''
         },
       };
     },
-    methods: {
-      submitForm() {
-        this.$router.push({path: '/'});
-      },
-      /*test(){
-        this.$router.push({path: '/'});
-      }*/
-      mounted(){
-        console.log("");
-        
-      },
+    methods: loginController,
+    mounted(){
+      
     }
   };
 </script>
@@ -139,6 +94,7 @@
 
   .login_frame {
     position: relative;
+    border-radius: 20px;
     top: 70px;
     height: 450px;
     background-color: #FFF389;
