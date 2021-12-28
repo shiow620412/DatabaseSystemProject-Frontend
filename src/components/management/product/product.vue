@@ -32,15 +32,9 @@
                             </div>
                         </template>
                     </el-table-column>
-<<<<<<< HEAD
-                    <el-table-column prop="Price" label="商品價格" min-width="25%" align="center"></el-table-column>
-                    <!-- <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column> -->
-                    <el-table-column label="操作" min-width="13%" align="center">
-=======
                     <el-table-column prop="price" label="商品價格" min-width="25%" align="center"></el-table-column>
                     <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
                     <el-table-column label="操作" min-width="20%" align="center">
->>>>>>> a56ed6ad093d3e058c2b6f887251ce9a58fbc249
                         <template #default="scope">
                             <div align="center">
                             <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row)">編輯</el-button>
