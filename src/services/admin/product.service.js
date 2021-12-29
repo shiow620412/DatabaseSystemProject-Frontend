@@ -30,14 +30,13 @@ function deleteProduct(productID) {
     return http.delete(url + productID);
 }
 
-function modifyProduct(productID, price, thumbnail, description, type, stock) {
+function modifyProduct(productId, price, thumbnail, description, stock) {
     const url = prefix + "/";
 
-    return http.put(url + productID, {
+    return http.put(url + productId, {
         "price": price,
         "thumbnail": thumbnail,
         "description": description,
-        "type": type,
         "stock": stock
     });
 }

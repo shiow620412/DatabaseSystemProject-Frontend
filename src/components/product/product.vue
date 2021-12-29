@@ -44,7 +44,7 @@
 <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="product-detail">
-        <div class="ql-editor" v-html="this.product.description"></div>
+        <div class="ql-editor" v-html="this.product.Description"></div>
     </el-col>
     <el-col :span="3"></el-col>
 </el-row>

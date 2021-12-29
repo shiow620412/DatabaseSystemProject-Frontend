@@ -4,7 +4,6 @@
         <el-text style="font-size: 25px;font-weight: bold">商品管理</el-text>
     </el-header>
     <el-main>
-
         <el-tabs :tab-position="tabPosition" v-model="tabPosition" type="card" style="margin-bottom: 45px;">
             <el-tab-pane label="first" name="first" :disabled="!this.readOnly">
                 <template #label>
@@ -27,7 +26,7 @@
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
                             <div class="demo-image__preview">
-                                <el-image style="width: 100px; height: 100px" :src="getImg(scope.row.Thumbnail)" :preview-src-list="srcList" :initial-index="1">
+                                <el-image style="width: 100px; height: 100px" :src="scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
                             </div>
                         </template>
@@ -37,14 +36,14 @@
                     <el-table-column label="操作" min-width="20%" align="center">
                         <template #default="scope">
                             <div align="center">
-                            <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row)">編輯</el-button>
-                            <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.ProductID)" type="danger">刪除</el-button>
+                                <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row, scope.row.ProductID)">編輯</el-button>
+                                <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.ProductID)" type="danger">刪除</el-button>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
-                <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
-                </el-pagination>
+                <!-- <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
+                </el-pagination> -->
             </el-tab-pane>
             <el-tab-pane label="two" name="two" :disabled="!this.allowEdit">
                 <template #label>
@@ -52,36 +51,45 @@
                         新增/編輯商品
                     </span>
                 </template>
-                <!-- <p style="color: black;font-size: 25px;font-weight: bold;">{{ this.tabName }}</p>
+                <p style="color: black;font-size: 25px;font-weight: bold;">{{ this.tabName }}</p>
                 <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
-                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" limit="1" :on-success="handleAvatarSuccess" :on-remove="handleRemove" :on-progress="checkImg" :on-exceed="handleExceed">
-                            <div class="image" v-if="this.productArray[this.index].Thumbnail">
-                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].Thumbnail" />
+                        <el-upload
+                                class="avatar-uploader"
+                                action="#"
+                                method="post"
+                                accept=".jpg, .jpeg, .png"
+                                :show-file-list="false"
+                                :on-success="handleAvatarSuccess"
+                                :before-upload="beforeAvatarUpload"
+                                :on-error="handleBannerError"
+                                :on-change="handleChange"
+                                name="image">
+                            <div class="image" v-if="this.operationProduct.Thumbnail">
+                                <img :src="this.operationProduct.Thumbnail" class="avatar" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
                             </div>
-                            <el-button style="width: 100%" @click="clickPhoto(this.index)">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
+                            <el-button style="width: 100%">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
                         </el-upload>
                     </el-col>
-
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
-                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
+                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.operationProduct.ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
                             </h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
                                 <span style="font-weight: normal;">NT$</span>
-                                <el-input v-model="this.productArray[this.index].Price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].Price)"></el-input>
+                                <el-input v-model="this.operationProduct.Price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.operationProduct.Price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>剩餘數量:&nbsp;&nbsp;
-                                <el-input v-model="this.productArray[this.index].Stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].Stock)">
+                                <el-input v-model="this.operationProduct.Stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.operationProduct.Stock)">
                                 </el-input>
                             </h1>
                         </div>
@@ -91,23 +99,25 @@
                 <el-row>
                     <el-col :span="3"></el-col>
                     <el-col :span="18" class="product-detail">
-                        <vue-editor v-model="this.productArray[this.index].description"></vue-editor>
+                        <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="this.operationProduct.Description"></vue-editor>
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="3"></el-col>
-                    <el-col :span="18">
-                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
+                    <el-col :span="9">
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">取消</el-button>
+                        </el-col>
+                        <el-col :span="9">
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.proID) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
                     </el-col>
                     <el-col :span="3"></el-col>
-                </el-row> -->
-
+                </el-row>
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <productPage :product="this.productArray[this.index]" />
+                <productPage :prop="this.operationProduct.ProductID" />
             </el-tab-pane>
         </el-tabs>
-        </el-main>
+    </el-main>
 </el-container>
 </template>
 
@@ -117,8 +127,7 @@ import {
 } from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
-import productService from '../../../services/admin/product.service'
-// import imageService from '../../../services/image.service'
+import adminProductService from '../../../services/admin/product.service'
 export default {
     name: 'product',
     components: {
@@ -132,18 +141,17 @@ export default {
             readOnly: true,
             tabPosition: 'first',
             tabName: "新增商品",
-            num: 1,
-            index: 0,
+            proID: 0,
             productArray: [],
-            operationProduct: {
-                ProductID: 0,
-                ProductName: '',
-                Thumbnail: '',
-                Price: 0,
-                Stock: 0,
-                description: ''
-            },
-            testData: "Test send data",
+            operationProduct: [],
+            // operationProduct: {
+            //     ProductID: 0,
+            //     ProductName: '',
+            //     Thumbnail: '',
+            //     Price: 0,
+            //     Stock: 0,
+            //     description: ''
+            // },
         }
     },
     methods: productController,
@@ -161,15 +169,10 @@ export default {
         }
     },
     mounted() {
-        productService.getProducts().then(data => {
+        adminProductService.getProducts().then(data => {
             this.productArray = data;
         })
     }
-    // mounted() {
-    //     imageService.getImage().then(data => {
-    //         this.ResolveOverlongString(data, 0);
-    //     })
-    // }
 }
 </script>
 
