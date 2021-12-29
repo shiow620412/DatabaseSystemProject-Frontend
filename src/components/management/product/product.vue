@@ -27,7 +27,7 @@
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
                             <div class="demo-image__preview">
-                                <el-image style="width: 100px; height: 100px" :src="scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
+                                <el-image style="width: 100px; height: 100px" :src="getImg(scope.row.Thumbnail)" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
                             </div>
                         </template>
@@ -52,7 +52,7 @@
                         新增/編輯商品
                     </span>
                 </template>
-                <p style="color: black;font-size: 25px;font-weight: bold;">{{ this.tabName }}</p>
+                <!-- <p style="color: black;font-size: 25px;font-weight: bold;">{{ this.tabName }}</p>
                 <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
@@ -70,7 +70,6 @@
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
                             <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
-                                <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
                             </h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
@@ -93,8 +92,6 @@
                     <el-col :span="3"></el-col>
                     <el-col :span="18" class="product-detail">
                         <vue-editor v-model="this.productArray[this.index].description"></vue-editor>
-                        <!-- <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor> -->
-                        <!-- <div v-text="this.productArray[this.index].description"></div> -->
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
@@ -104,13 +101,13 @@
                         <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
                     </el-col>
                     <el-col :span="3"></el-col>
-                </el-row>
+                </el-row> -->
 
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
                 <productPage :product="this.productArray[this.index]" />
             </el-tab-pane>
         </el-tabs>
-    </el-main>
+        </el-main>
 </el-container>
 </template>
 
@@ -120,6 +117,7 @@ import {
 } from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
+import productService from '../../../services/admin/product.service'
 // import imageService from '../../../services/image.service'
 export default {
     name: 'product',
@@ -136,49 +134,7 @@ export default {
             tabName: "新增商品",
             num: 1,
             index: 0,
-            productArray: [{
-                ProductID: 0,
-                ProductName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                Price: 515,
-                Stock: 10,
-                description: "<p>txt url</p><p class='ql-align-center'>product <span style='color: rgb(230, 100, 0);'>description</span></p>"
-            }, {
-                ProductID: 1,
-                ProductName: "商品1",
-                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                Price: 515,
-                Stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                ProductID: 2,
-                ProductName: "商品2",
-                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                Price: 515,
-                Stock: 10,
-                description: "p class='ql-align-center'>product2 <span style='color: rgb(230, 0, 255);'>description</span></p>"
-            }, {
-                ProductID: 3,
-                ProductName: "商品3",
-                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                Price: 515,
-                Stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                ProductID: 4,
-                ProductName: "商品4",
-                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                Price: 515,
-                Stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                ProductID: 5,
-                ProductName: "商品5",
-                Thumbnail: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                Price: 1000,
-                Stock: 1,
-                description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
-            }],
+            productArray: [],
             operationProduct: {
                 ProductID: 0,
                 ProductName: '',
@@ -187,7 +143,7 @@ export default {
                 Stock: 0,
                 description: ''
             },
-            testData: "Test send data"
+            testData: "Test send data",
         }
     },
     methods: productController,
@@ -195,15 +151,20 @@ export default {
         tables: function () {
             var search = this.search;
             if (search) {
-                return this.productArray.filter(function (dataNews) {
+                return this.productArray.result.filter(function (dataNews) {
                     return Object.keys(dataNews).some(function (key) {
                         return String(dataNews[key]).toLowerCase().indexOf(search) > -1
                     })
                 })
             }
-            return this.productArray
+            return this.productArray.result
         }
     },
+    mounted() {
+        productService.getProducts().then(data => {
+            this.productArray = data;
+        })
+    }
     // mounted() {
     //     imageService.getImage().then(data => {
     //         this.ResolveOverlongString(data, 0);

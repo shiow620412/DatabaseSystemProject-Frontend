@@ -1,4 +1,5 @@
-import imageService from '../../../services/image.service'
+import imageService from '../../../services/admin/image.service'
+
 export default {
     checkButton,
     addProduct,
@@ -13,7 +14,8 @@ export default {
     handleRemove,
     checkImg,
     handleExceed,
-    handleImageAdded
+    handleImageAdded,
+    getImg,
 }
 
 function checkButton(clickButton) {
@@ -104,4 +106,9 @@ function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
         Editor.insertEmbed(cursorLocation, "image", url);
         resetUploader();
     });
+}
+
+function getImg(fileName) {
+    const imgURL = "http://103.195.4.81:3000/img/" + fileName
+    return imgURL;
 }

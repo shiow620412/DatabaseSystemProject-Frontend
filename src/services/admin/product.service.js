@@ -2,10 +2,15 @@ import http from "../service.config";
 
 const prefix = "/admin/products";
 const services = {
+    getProducts,
     addProduct,
     deleteProduct,
     modifyProduct,
     getAllProductStatus
+}
+
+function getProducts() {
+    return http.get(prefix);
 }
 
 function addProduct(productName, price, thumbnail, description, type, stock) {
