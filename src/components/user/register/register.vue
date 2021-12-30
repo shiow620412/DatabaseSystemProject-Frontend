@@ -58,16 +58,16 @@
           </el-row>
         </el-main>
         <el-row class="jump_page">
-          <el-col :span="7"></el-col>
-          <el-col :span="6" class="text">
+          <el-col :span="6"></el-col>
+          <el-col :span="8" class="text">
             <span>已註冊SHOP會員？</span>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="5">
             <div class="subject_link">
               <router-link to="/identify/login">登入</router-link>
             </div>
           </el-col>
-          <el-col :span="7"></el-col>
+          <el-col :span="5"></el-col>
         </el-row>
       </el-container>
     </el-col>
