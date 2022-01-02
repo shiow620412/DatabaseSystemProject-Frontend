@@ -9,14 +9,14 @@
             <el-input style="width: 250px" placeholder="Search" class="search" v-model="search"></el-input>
         </div>
         <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'MemberID' }" row-style="height: 10vh" max-height="490">
-        <!-- <el-table :data="memberArray" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'MemberID' }" row-style="height: 10vh" max-height="490"> -->
+            <!-- <el-table :data="memberArray" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'MemberID' }" row-style="height: 10vh" max-height="490"> -->
             <el-table-column prop="MemberID" label="會員ID" min-width="15%" align="center" sortable></el-table-column>
             <el-table-column prop="Name" label="會員名稱" min-width="25%" align="center" sortable></el-table-column>
             <el-table-column prop="Account" label="帳號" min-width="25%" align="center"></el-table-column>
             <el-table-column prop="Email" label="信箱" min-width="25%" align="center"></el-table-column>
             <el-table-column label="是否為管理員" min-width="15%" align="center">
                 <template v-slot="scope">
-                        <!-- <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag> -->
+                    <!-- <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag> -->
                     <template v-if="!scope.row.click">
                         <el-tag :type="(scope.row.isAdmin === 1) ? 'success' : 'danger'" size="medium">{{ changeIsAdminChinese(scope.row.isAdmin) }}</el-tag>
                     </template>
@@ -46,14 +46,17 @@
                 </template>
             </el-table-column>
         </el-table>
-        <!-- <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
-        </el-pagination> -->
+        <div style="text-align: center">
+            <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[50, 100, 150]" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="this.memberArray.total" />
+        </div>
     </el-main>
 </el-container>
 </template>
 
 <script>
-import { ref } from 'vue'
+import {
+    ref
+} from 'vue'
 import memberController from "./member.controller"
 import memberService from '../../../services/admin/user.service'
 
@@ -87,6 +90,8 @@ export default {
         return {
             search: '',
             memberArray: [],
+            currentPage: 1,
+            pageSize: 50,
         }
     },
     methods: memberController,
@@ -103,8 +108,8 @@ export default {
             return this.memberArray.result
         }
     },
-    mounted(){
-        memberService.getMembers().then(data => {
+    mounted() {
+        memberService.getAllMembers().then(data => {
             this.memberArray = data
         })
     }

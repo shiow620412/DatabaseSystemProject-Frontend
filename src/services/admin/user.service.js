@@ -2,13 +2,20 @@ import http from "../service.config";
 
 const prefix = "/admin/users";
 const services = {
+    getAllMembers,
     getMembers,
     modifyUser,
     getAllMemberStatus
 }
 
-function getMembers() {
+function getAllMembers() {
     return http.get(prefix);
+}
+
+function getMembers(pageNum) {
+    const url = prefix + "?page=" + pageNum
+
+    return http.get(url);
 }
 
 function modifyUser(userId, isAdminStatus, isBanStatus) {
