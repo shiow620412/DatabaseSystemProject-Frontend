@@ -9,19 +9,16 @@
     </el-header>
     <el-main>
         <el-row :gutter="12" justify="center">
-            <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
+            <!-- <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
                 <router-link :to="item.link">
                     <el-card shadow="always">
                         <vue3-chart-js v-bind="{ ...item.chartData }" />
                         <div style="padding: 14px">
                             <span style="font-weight: bold;font-size: 25px;margin-top: 20px;">{{ item.name }}</span>
-                            <!-- <div>
-                            {{ item.doc }}
-                        </div> -->
                         </div>
                     </el-card>
                 </router-link>
-            </el-col>
+            </el-col> -->
             <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
                 <el-button type="cord" shadow="always" @click="getPageID(item.pageID) & this.$router.push(item.link)">
                     <vue3-chart-js v-bind="{ ...item.chartData }" />
@@ -62,10 +59,10 @@ export default {
         }
     },
     mounted() {
-        memberService.getAllMembersStatus().then(data => {
+        memberService.getAllMemberStatus().then(data => {
             this.memberArray = data
         })
-        orderService.getAllOrdersStatus().then(data => {
+        orderService.getAllOrderStatus().then(data => {
             this.orderArray = data
         })
         productService.getAllProductStatus().then(data => {
