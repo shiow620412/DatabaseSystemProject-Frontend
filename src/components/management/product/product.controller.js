@@ -6,17 +6,17 @@ export default {
     checkButton,
     addProduct,
     editProduct,
+    setPID,
     deleteProduct,
     clickCancel,
     clickSave,
-    clickPhoto,
     checkPrice,
     checkStock,
-    handleAvatarSuccess,
     beforeAvatarUpload,
-    handleBannerError,
     handleChange,
     handleImageAdded,
+    handleSizeChange,
+    handleCurrentChange
 }
 
 function checkButton(clickButton) {
@@ -28,86 +28,78 @@ function checkButton(clickButton) {
 }
 
 function addProduct() {
-    this.productArray.push({
-        productID: this.productArray.length,
-        productName: '',
-        photo: '',
-        price: '',
-        description: ''
-    });
-    this.index = this.productArray.length - 1;
+    this.proID = 0;
 }
 
-function editProduct(index, item, productID) {
-    console.log(index);
-    console.log(item);
-    this.index = index;
+function editProduct(productID) {
     this.proID = productID;
-    productService.getProductdetail(this.proID).then(data => {
+    productService.getProductDetail(this.proID).then(data => {
         this.operationProduct = data;
     })
 }
 
-function deleteProduct(index, id) {
-    console.log(index);
-    console.log(id);
+function setPID(productID) {
+    this.proID = productID;
+    console.log(this.proID);
+    this.dialogVisible = true;
 }
 
-function clickCancel(num) {
-    console.log(num);
-    this.previewImage = null;
+function deleteProduct(productID) {
+    adminProductService.deleteProduct(productID).then((result) => {
+        this.$message.success(result.message);
+        location.reload();
+    });
+    this.dialogVisible = false;
+}
+
+function clickCancel() {
+    this.operationProduct.length = 0;
+    this.operationProduct = [];
+    console.log(this.operationProduct);
+    if (this.tabName === '新增商品') {
+        this.$message.success('取消新增商品');
+    } else if (this.tabName === '編輯商品') {
+        this.$message.success('取消編輯商品');
+    }
 }
 
 function clickSave(productID) {
-    console.log(productID);
     let temp = this.operationProduct;
-    adminProductService.modifyProduct(productID, temp.Price, temp.Thumbnail, temp.Description, temp.Stock)
+    if (this.tabName === '編輯商品') {
+        adminProductService.modifyProduct(productID, temp.Price, temp.Thumbnail, temp.Description, temp.Stock).then((result) => {
+            this.$message.success(result.message);
+            location.reload();
+        }).catch((error) => {
+            this.$message.error(error.response.data.message);
+        });
+    } else if (this.tabName === '新增商品') {
+        adminProductService.addProduct(temp.ProductName, temp.Price, temp.Thumbnail, temp.Description, temp.Type, temp.Stock).then((result) => {
+            this.$message.success(result.message);
+            location.reload();
+        }).catch((error) => {
+            this.$message.error(error.response.data.message);
+        });
+    }
     this.operationProduct.length = 0;
-}
-
-function clickPhoto(num) {
-    console.log(num)
+    this.operationProduct = [];
 }
 
 function checkPrice(num) {
     if (num < 0) {
+        console.log('checkprice');
         this.operationProduct.Price = 0;
+        this.$message.error('價格不可以低於0');
     }
 }
 
 function checkStock(num) {
     if (num < 0) {
         this.operationProduct.Stock = 0;
+        this.$message.error('庫存不可以低於0');
     }
 }
 
-function handleAvatarSuccess(res, file) {
-    let imageUrl = URL.createObjectURL(file.raw)
-    console.log(imageUrl);
-    this.$message.success('上傳成功')
-}
-
 function beforeAvatarUpload(file) {
-    // const isJPG = fileList.type === 'image/jpeg' || fileList.type === 'image/png'
-    // const isLt2M = fileList.size / 1024 / 1024 < 2
-
-    // if (!isJPG) {
-    //     this.$message.error('Avatar picture must be jpg/jpeg/png format!')
-    // }
-    // if (!isLt2M) {
-    //     this.$message.error('Avatar picture size can not exceed 2MB!')
-    // }
-    // if (isJPG && isLt2M) {
-    //     const formData = new FormData();
-    //     formData.append("image", fileList);
-    //     imageService.uploadImage(formData).then((result) => {
-    //         const url = result.imageUrl;
-    //         this.operationProduct.Thumbnail = url;
-    //         console.log(url);
-    //     });
-    // } else {
-    //     return isJPG && isLt2M;
-    // }
     const isJPG = file.type === 'image/jpeg';
     const isPNG = file.type === 'image/png';
     if (!isJPG && !isPNG) {
@@ -119,13 +111,10 @@ function beforeAvatarUpload(file) {
         imageService.uploadImage(formData).then((result) => {
             const url = result.imageUrl;
             this.operationProduct.Thumbnail = url;
+            this.$message.success(result.message);
             console.log(url);
         });
     }
-}
-
-function handleBannerError() {
-    this.$message.error('上傳失敗');
 }
 
 function handleChange(file, fileList) {
@@ -142,10 +131,23 @@ function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
         const url = result.imageUrl;
         Editor.insertEmbed(cursorLocation, "image", url);
         resetUploader();
+        this.$message.success("照片" + result.message);
+    }).catch((error) => {
+        this.$message.error(error.response.data.message);
     });
 }
 
-// function getImg(fileName) {
-//     const imgURL = "http://103.195.4.81:3000/img/" + fileName
-//     return imgURL;
-// }
+function handleSizeChange(size) {
+    this.pageSize = size;
+    console.log(this.pageSize);
+}
+
+function handleCurrentChange(currentPage) {
+    this.currentPage = currentPage;
+    console.log(this.currentPage);
+    adminProductService.getProducts(this.currentPage).then(data => {
+        this.productArray = data;
+    }).catch((error) => {
+        this.$message.error(error.response.data.message);
+    });
+}

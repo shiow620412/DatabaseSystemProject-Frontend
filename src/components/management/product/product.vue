@@ -33,17 +33,41 @@
                     </el-table-column>
                     <el-table-column prop="Price" label="商品價格" min-width="25%" align="center"></el-table-column>
                     <el-table-column prop="Stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
+                    <el-table-column label="狀態" min-width="18%" align="center">
+                        <template v-slot="scope">
+                                <el-tag :type="(scope.row.OnShelf === 'Yes') ? 'success' : 'error'" size="medium">{{ scope.row.OnShelf }}</el-tag>
+                        </template>
+                    </el-table-column>
                     <el-table-column label="操作" min-width="20%" align="center">
                         <template #default="scope">
                             <div align="center">
-                                <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row, scope.row.ProductID)">編輯</el-button>
-                                <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.ProductID)" type="danger">刪除</el-button>
+                                <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.row.ProductID)">編輯</el-button>
+                                <!-- <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.ProductID)" type="danger">下架</el-button> -->
+                                <el-button size="mini" @click="setPID(scope.row.ProductID)" type="danger">下架</el-button>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
-                <!-- <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
-                </el-pagination> -->
+                <div style="text-align: center">
+                <el-pagination 
+                    background 
+                    @size-change="handleSizeChange" 
+                    @current-change="handleCurrentChange" 
+                    :current-page="currentPage" 
+                    :page-sizes="[50, 100, 150]" 
+                    :page-size="pageSize"
+                    layout="total, prev, pager, next, jumper"
+                    :total="this.productArray.total" />
+                </div>
+                <el-dialog v-model="dialogVisible" width="20%">
+                    <span>確定要將此商品下架嗎?</span>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="dialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="deleteProduct(this.proID)">確定</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
             </el-tab-pane>
             <el-tab-pane label="two" name="two" :disabled="!this.allowEdit">
                 <template #label>
@@ -58,12 +82,9 @@
                         <el-upload
                                 class="avatar-uploader"
                                 action="#"
-                                method="post"
                                 accept=".jpg, .jpeg, .png"
                                 :show-file-list="false"
-                                :on-success="handleAvatarSuccess"
                                 :before-upload="beforeAvatarUpload"
-                                :on-error="handleBannerError"
                                 :on-change="handleChange"
                                 name="image">
                             <div class="image" v-if="this.operationProduct.Thumbnail">
@@ -83,7 +104,7 @@
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
                                 <span style="font-weight: normal;">NT$</span>
-                                <el-input v-model="this.operationProduct.Price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.operationProduct.Price)"></el-input>
+                                <el-input v-model="this.operationProduct.Price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkPrice(this.operationProduct.Price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
@@ -91,6 +112,13 @@
                             <h1>剩餘數量:&nbsp;&nbsp;
                                 <el-input v-model="this.operationProduct.Stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.operationProduct.Stock)">
                                 </el-input>
+                            </h1>
+                        </div>
+                        <div style="text-align: left;" class="pro_info_div" :disabled="(this.tabName === '新增商品') ? true : false" v-show="(this.tabName === '新增商品') ? true : false">
+                            <h1>商品類型:&nbsp;&nbsp;
+                                <el-select v-model="this.operationProduct.Type" placeholder="Select" size="medium">
+                                    <el-option v-for="item in typesArray" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                </el-select>
                             </h1>
                         </div>
                     </el-col>
@@ -106,7 +134,7 @@
                 <el-row>
                     <el-col :span="3"></el-col>
                     <el-col :span="9">
-                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">取消</el-button>
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickCancel() & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">取消</el-button>
                         </el-col>
                         <el-col :span="9">
                         <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.proID) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
@@ -114,7 +142,7 @@
                     <el-col :span="3"></el-col>
                 </el-row>
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <productPage :prop="this.operationProduct.ProductID" />
+                <productPage :SimulatedProduct="this.operationProduct" />     <!-- TODO: Fix send productID -->
             </el-tab-pane>
         </el-tabs>
     </el-main>
@@ -122,9 +150,8 @@
 </template>
 
 <script>
-import {
-    VueEditor
-} from 'vue3-editor';
+import { ref } from 'vue'
+import { VueEditor } from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
 import adminProductService from '../../../services/admin/product.service'
@@ -133,6 +160,31 @@ export default {
     components: {
         VueEditor,
         productPage,
+    },
+    setup() {
+        return {
+            typesArray: ref([{
+                    value: 1,
+                    label: '水果'
+                }, {
+                    value: 2, 
+                    label: '食物'
+                }, {
+                    value: 3, 
+                    label: '3c'
+                }, {
+                    value: 4, 
+                    label: '衣物'
+                }, {
+                    value: 5, 
+                    label: '日用品'
+                }, {
+                    value: 6, 
+                    label: '飲料'
+                }
+            ]),
+            value: ref('')
+        }
     },
     data() {
         return {
@@ -144,14 +196,9 @@ export default {
             proID: 0,
             productArray: [],
             operationProduct: [],
-            // operationProduct: {
-            //     ProductID: 0,
-            //     ProductName: '',
-            //     Thumbnail: '',
-            //     Price: 0,
-            //     Stock: 0,
-            //     description: ''
-            // },
+            dialogVisible: false,
+            currentPage: 1,
+            pageSize: 50,
         }
     },
     methods: productController,
@@ -169,7 +216,7 @@ export default {
         }
     },
     mounted() {
-        adminProductService.getProducts().then(data => {
+        adminProductService.getAllProducts().then(data => {
             this.productArray = data;
         })
     }

@@ -4,7 +4,7 @@ const prefix = "/products";
 const services = {
     getProducts,
     getProductsBycategory,
-    getProductdetail,
+    getProductDetail,
     getNewProductPage,
     getProductBySearch
 }
@@ -27,7 +27,7 @@ function getProducts(){
 
     return http.get(url);
 }
-function getProductdetail(id){
+function getProductDetail(id){
     let url = prefix + "/"+id;
 
     return http.get(url);

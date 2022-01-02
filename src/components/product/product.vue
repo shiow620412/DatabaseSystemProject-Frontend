@@ -1,8 +1,10 @@
 <template>
+  <p><span>Product: {{ this.product }}</span></p>
+  <p><span>SimulatedProduct: {{ this.SimulatedProduct }}</span></p>
 <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="7" class="pro_Image">
-      <div class="image"><img src="../../assets/al.jpg"></div>
+      <div class="image"><img :src="this.product.Thumbnail"></div>
     </el-col>
     <el-col :span="11" class="pro_intro">
       <div class="pro_name">
@@ -34,7 +36,7 @@
       <el-row class="add_procar">
         <el-col :span="4"></el-col>
         <el-col :span="8"><br><br>
-          <el-button type="success">加入購物車</el-button>
+          <el-button type="success" :disabled="!ButtonActivity">加入購物車</el-button>
         </el-col>
         <el-col :span="12"></el-col>
       </el-row>
@@ -54,11 +56,12 @@
 import productService from "../../services/product.service"
   export default {
     name: 'top',
+    props: ["SimulatedProduct"],
     data() {
       return {
         content: "<p>123</p>",
         num: 1,
-        product: {},
+        product: [],
       };
     },
     methods: {
@@ -66,10 +69,25 @@ import productService from "../../services/product.service"
         console.log(value);
       }
     },
+    computed: {
+      ButtonActivity: function() {
+        if (this.$route.params.id) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
     mounted() {
-      productService.getProductdetail(this.$route.params.id).then(data => {
-          this.product = data;
+      if (this.SimulatedProduct) {
+        this.product = this.SimulatedProduct;
+        console.log("SimulatedProduct");
+      } else {
+        productService.getProductDetail(this.$route.params.id).then(data => {
+        this.product = data;
       })
+        console.log("Product");
+      }
     },
   };
 </script>

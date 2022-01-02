@@ -2,6 +2,7 @@ import http from "../service.config";
 
 const prefix = "/admin/products";
 const services = {
+    getAllProducts,
     getProducts,
     addProduct,
     deleteProduct,
@@ -9,8 +10,14 @@ const services = {
     getAllProductStatus
 }
 
-function getProducts() {
+function getAllProducts() {
     return http.get(prefix);
+}
+
+function getProducts(pageNum) {
+    const url = prefix + "?page=" + pageNum
+
+    return http.get(url);
 }
 
 function addProduct(productName, price, thumbnail, description, type, stock) {
