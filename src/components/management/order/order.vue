@@ -41,8 +41,9 @@
                 </template>
             </el-table-column>
         </el-table>
-        <!-- <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
-        </el-pagination> -->
+        <div style="text-align: center">
+            <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[50, 100, 150]" :page-size="pageSize" layout="total, prev, pager, next, jumper" :total="this.orderArray.total" />
+        </div>
     </el-main>
 </el-container>
 </template>
@@ -74,6 +75,8 @@ export default {
         return {
             search: '',
             orderArray: [],
+            currentPage: 1,
+            pageSize: 50,
         }
     },
     methods: orderController,
@@ -91,7 +94,7 @@ export default {
         }
     },
     mounted() {
-        orderService.getOrders().then(data => {
+        orderService.getAllOrders().then(data => {
             this.orderArray = data
         })
     }

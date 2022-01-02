@@ -4,7 +4,9 @@ export default {
     changePaymentChinese,
     changeStatusChinese,
     modifyOrder,
-    clickSave
+    clickSave,
+    handleSizeChange,
+    handleCurrentChange
 }
 
 function changePaymentChinese(num) {
@@ -34,8 +36,23 @@ function clickSave(index, orderId, orderStatus) {
     let tempStatus = '';
     if (orderStatus === 1) {
         tempStatus = 'finish';
-    } else if(orderStatus === 2) {
+    } else if (orderStatus === 2) {
         tempStatus = 'cancel';
     }
     modifyOrder(orderId, tempStatus);
+}
+
+function handleSizeChange(size) {
+    this.pageSize = size;
+    console.log(this.pageSize);
+}
+
+function handleCurrentChange(currentPage) {
+    this.currentPage = currentPage;
+    console.log(this.currentPage);
+    orderService.getOrders(this.currentPage).then(data => {
+        this.orderArray = data;
+    }).catch((error) => {
+        this.$message.error(error.response.data.message);
+    });
 }

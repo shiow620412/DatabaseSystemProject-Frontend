@@ -2,13 +2,20 @@ import http from "../service.config";
 
 const prefix = "/admin/orders";
 const services = {
+    getAllOrders,
     getOrders,
     modifyOrder,
     getAllOrderStatus
 }
 
-function getOrders() {
+function getAllOrders() {
     return http.get(prefix);
+}
+
+function getOrders(pageNum) {
+    const url = prefix + "?page=" + pageNum
+
+    return http.get(url);
 }
 
 function modifyOrder(orderId,status) {
