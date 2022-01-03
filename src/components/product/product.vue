@@ -53,6 +53,7 @@
 <script>
 import productService from "../../services/product.service"
 import CartService from "../../services/cart.service"
+import { ElMessage } from 'element-plus'
   export default {
     name: 'top',
     data() {
@@ -66,6 +67,10 @@ import CartService from "../../services/cart.service"
       putProduct(id, num){
         CartService.PutProductIntoCart(id, num).then(data => {
           console.log(data.message);
+          ElMessage({
+            message:'已加入購物車',
+            type: 'success'
+            })
         }).catch((error) => {
           alert(error.response.data.message);
         })
