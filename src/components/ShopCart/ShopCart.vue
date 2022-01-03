@@ -15,41 +15,46 @@
                 <el-table-column type="selection" label="選取" min-width="10%" align="center"></el-table-column>
                 <el-table-column label="商品圖片" min-width="30%" align="center">
                     <template v-slot="scope">
-                        <el-image :src="scope.row.photo"></el-image>
+                        <el-image :src="scope.row.Thumbnail"></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="productName" label="商品名稱" min-width="35%" align="center"></el-table-column>
+                <el-table-column prop="ProductName" label="商品名稱" min-width="35%" align="center"></el-table-column>
                 <el-table-column label="單價" min-width="15%" align="center">
                     <template v-slot="scope">
-                        <el-text>&#36; {{ scope.row.price }}</el-text>
+                        <span>&#36; {{ scope.row.Price }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="購買數量" min-width="35%" align="center">
                     <template v-slot="scope">
-                        <el-input-number size="small" v-model="scope.row.quantity" :min="1" :max="scope.row.stock"></el-input-number>
+                        <el-input-number v-if="scope.row.allowEdit" size="small" v-model="scope.row.Quantity" :min="1" :max="scope.row.Stock"></el-input-number>
+                        <span v-else>{{ scope.row.Quantity }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column label="小計" min-width="20%" align="center">
                     <template v-slot="scope">
-                        <el-text>&#36; {{ scope.row.price * scope.row.quantity }}</el-text>
+                        <span>&#36; {{ scope.row.Price * scope.row.Quantity }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" min-width="15%" align="center">
+                <el-table-column label="操作" min-width="20%" align="center">
                     <template v-slot="scope">
-                        <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="setIndex(scope.$index)"></el-button>
+                        <el-button v-if="!scope.row.allowEdit" size="mini" @click="(scope.row.allowEdit = true) & editProduct(scope.row.ProductID)">編輯</el-button>
+                        <el-button v-else size="mini" @click="(scope.row.allowEdit = false) & saveProduct(scope.row.ProductID, scope.row.Quantity)">儲存</el-button>
+                        <el-button v-if="!scope.row.allowEdit" size="mini" @click="setDeleteID(scope.row.ProductID)" type="danger">刪除</el-button>
+                        <el-button v-else size="mini" @click="(scope.row.allowEdit = false) & cancelEdit()">取消</el-button>
+                        <!-- <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="setDeleteID(scope.row.ProductID)"></el-button> -->
                     </template>
                 </el-table-column>
             </el-table>
-            <el-dialog v-model="dialogVisible" width="20%">
-                <span>確定要刪除嗎?</span>
-                <template #footer>
-                    <span class="dialog-footer">
-                        <el-button @click="dialogVisible = false">取消</el-button>
-                        <el-button type="primary" @click="deleteProduct()">確定</el-button>
-                    </span>
-                </template>
-            </el-dialog>
         </ul>
+        <el-dialog v-model="dialogVisible" width="20%">
+            <span>確定要刪除嗎?</span>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="(dialogVisible = false)">取消</el-button>
+                    <el-button type="primary" @click="deleteProduct(this.proID)">確定</el-button>
+                </span>
+            </template>
+        </el-dialog>
 
         <div style="height: 20px; background-color: #f5f5f5"></div>
         <div class="cart-bar">
@@ -81,6 +86,7 @@
 <script>
 import { ref } from 'vue'
 import ShopCartController from "./ShopCart.controller";
+import ShopCartService from "../../services/shopcart.service"
 export default {
     emits: ['sendDataToPayment'],
     name: 'ShopCart',
@@ -92,57 +98,29 @@ export default {
     data() {
         return {
             productOfChecked: [],
-            deleteIndex: 0,
-            productArray: [{
-                productID: 1,
-                photo: require('../../assets/logo.png'),
-                productName: 'T-shirt',
-                price: 300,
-                quantity: 5,
-                stock: 5
-            }, {
-                productID: 2,
-                photo: require('../../assets/logo_test.png'),
-                productName: 'Tableware',
-                price: 100,
-                quantity: 3,
-                stock: 15
-            }, {
-                productID: 3,
-                photo: require('../../assets/logo.png'),
-                productName: 'Book',
-                price: 50,
-                quantity: 7,
-                stock: 35
-            }, {
-                productID: 4,
-                photo: require('../../assets/logo_test.png'),
-                productName: 'Bag',
-                price: 550,
-                quantity: 1,
-                stock: 3
-            }, {
-                productID: 5,
-                photo: require('../../assets/logo.png'),
-                productName: 'Pencil Box',
-                price: 135,
-                quantity: 1,
-                stock: 2
-            }],
+            productArray: [],
+            proID: 0,
+            allowEdit: false,
         }
     },
     methods: ShopCartController,
     computed: {
         getQuantity() {
-            return this.productArray.reduce((x, y) => x + y.quantity, 0)
+            return this.productArray.reduce((x, y) => x + y.Quantity, 0)
         },
         getCheckQuantity() {
-            return this.productOfChecked.reduce((x, y) => x + y.quantity, 0)
+            return this.productOfChecked.reduce((x, y) => x + y.Quantity, 0)
         },
         getTotalPrice() {
-            return this.productOfChecked.reduce((x, y) => x + y.price * y.quantity, 0)
+            return this.productOfChecked.reduce((x, y) => x + y.Price * y.Quantity, 0)
         }
+    },
+    mounted() {
+        ShopCartService.getCart().then(data => {
+            this.productArray = data;
+        })
     }
 }
 </script>
+
 <style scoped lang="scss" src="./ShopCart.scss"></style>
