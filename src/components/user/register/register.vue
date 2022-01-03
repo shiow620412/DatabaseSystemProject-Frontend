@@ -11,6 +11,16 @@
         <el-main>
           <el-row>
             <el-col :span="21">
+              <el-form label-width="100px" class="check_pass_frame">
+                <el-form-item label="名稱" prop="checkPass">
+                  <el-input type="password" v-model="dynamicValidateForm.name" autocomplete="off"></el-input>
+                </el-form-item>
+              </el-form>
+            </el-col>
+            <el-col :span="3"></el-col>
+          </el-row>
+          <el-row>
+             <el-col :span="21">
               <el-form label-width="100px" class="email_frame">
                 <el-form-item prop="email" label="信箱" >
                   <el-input v-model="dynamicValidateForm.email"></el-input>
@@ -39,16 +49,6 @@
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
-          <el-row>
-            <el-col :span="21">
-              <el-form label-width="100px" class="check_pass_frame">
-                <el-form-item label="名稱" prop="checkPass">
-                  <el-input type="password" v-model="dynamicValidateForm.name" autocomplete="off"></el-input>
-                </el-form-item>
-              </el-form>
-            </el-col>
-            <el-col :span="3"></el-col>
-          </el-row>
           <el-row class="checkin_frame">
             <el-col :span="4"></el-col>
             <el-col :span="17">
@@ -60,7 +60,7 @@
         <el-row class="jump_page">
           <el-col :span="7"></el-col>
           <el-col :span="6" class="text">
-            <span>已註冊SHOP會員？</span>
+            <span>已註冊WSS會員？</span>
           </el-col>
           <el-col :span="4">
             <div class="subject_link">
@@ -93,8 +93,8 @@
       submitForm(email, account, password, name) {
         UserService.register(email, account, password, name).then(data => {
           console.log(data);
-          this.$router.push({path: '/'});
           alert("註冊成功");
+          this.$router.push({path: '/identify/register'});
         }).catch((error) => {
           alert(error.response.data.message);
         })
@@ -125,7 +125,7 @@
   }
 
   .email_frame {
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   .account_frame {
@@ -137,7 +137,7 @@
   }
 
   .check_pass_frame {
-    margin-top: 10px;
+    margin-top: 30px;
   }
 
   .checkin_frame {

@@ -15,23 +15,23 @@
                 <el-table-column type="selection" label="選取" min-width="10%" align="center"></el-table-column>
                 <el-table-column label="商品圖片" min-width="30%" align="center">
                     <template v-slot="scope">
-                        <el-image :src="scope.row.photo"></el-image>
+                        <el-image :src="scope.row.Thumbnail"></el-image>
                     </template>
                 </el-table-column>
-                <el-table-column prop="productName" label="商品名稱" min-width="35%" align="center"></el-table-column>
+                <el-table-column prop="ProductName" label="商品名稱" min-width="35%" align="center"></el-table-column>
                 <el-table-column label="單價" min-width="15%" align="center">
                     <template v-slot="scope">
-                        <el-text>&#36; {{ scope.row.price }}</el-text>
+                        <el-text>&#36; {{ scope.row.Price }}</el-text>
                     </template>
                 </el-table-column>
                 <el-table-column label="購買數量" min-width="35%" align="center">
                     <template v-slot="scope">
-                        <el-input-number size="small" v-model="scope.row.quantity" :min="1" :max="scope.row.stock"></el-input-number>
+                        <el-input-number size="small" v-model="scope.row.Stock" :min="1" :max="scope.row.Stock"></el-input-number>
                     </template>
                 </el-table-column>
                 <el-table-column label="小計" min-width="20%" align="center">
                     <template v-slot="scope">
-                        <el-text>&#36; {{ scope.row.price * scope.row.quantity }}</el-text>
+                        <el-text>&#36; {{ scope.row.Price * scope.row.Stock }}</el-text>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" min-width="15%" align="center">
@@ -82,6 +82,7 @@
 <script>
 import { ref } from 'vue'
 import ShopCartController from "./ShopCart.controller";
+import CartService from '../../services/cart.service'
 export default {
     name: 'ShopCart',
     setup() {
@@ -93,43 +94,13 @@ export default {
         return {
             productOfChecked: [],
             deleteIndex: 0,
-            productArray: [{
-                productID: 1,
-                photo: require('../../assets/logo.png'),
-                productName: 'T-shirt',
-                price: 300,
-                quantity: 5,
-                stock: 5
-            }, {
-                productID: 2,
-                photo: require('../../assets/logo_test.png'),
-                productName: 'Tableware',
-                price: 100,
-                quantity: 3,
-                stock: 15
-            }, {
-                productID: 3,
-                photo: require('../../assets/logo.png'),
-                productName: 'Book',
-                price: 50,
-                quantity: 7,
-                stock: 35
-            }, {
-                productID: 4,
-                photo: require('../../assets/logo_test.png'),
-                productName: 'Bag',
-                price: 550,
-                quantity: 1,
-                stock: 3
-            }, {
-                productID: 5,
-                photo: require('../../assets/logo.png'),
-                productName: 'Pencil Box',
-                price: 135,
-                quantity: 1,
-                stock: 2
-            }],
+            productArray: [],
         }
+    },
+    mounted() {
+        CartService.getProductFromCart().then(data => {
+            this.productArray = data;
+        })
     },
     methods: ShopCartController,
     computed: {

@@ -30,7 +30,7 @@
                 </el-button>
             </router-link>
             <el-button class="button-back" @click="logout()">
-                <p class="el-icon-edit-outline button-text"></p>
+                <p class="el-icon-s-release button-text"></p>
                 <span class="button-text ">登出</span>
             </el-button>
         </el-col>

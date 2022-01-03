@@ -34,7 +34,7 @@
       <el-row class="add_procar">
         <el-col :span="4"></el-col>
         <el-col :span="8"><br><br>
-          <el-button type="success">加入購物車</el-button>
+          <el-button type="success" @click="putProduct(this.$route.params.id, num)">加入購物車</el-button>
         </el-col>
         <el-col :span="12"></el-col>
       </el-row>
@@ -52,6 +52,7 @@
 
 <script>
 import productService from "../../services/product.service"
+import CartService from "../../services/cart.service"
   export default {
     name: 'top',
     data() {
@@ -62,6 +63,13 @@ import productService from "../../services/product.service"
       };
     },
     methods: {
+      putProduct(id, num){
+        CartService.PutProductIntoCart(id, num).then(data => {
+          console.log(data.message);
+        }).catch((error) => {
+          alert(error.response.data.message);
+        })
+      },
       handleChange(value) {
         console.log(value);
       }

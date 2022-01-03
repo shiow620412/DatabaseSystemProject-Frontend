@@ -48,7 +48,7 @@
         <el-row class="jump_page">
           <el-col :span="7"></el-col>
           <el-col :span="6" class="text">
-            <span>註冊為SHOP會員</span>
+            <span>註冊為WSS會員</span>
           </el-col>
           <el-col :span="4">
             <div class="subject_link">

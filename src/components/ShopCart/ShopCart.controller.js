@@ -1,3 +1,5 @@
+import CartService from '../../services/cart.service'
+
 export default {
     setIndex,deleteProduct,addToPayArray
 }
@@ -6,6 +8,7 @@ function setIndex(num) {
     this.deleteIndex = num;
 }
 function deleteProduct() {
+    CartService.deleteProductofCart(this.productArray[this.deleteIndex].ProductID);
     this.productArray.splice(this.deleteIndex, 1);
     this.dialogVisible = false;
 }

@@ -15,6 +15,9 @@
                                 <el-form-item prop="email" label="信箱">
                                     <el-input v-model="dynamicValidateForm.email"></el-input>
                                 </el-form-item>
+                                <el-form-item prop="account" label="帳號">
+                                    <el-input v-model="dynamicValidateForm.account"></el-input>
+                                </el-form-item>
                             </el-form>
                         </el-col>
                         <el-col :span="3"></el-col>
@@ -22,7 +25,7 @@
                     <el-row class="checkin_frame">
                         <el-col :span="4"></el-col>
                         <el-col :span="17">
-                            <el-button class="checkin" type="primary" @click="submitForm(dynamicValidateForm.email)">送出</el-button>
+                            <el-button class="checkin" type="primary" @click="submitForm(dynamicValidateForm.email, dynamicValidateForm.account)">送出</el-button>
                         </el-col>
                         <el-col :span="3"></el-col>
                     </el-row>
@@ -41,13 +44,14 @@
       return {
         dynamicValidateForm: {
           email: '',
+          account: ''
         },
       };
     },
     methods: {
-      submitForm(email) {
-        UserService.findPassword(email).then(data => {
-          alert(data.Password);
+      submitForm(email, account) {
+        UserService.resetPassword(email, account).then(data => {
+          alert(data.message);
         }).catch((error) => {
           console.log(error.response.data.message);
         })
