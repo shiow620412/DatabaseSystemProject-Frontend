@@ -26,6 +26,6 @@
     }
     .login_logo{
         width: 48%;
-        transform:translateY(55%);
+        transform:translateY(40%);
     }
 </style>

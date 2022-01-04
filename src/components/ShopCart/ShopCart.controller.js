@@ -9,6 +9,7 @@ export default {
 
 function setIndex(num) {
     this.deleteIndex = num;
+    this.dialogVisible = true;
 }
 function deleteProduct() {
     CartService.deleteProductofCart(this.productArray[this.deleteIndex].ProductID);

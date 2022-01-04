@@ -1,5 +1,5 @@
 <template>
-  <el-row class="product-briefing">
+<el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="7" class="pro_Image">
       <div class="image"><img src="../../assets/al.jpg"></div>
@@ -40,14 +40,14 @@
       </el-row>
     </el-col>
     <el-col :span="3"></el-col>
-  </el-row>
-  <el-row class="product-briefing">
+</el-row>
+<el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="product-detail">
-      <div v-html="content"></div>
+        <div class="ql-editor" v-html="this.product.description"></div>
     </el-col>
     <el-col :span="3"></el-col>
-  </el-row>
+</el-row>
 </template>
 
 <script>

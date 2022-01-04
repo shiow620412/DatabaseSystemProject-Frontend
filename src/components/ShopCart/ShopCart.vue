@@ -36,20 +36,19 @@
                 </el-table-column>
                 <el-table-column label="操作" min-width="15%" align="center">
                     <template v-slot="scope">
-                        <!-- <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="dialogVisible = true"></el-button> -->
-                        <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="setIndex(scope.$index) & (dialogVisible = true)"></el-button>
-                        <el-dialog v-model="dialogVisible" width="30%">
-                            <span>您確定要將此商品從購物車中移除嗎?</span>
-                            <template #footer>
-                                <span class="dialog-footer">
-                                    <el-button @click="dialogVisible = false">取消</el-button>
-                                    <el-button type="primary" @click="deleteProduct()">確定</el-button>
-                                </span>
-                            </template>
-                        </el-dialog>
+                        <el-button type="text" class="el-icon-delete" style="font-size: 18px;" @click="setIndex(scope.$index)"></el-button>
                     </template>
                 </el-table-column>
             </el-table>
+            <el-dialog v-model="dialogVisible" width="20%">
+                <span>確定要刪除嗎?</span>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button @click="dialogVisible = false">取消</el-button>
+                        <el-button type="primary" @click="deleteProduct()">確定</el-button>
+                    </span>
+                </template>
+            </el-dialog>
         </ul>
 
         <div style="height: 20px; background-color: #f5f5f5"></div>
@@ -66,7 +65,7 @@
                     <span class="total-price-title">合計：</span>
                     <span class="total-price">{{ getTotalPrice }}元</span>
                 </span>
-                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'">結帳</el-button>
+                <el-button :class="getCheckQuantity > 0 ? 'btn-primary' : 'btn-primary-disabled'" :disabled="this.productOfChecked.length === 0 ? true : false" @click="this.$router.push({path: '/payment', query: { dataTable: this.productOfChecked }})">買單</el-button>
             </div>
         </div>
     </div>
@@ -84,6 +83,7 @@ import { ref } from 'vue'
 import ShopCartController from "./ShopCart.controller";
 import CartService from '../../services/cart.service'
 export default {
+    emits: ['sendDataToPayment'],
     name: 'ShopCart',
     setup() {
         return {

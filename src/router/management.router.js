@@ -6,6 +6,7 @@ import productManagement from '../components/management/product/product.vue'
 const router = {
     path: '/management',
     component: managementPage,
+    redirect: "/management/main",
     children: [{
       path: 'main',
       component: mainManagement
