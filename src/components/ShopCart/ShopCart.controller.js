@@ -1,7 +1,10 @@
 import CartService from '../../services/cart.service'
 
 export default {
-    setIndex,deleteProduct,addToPayArray
+    setIndex,
+    deleteProduct,
+    addToPayArray,
+    handleChange
 }
 
 function setIndex(num) {
@@ -14,4 +17,7 @@ function deleteProduct() {
 }
 function addToPayArray(val) {
     this.productOfChecked = val;
+}
+function handleChange(index,quantity){
+    alert(index+","+quantity);
 }

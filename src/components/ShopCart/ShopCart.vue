@@ -26,12 +26,12 @@
                 </el-table-column>
                 <el-table-column label="購買數量" min-width="35%" align="center">
                     <template v-slot="scope">
-                        <el-input-number size="small" v-model="scope.row.Stock" :min="1" :max="scope.row.Stock"></el-input-number>
+                        <el-input-number size="small" v-model="scope.row.Quantity" :min="1" :max="scope.row.Stock" @change="handleChange(scope.$index, scope.row.Quantity)"></el-input-number>
                     </template>
                 </el-table-column>
                 <el-table-column label="小計" min-width="20%" align="center">
                     <template v-slot="scope">
-                        <el-text>&#36; {{ scope.row.Price * scope.row.Stock }}</el-text>
+                        <el-text>&#36; {{ scope.row.Price * scope.row.Quantity }}</el-text>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作" min-width="15%" align="center">
@@ -105,13 +105,13 @@ export default {
     methods: ShopCartController,
     computed: {
         getQuantity() {
-            return this.productArray.reduce((x, y) => x + y.quantity, 0)
+            return this.productArray.reduce((x, y) => x + y.Quantity, 0)
         },
         getCheckQuantity() {
-            return this.productOfChecked.reduce((x, y) => x + y.quantity, 0)
+            return this.productOfChecked.reduce((x, y) => x + y.Quantity, 0)
         },
         getTotalPrice() {
-            return this.productOfChecked.reduce((x, y) => x + y.price * y.quantity, 0)
+            return this.productOfChecked.reduce((x, y) => x + y.Price * y.Quantity, 0)
         }
     }
 }
