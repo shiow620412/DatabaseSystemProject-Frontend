@@ -4,23 +4,23 @@
       <el-table width="100%" :data="dataTable" :header-cell-style="{background:'#FCA96D',color:'#000000'}">
         <el-table-column label="訂單商品" min-width="10%" align="center">
           <template v-slot="scope">
-            <el-image class="pay_image" :src="scope.row.photo"></el-image>
+            <el-image class="pay_image" :src="scope.row.Thumbnail"></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="itemName" min-width="35%" align="center" />
-        <el-table-column prop="price" label="單價" min-width="10%" align="center">
+        <el-table-column prop="ProductName" min-width="35%" align="center" />
+        <el-table-column prop="Price" label="單價" min-width="10%" align="center">
           <template v-slot="scope">
-            <p>&#36; {{ scope.row.price }}</p>
+            <p>&#36; {{ scope.row.Price }}</p>
           </template>
         </el-table-column>>
-        <el-table-column prop="quantity" label="數量" min-width="5%" align="center">
+        <el-table-column prop="Quantity" label="數量" min-width="5%" align="center">
           <template v-slot="scope">
-            <p>x {{ scope.row.quantity }}</p>
+            <p>x {{ scope.row.Quantity }}</p>
           </template>
         </el-table-column>
         <el-table-column prop="all_price" label="總共" min-width="10%" align="center">
           <template v-slot="scope">
-            <p>&#36; {{ scope.row.price * scope.row.quantity }}</p>
+            <p>&#36; {{ scope.row.Price * scope.row.Quantity }}</p>
           </template>
         </el-table-column>>
       </el-table>
@@ -34,13 +34,13 @@
       </el-row>
       <el-row>
         <el-col :span="8"></el-col>
-        <el-col :span="10" style="text-align:left;">姓名： {{send_Info.customer_name}}</el-col>
+        <el-col :span="10" style="text-align:left;">姓名： {{send_Info.Name}}</el-col>
         <el-col :span="6"></el-col>
         <el-col :span="8"></el-col>
-        <el-col :span="10" style="text-align:left;">電話： {{send_Info.phone}}</el-col>
+        <el-col :span="10" style="text-align:left;">電話： {{send_Info.Phone}}</el-col>
         <el-col :span="6"></el-col>
         <el-col :span="8"></el-col>
-        <el-col :span="10" style="text-align:left;">住址： {{send_Info.address}}</el-col>
+        <el-col :span="10" style="text-align:left;">住址： {{send_Info.Address}}</el-col>
         <el-col :span="6"></el-col>
       </el-row>
     </div>
@@ -49,8 +49,8 @@
         <el-col :span="8" style="color:#0093e9; text-align:right; font-weight:bold;">
           <span style="position: relative; right:20px;">付款方式</span></el-col>
         <el-col :span="16">
-          <el-tabs type="card" @tab-click="handleClick">
-            <el-tab-pane label="貨到付款">
+          <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
+            <el-tab-pane label="貨到付款" name="cash">
               <el-row>
                 <el-col :span="5">
                   <span>貨到付款</span>
@@ -61,7 +61,7 @@
                 <el-col :span="14"></el-col>
               </el-row>
             </el-tab-pane>
-            <el-tab-pane label="信用卡">
+            <el-tab-pane label="信用卡" name="credit">
               <el-row>
                 <el-col :span="5">
                   <span>選擇付款帳戶</span>
@@ -71,7 +71,7 @@
                 </el-col>
                 <el-col :span="8">
                   <el-select :data="insert_card" v-model="value" filterable placeholder="Choose a credit card">
-                    <el-option v-for="item in insert_card" :key="item.number" :label="item.label" :value="item.number">
+                    <el-option v-for="item in insert_card" :key="item.CreditCardNumber" :label="item.label" :value="item.CreditCardNumber">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -156,40 +156,30 @@
 </template>
 
 <script>
+import UserService from '../../services/user.service'
   export default {
     name: 'payment',
+    mounted() {
+      this.dataTable = JSON.parse(this.$route.query.dataTable);
+      UserService.getCreditCard().then(data => {
+        this.insert_card = data;
+      });
+      UserService.getInformation().then(data => {
+        this.send_Info = data;
+      });
+    },
     data() {
       return {
         freight: 80,
+        activeName: "cash",
         totalPice: [],
-        dataTable: [{
-            productID: 1,
-            photo: require("../../assets/show1.jpg"),
-            itemName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-            price: 100,
-            quantity: 3,
-            // freight:80,
-          },
-          {
-            productID: 2,
-            photo: require("../../assets/show2.jpg"),
-            itemName: "-198498484｜ 96LINE.TW 韓國代購",
-            price: 800,
-            quantity: 5,
-            // freight:80,
-          },
-        ],
+        dataTable: [],
         radio1: 'COD',
         radio2: 'Card',
         choice: 0,
         isEditShow: false,
         isAddShow: false,
-        send_Info: {
-          accountNum: 515,
-          customer_name: "黃XX",
-          phone: '091561156',
-          address: "新北市某一區某一路某一小塊地方某一小塊地方",
-        },
+        send_Info: {},
         form: {
           customer_name: '',
           phone: '',
@@ -201,39 +191,19 @@
           year: "",
           month: "",
         },
-        insert_card: [{
-            number: '20160503',
-            safeCode: 123,
-            deadline: '2013/02',
-          },
-          {
-            number: '20160502',
-            safeCode: 456,
-            deadline: '2013/02',
-          },
-          {
-            number: '20160504',
-            safeCode: 789,
-            deadline: '2013/02',
-          },
-          {
-            number: '20160501',
-            safeCode: 461,
-            deadline: '2013/02',
-          },
-        ],
+        insert_card: [],
         value: '',
       }
     },
     methods: {
-      handleClick(tab) {
-        console.log(tab.uid);
+      handleClick() {
+        console.log(this.activeName);
       },
       clickEdit() {
         this.isEditShow = true;
-        this.form.customer_name = this.send_Info.customer_name;
-        this.form.phone = this.send_Info.phone;
-        this.form.address = this.send_Info.address;
+        this.form.customer_name = this.send_Info.Name;
+        this.form.phone = this.send_Info.Phone;
+        this.form.address = this.send_Info.Address;
       },
       windowsEditClose() {
         this.isEditShow = false;
@@ -283,7 +253,7 @@
     // }
     computed: {
       getTotalPrice() {
-        return this.dataTable.reduce((x, y) => x + y.price * y.quantity, 0)
+        return this.dataTable.reduce((x, y) => x + y.Price * y.Quantity, 0)
       },
       // getTest() {
       //   return this.$route.query.dataTable;

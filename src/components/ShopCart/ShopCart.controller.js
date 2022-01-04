@@ -4,7 +4,8 @@ export default {
     setIndex,
     deleteProduct,
     addToPayArray,
-    handleChange
+    handleChange,
+    click
 }
 
 function setIndex(num) {
@@ -21,4 +22,12 @@ function addToPayArray(val) {
 }
 function handleChange(index,quantity){
     console.log(index, quantity);
+}
+function click(){
+    this.$router.push({
+        path: '/payment',
+        query: {
+            dataTable: JSON.stringify(this.productOfChecked)
+        }
+    });
 }
