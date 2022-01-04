@@ -19,5 +19,5 @@ function addToPayArray(val) {
     this.productOfChecked = val;
 }
 function handleChange(index,quantity){
-    alert(index+","+quantity);
+    console.log(index, quantity);
 }
