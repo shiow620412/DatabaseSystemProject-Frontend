@@ -20,21 +20,14 @@
                 </router-link>
             </el-col> -->
             <el-col :span="8" v-for="(item, index) in ArrayList" :key="index">
-                <el-button type="cord" shadow="always" @click="getPageID(item.pageID) & this.$router.push(item.link)">
-                    <vue3-chart-js v-bind="{ ...item.chartData }" />
+                <el-button type="cord" shadow="always" @click="this.$router.push(item.link)">
+                    <vue3-chart-js v-if="item.loaded" v-bind="{ ...item.chartData }" />
                     <div style="padding: 14px">
                         <span style="font-weight: bold;font-size: 25px;margin-top: 20px;">{{ item.name }}</span>
                     </div>
                 </el-button>
             </el-col>
         </el-row>
-        <p>memberNumber:  {{ this.memberNumber }}</p>
-        <!-- <p>{{ this.memberNumber.data.datasets[0].data }}</p> -->
-        <p>getMNum:  {{ this.getMNum }}</p>
-        <p>orderNumber:  {{ this.orderNumber }}</p>
-        <p>getONum:  {{ this.getONum }}</p>
-        <p>productNumber:  {{ this.productNumber }}</p>
-        <p>getPNum:  {{ this.getPNum }}</p>
     </el-main>
 </el-container>
 </template>
@@ -42,8 +35,8 @@
 <script>
 // ref link: https://github.com/J-T-McC/vue3-chartjs
 import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
-import orderService from '../../../services/admin/order.service'
 import memberService from '../../../services/admin/user.service'
+import orderService from '../../../services/admin/order.service'
 import productService from '../../../services/admin/product.service'
 
 export default {
@@ -54,19 +47,28 @@ export default {
     data() {
         return {
             memberArray: [],
+            memberLoaded: false,
             orderArray: [],
+            orderLoaded: false,
             productArray: [],
+            productLoaded: false,
         }
     },
     mounted() {
         memberService.getAllMemberStatus().then(data => {
             this.memberArray = data
+            this.memberLoaded = true
+            this.loaded = true
         })
         orderService.getAllOrderStatus().then(data => {
             this.orderArray = data
+            this.orderLoaded = true
+            this.loaded = true
         })
         productService.getAllProductStatus().then(data => {
             this.productArray = data
+            this.productLoaded = true
+            this.loaded = true
         })
     },
     computed: {
@@ -89,16 +91,8 @@ export default {
             }
             return tempArray;
         },
-        tt() {
-            let test = [];
-            for (let i = 1; i < 3; i++) {
-                test.push(i);
-            }
-            return test
-        },
-
         memberNumber() {
-            const mNum = {
+            const chartData = {
                 type: "doughnut",
                 data: {
                     labels: ["正常", "停權"],
@@ -108,10 +102,10 @@ export default {
                     }, ],
                 },
             };
-            return mNum;
+            return chartData;
         },
         orderNumber() {
-            const oNum = {
+            const chartData = {
                 type: "doughnut",
                 data: {
                     labels: ["交易完成", "交易取消", "確認中"],
@@ -121,37 +115,37 @@ export default {
                     }, ],
                 },
             };
-            return oNum;
+            return chartData;
         },
         productNumber() {
-            const pNum = {
+            const chartData = {
                 type: "doughnut",
                 data: {
-                    labels: ["正常", "停權"],
+                    labels: ["停權", "正常"],
                     datasets: [{
                         backgroundColor: ["rgb(255,127,80)", "rgb(80,200,120)"],
                         data: this.getPNum
                     }, ],
                 },
             };
-            return pNum;
+            return chartData;
         },
         ArrayList() {
             const arrList = [{
                 link: 'member',
-                icon: 'el-icon-user',
                 chartData: this.memberNumber,
                 name: '會員管理',
+                loaded: this.memberLoaded,
             }, {
                 link: 'order',
-                icon: 'el-icon-s-order',
                 chartData: this.orderNumber,
                 name: '訂單管理',
+                loaded: this.orderLoaded,
             }, {
                 link: 'product',
-                icon: 'el-icon-shopping-bag-2',
                 chartData: this.productNumber,
                 name: '商品管理',
+                loaded: this.productLoaded,
             }];
             return arrList;
         }
