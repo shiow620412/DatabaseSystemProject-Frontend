@@ -1,4 +1,5 @@
 import orderService from '../../../services/admin/order.service'
+import { ElMessage } from 'element-plus'
 
 export default {
     changePaymentChinese,
@@ -28,7 +29,15 @@ function changeStatusChinese(num) {
 }
 
 function modifyOrder(id, status) {
-    orderService.modifyOrder(id, status);
+    orderService.modifyOrder(id, status).then((result) => {
+        if (result.message === "訂單交易成功") {
+            ElMessage.success("訂單狀態已改為成功");
+        } else if (result.message === '訂單取消成功') {
+            ElMessage.success("訂單狀態已改為取消");
+        }
+    }).catch((error) => {
+        ElMessage.error(error.response.data.message);
+    });
 }
 
 function clickSave(index, orderId, orderStatus) {
