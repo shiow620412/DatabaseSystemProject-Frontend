@@ -33,16 +33,15 @@
                     </el-table-column>
                     <el-table-column prop="Price" label="商品價格" min-width="25%" align="center"></el-table-column>
                     <el-table-column prop="Stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
-                    <el-table-column label="狀態" min-width="18%" align="center">
+                    <el-table-column label="在架上" min-width="18%" align="center">
                         <template v-slot="scope">
-                                <el-tag :type="(scope.row.OnShelf === 'Yes') ? 'success' : 'error'" size="medium">{{ scope.row.OnShelf }}</el-tag>
+                                <el-tag :type="(scope.row.OnShelf === 'Yes') ? 'success' : 'error'" size="medium">{{ changeChinese(scope.row.OnShelf) }}</el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" min-width="20%" align="center">
+                    <el-table-column label="操作" min-width="25%" align="center">
                         <template #default="scope">
                             <div align="center">
                                 <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.row.ProductID)">編輯</el-button>
-                                <!-- <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.ProductID)" type="danger">下架</el-button> -->
                                 <el-button size="mini" @click="setPID(scope.row.ProductID)" type="danger">下架</el-button>
                             </div>
                         </template>
@@ -142,7 +141,7 @@
                     <el-col :span="3"></el-col>
                 </el-row>
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <productPage :SimulatedProduct="this.operationProduct" />     <!-- TODO: Fix send productID -->
+                <productPage :SimulatedProduct="this.operationProduct" />
             </el-tab-pane>
         </el-tabs>
     </el-main>

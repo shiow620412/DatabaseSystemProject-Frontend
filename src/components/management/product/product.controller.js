@@ -1,8 +1,10 @@
 import adminProductService from '../../../services/admin/product.service'
 import productService from '../../../services/product.service'
 import imageService from '../../../services/admin/image.service'
+import { ElMessage } from 'element-plus'
 
 export default {
+    changeChinese,
     checkButton,
     addProduct,
     editProduct,
@@ -17,6 +19,14 @@ export default {
     handleImageAdded,
     handleSizeChange,
     handleCurrentChange
+}
+
+function changeChinese(text) {
+    if (text === 'Yes') {
+        return '是';
+    } else {
+        return '否';
+    }
 }
 
 function checkButton(clickButton) {
@@ -46,7 +56,7 @@ function setPID(productID) {
 
 function deleteProduct(productID) {
     adminProductService.deleteProduct(productID).then((result) => {
-        this.$message.success(result.message);
+        ElMessage.success(result.message);
         location.reload();
     });
     this.dialogVisible = false;
@@ -57,9 +67,9 @@ function clickCancel() {
     this.operationProduct = [];
     console.log(this.operationProduct);
     if (this.tabName === '新增商品') {
-        this.$message.success('取消新增商品');
+        ElMessage.success('取消新增商品');
     } else if (this.tabName === '編輯商品') {
-        this.$message.success('取消編輯商品');
+        ElMessage.success('取消編輯商品');
     }
 }
 
@@ -67,17 +77,17 @@ function clickSave(productID) {
     let temp = this.operationProduct;
     if (this.tabName === '編輯商品') {
         adminProductService.modifyProduct(productID, temp.Price, temp.Thumbnail, temp.Description, temp.Stock).then((result) => {
-            this.$message.success(result.message);
+            ElMessage.success(result.message);
             location.reload();
         }).catch((error) => {
-            this.$message.error(error.response.data.message);
+            ElMessage.error(error.response.data.message);
         });
     } else if (this.tabName === '新增商品') {
         adminProductService.addProduct(temp.ProductName, temp.Price, temp.Thumbnail, temp.Description, temp.Type, temp.Stock).then((result) => {
-            this.$message.success(result.message);
+            ElMessage.success(result.message);
             location.reload();
         }).catch((error) => {
-            this.$message.error(error.response.data.message);
+            ElMessage.error(error.response.data.message);
         });
     }
     this.operationProduct.length = 0;
@@ -88,14 +98,14 @@ function checkPrice(num) {
     if (num < 0) {
         console.log('checkprice');
         this.operationProduct.Price = 0;
-        this.$message.error('價格不可以低於0');
+        ElMessage.error('價格不可以低於0');
     }
 }
 
 function checkStock(num) {
     if (num < 0) {
         this.operationProduct.Stock = 0;
-        this.$message.error('庫存不可以低於0');
+        ElMessage.error('庫存不可以低於0');
     }
 }
 
@@ -103,7 +113,7 @@ function beforeAvatarUpload(file) {
     const isJPG = file.type === 'image/jpeg';
     const isPNG = file.type === 'image/png';
     if (!isJPG && !isPNG) {
-        this.$message.error('只能上傳 JPG 或 PNG 格式的圖片!');
+        ElMessage.error('只能上傳 JPG 或 PNG 格式的圖片!');
         return (isJPG || isPNG);
     } else {
         const formData = new FormData();
@@ -111,7 +121,7 @@ function beforeAvatarUpload(file) {
         imageService.uploadImage(formData).then((result) => {
             const url = result.imageUrl;
             this.operationProduct.Thumbnail = url;
-            this.$message.success(result.message);
+            ElMessage.success(result.message);
             console.log(url);
         });
     }
@@ -131,9 +141,9 @@ function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
         const url = result.imageUrl;
         Editor.insertEmbed(cursorLocation, "image", url);
         resetUploader();
-        this.$message.success("照片" + result.message);
+        ElMessage.success("照片" + result.message);
     }).catch((error) => {
-        this.$message.error(error.response.data.message);
+        ElMessage.error(error.response.data.message);
     });
 }
 
@@ -148,6 +158,6 @@ function handleCurrentChange(currentPage) {
     adminProductService.getProducts(this.currentPage).then(data => {
         this.productArray = data;
     }).catch((error) => {
-        this.$message.error(error.response.data.message);
+        ElMessage.error(error.response.data.message);
     });
 }
