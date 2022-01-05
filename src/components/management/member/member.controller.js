@@ -1,4 +1,5 @@
 import memberService from '../../../services/admin/user.service'
+import { ElMessage } from 'element-plus'
 
 export default {
     changeIsAdminChinese,
@@ -45,6 +46,6 @@ function handleCurrentChange(currentPage) {
     memberService.getMembers(this.currentPage).then(data => {
         this.memberArray = data;
     }).catch((error) => {
-        this.$message.error(error.response.data.message);
+        ElMessage.error(error.response.data.message);
     });
 }
