@@ -198,7 +198,7 @@ import { ElMessage } from 'element-plus'
     },
     methods: {
       completeOrder(){
-        this.paymentMethod = this.activeName==='cash' ? 1 : 2;
+        this.paymentMethod = this.activeName==='cash' ? 2 : 1;
         this.ConvertJsonToObject();
         OrderService.submitOrder(this.convertTable, this.paymentMethod).then(data => {
           ElMessage({
