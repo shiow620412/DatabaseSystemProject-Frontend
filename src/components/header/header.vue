@@ -1,27 +1,30 @@
 <template>
-    <el-row class="top">
+    <el-row class="top" >
         <el-col :span="7">
-            <el-row>
-                <el-col :span="24">
+            <router-link to="/">
+                <el-image  :fit="'contain'" :src="require('../../assets/logo.png')" alt=""></el-image>
+            </router-link>
+                <!-- <el-col :span="24">
                     <div>
-                        <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
+                      
+                        class="home-image"
                     </div>
                 </el-col>
                 <el-col :span="3">
                     <div>
-                        <!-- layout-margin -->
+                        layout-margin
                     </div>
-                </el-col>
-            </el-row>
+                </el-col> -->
+          
         </el-col>
         <el-col :span="10" class="input-position">
-            <div>
+           
                 <el-input v-model="input" placeholder="Please Search Product">
                 <template #append>
                     <el-button @click="search"><el-icon><Search/></el-icon></el-button>
                 </template>
                 </el-input>
-            </div>
+         
         </el-col>
         <el-col :span="7">
             <el-row>
@@ -38,12 +41,12 @@
                                     <el-row>
                                         <el-col :span="12">
                                             <div>
-                                                <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
+                                                <router-link to="/user/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
                                             </div>
                                         </el-col>
                                         <el-col :span="12">
                                             <div>
-                                                <router-link to="/identify/register" class="register-position"><font face="DFKai-sb">註冊</font></router-link>
+                                                <router-link to="/user/register" class="register-position"><font face="DFKai-sb">註冊</font></router-link>
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -89,14 +92,23 @@
             },
             checkLogin(){
                 if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
-                else{this.$router.push({path: "/identify"});}
+                else{this.$router.push({path: "/user"});}
             }
         },
     }
 </script>
 
-<style>
+<style scoped>
+    .el-col-7 a{
+        height: 100px;   
+    }
+    .el-image{
+        height: inherit;
+    }
     .top{
+        position: sticky;
+        top: 0;
+        left: 0;
         height: 100px;
         width: 100%;
         z-index: 2;
@@ -131,9 +143,13 @@
     }
     .input-position{
         margin: auto auto;
+        display: flex;
+        justify-content: center;
+        align-content: center;
     }
     .home-image{
         width: 40%;
         transform:translateY(20%);
+        display: inline-block;
     }
 </style>
