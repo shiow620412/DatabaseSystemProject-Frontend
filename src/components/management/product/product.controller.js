@@ -42,9 +42,11 @@ function addProduct() {
 }
 
 function editProduct(productID) {
+    this.loaded = false;
     this.proID = productID;
     productService.getProductDetail(this.proID).then(data => {
         this.operationProduct = data;
+        this.loaded = true;
     })
 }
 

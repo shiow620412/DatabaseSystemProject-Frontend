@@ -1,6 +1,6 @@
 <template>
 <p><span>Product: {{ this.product }}</span></p>
-<p><span>SimulatedProduct: {{ this.SimulatedProduct }}</span></p>
+<!-- <p>{{ this.SimulatedProduct }}</p> -->
 <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="7" class="pro_Image">
@@ -61,7 +61,7 @@ export default {
         return {
             content: "<p>123</p>",
             num: 1,
-            product: [],
+            product: {},
         };
     },
     methods: {
@@ -84,8 +84,9 @@ export default {
                 this.product = data;
             });
         } else if (this.SimulatedProduct) {
-            console.log(this.SimulatedProduct);
             this.product = this.SimulatedProduct;
+            console.log(this.product);
+            console.log(this.SimulatedProduct);
         }
     }
 };

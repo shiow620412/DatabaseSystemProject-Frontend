@@ -141,7 +141,7 @@
                     <el-col :span="3"></el-col>
                 </el-row>
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <productPage :SimulatedProduct="this.operationProduct" />
+                <productPage v-if="allowEdit & loaded" :SimulatedProduct="this.operationProduct" />
             </el-tab-pane>
         </el-tabs>
     </el-main>
@@ -198,6 +198,7 @@ export default {
             dialogVisible: false,
             currentPage: 1,
             pageSize: 50,
+            loaded: false
         }
     },
     methods: productController,
