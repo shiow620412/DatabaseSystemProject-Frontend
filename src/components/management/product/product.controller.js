@@ -9,7 +9,7 @@ export default {
     addProduct,
     editProduct,
     setPID,
-    deleteProduct,
+    changeProductStatus,
     clickCancel,
     clickSave,
     checkPrice,
@@ -39,6 +39,7 @@ function checkButton(clickButton) {
 
 function addProduct() {
     this.proID = 0;
+    this.loaded = true;
 }
 
 function editProduct(productID) {
@@ -53,15 +54,16 @@ function editProduct(productID) {
 function setPID(productID) {
     this.proID = productID;
     console.log(this.proID);
-    this.dialogVisible = true;
 }
 
-function deleteProduct(productID) {
-    adminProductService.deleteProduct(productID).then((result) => {
-        ElMessage.success(result.message);
+function changeProductStatus(productID, status) {
+    adminProductService.changeProductStatus(productID, status).then((result) => {
+        ElMessage({message: result.message, type: 'success'});
         location.reload();
+
     });
-    this.dialogVisible = false;
+    this.deleteDialogVisible = false;
+    this.onSelfDialogVisible = false;
 }
 
 function clickCancel() {

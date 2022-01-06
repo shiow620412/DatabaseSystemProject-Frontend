@@ -40,9 +40,12 @@
                     </el-table-column>
                     <el-table-column label="操作" min-width="25%" align="center">
                         <template #default="scope">
-                            <div align="center">
+                            <div align="center" v-if="scope.row.OnShelf === 'Yes'">
                                 <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.row.ProductID)">編輯</el-button>
-                                <el-button size="mini" @click="setPID(scope.row.ProductID)" type="danger">下架</el-button>
+                                <el-button size="mini" @click="setPID(scope.row.ProductID) & (this.deleteDialogVisible = true)" type="danger">下架</el-button>
+                            </div>
+                            <div align="center" v-else>
+                                <el-button size="mini" @click="setPID(scope.row.ProductID) & (this.onSelfDialogVisible = true)" type="success">上架</el-button>
                             </div>
                         </template>
                     </el-table-column>
@@ -58,12 +61,21 @@
                     layout="total, prev, pager, next, jumper"
                     :total="this.productArray.total" />
                 </div>
-                <el-dialog v-model="dialogVisible" width="20%">
+                <el-dialog v-model="deleteDialogVisible" width="20%">
                     <span>確定要將此商品下架嗎?</span>
                     <template #footer>
                         <span class="dialog-footer">
-                            <el-button @click="dialogVisible = false">取消</el-button>
-                            <el-button type="primary" @click="deleteProduct(this.proID)">確定</el-button>
+                            <el-button @click="deleteDialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="changeProductStatus(this.proID, false)">確定</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+                <el-dialog v-model="onSelfDialogVisible" width="20%">
+                    <span>確定要將此商品上架嗎?</span>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="onSelfDialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="changeProductStatus(this.proID, true)">確定</el-button>
                         </span>
                     </template>
                 </el-dialog>
@@ -195,7 +207,8 @@ export default {
             proID: 0,
             productArray: [],
             operationProduct: [],
-            dialogVisible: false,
+            deleteDialogVisible: false,
+            onSelfDialogVisible: false,
             currentPage: 1,
             pageSize: 50,
             loaded: false

@@ -5,7 +5,7 @@ const services = {
     getAllProducts,
     getProducts,
     addProduct,
-    deleteProduct,
+    changeProductStatus,
     modifyProduct,
     getAllProductStatus
 }
@@ -31,10 +31,12 @@ function addProduct(productName, price, thumbnail, description, type, stock) {
     });
 }
 
-function deleteProduct(productID) {
+function changeProductStatus(productID, status) {
     const url = prefix + "/";
 
-    return http.delete(url + productID);
+    return http.put(url + productID + "/operate", {
+        "onShelf": status
+    });
 }
 
 function modifyProduct(productId, price, thumbnail, description, stock) {

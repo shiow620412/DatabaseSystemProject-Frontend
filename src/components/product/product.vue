@@ -1,6 +1,4 @@
 <template>
-<p><span>Product: {{ this.product }}</span></p>
-<!-- <p>{{ this.SimulatedProduct }}</p> -->
 <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="7" class="pro_Image">
@@ -24,7 +22,7 @@
             </el-col>
             <el-col :span="6">
                 <div class="pro_input_quantity">
-                    <el-input-number v-model="num" @change="handleChange" :min="1" :max="this.product.Stock" label="描述文字">
+                    <el-input-number v-model="num" @change="handleChange" :min="1" :max="this.product.Stock" label="描述文字" size="small">
                     </el-input-number>
                 </div>
             </el-col>
