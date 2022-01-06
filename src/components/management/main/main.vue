@@ -108,7 +108,7 @@ export default {
             const chartData = {
                 type: "doughnut",
                 data: {
-                    labels: ["交易完成", "交易取消", "確認中"],
+                    labels: ["交易完成", "交易取消", "訂單成立"],
                     datasets: [{
                         backgroundColor: ["rgb(255,0,0)", "rgb(255,140,0)", "rgb(255,255,0)"],
                         data: this.getONum
@@ -121,7 +121,7 @@ export default {
             const chartData = {
                 type: "doughnut",
                 data: {
-                    labels: ["停權", "正常"],
+                    labels: ["下架", "上架"],
                     datasets: [{
                         backgroundColor: ["rgb(255,127,80)", "rgb(80,200,120)"],
                         data: this.getPNum
