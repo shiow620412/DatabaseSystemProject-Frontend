@@ -1,47 +1,45 @@
 <template>
-  <el-row class="frame">
-    <el-col :span="7"></el-col>
-    <el-col :span="10" class="login_frame">
-      <el-container>
+
+      <el-container class="login_frame">
         <el-header>
           <div class="login_text">
             <h3>登入會員</h3>
           </div>
         </el-header>
         <el-main>
+          <el-form :model="loginForm" label-width="100px" class="account_frame" @submit.prevent="login(loginForm.account, loginForm.password)">
           <el-row>
             <el-col :span="21">
-              <el-form :model="dynamicValidateForm" label-width="100px" class="account_frame">
+              
                 <el-form-item label="帳號" prop="account">
-                  <el-input v-model="dynamicValidateForm.account"></el-input>
+                  <el-input v-model="loginForm.account"></el-input>
                 </el-form-item>
-              </el-form>
+            
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form :model="ruleForm" status-icon label-width="100px" class="password_frame">
+          
                 <el-form-item label="密碼" prop="pass">
-                  <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                  <el-input type="password" v-model="loginForm.password" autocomplete="off"></el-input>
                 </el-form-item>
-              </el-form>
+  
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
           <el-row class="checkin_frame">
             <el-col :span="4"></el-col>
             <el-col :span="17">
-              <el-button class="checkin" type="primary" @click="login(dynamicValidateForm.account, ruleForm.pass)">登入</el-button>
+              <el-button class="checkin" type="primary" @click="login(loginForm.account, loginForm.password)">登入</el-button>
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
-        </el-main>
-        <el-row>
+           <el-row>
           <el-col :span="14"></el-col>
           <el-col :span="10">
             <div class="Forgot_password">
-              <router-link to="/identify/retrievePassword">忘記密碼</router-link>
+              <router-link to="/user/retrievePassword">忘記密碼</router-link>
             </div>
           </el-col>
         </el-row>
@@ -52,15 +50,16 @@
           </el-col>
           <el-col :span="4">
             <div class="subject_link">
-              <router-link to="/identify/register">註冊</router-link>
+              <router-link to="/user/register">註冊</router-link>
             </div>
           </el-col>
           <el-col :span="7"></el-col>
         </el-row>
+          </el-form>
+        </el-main>
+       
       </el-container>
-    </el-col>
-    <el-col :span="7"></el-col>
-  </el-row>
+
 </template>
 
 <script>
@@ -69,12 +68,10 @@ import loginController from './login.controller'
     name: 'login',
     data() {
       return {
-        ruleForm: {
-          pass: '',
-        },
-        dynamicValidateForm: {
-          account: ''
-        },
+        loginForm: {
+          account: '',
+          password: ''
+        }
       };
     },
     methods: loginController,
@@ -88,7 +85,7 @@ import loginController from './login.controller'
 <style scoped>
   .frame {
     background-color: #EFFFE4;
-    height: 600px;
+    height: calc(100vh - 100px);
     width: 100%;
   }
 

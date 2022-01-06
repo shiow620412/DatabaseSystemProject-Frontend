@@ -1,36 +1,37 @@
 <template>
-    <el-row class="frame">
-        <el-col :span="7"></el-col>
-        <el-col :span="10" class="retrievePass_frame">
-            <el-container>
+
+            <el-container class="retrievePass_frame">
                 <el-header>
                     <div class="retrieve_text">
                         <h3>忘記密碼</h3>
                     </div>
                 </el-header>
                 <el-main>
-                    <el-row>
-                        <el-col :span="21">
-                            <el-form label-width="100px" class="email_frame">
-                                <el-form-item prop="email" label="信箱">
-                                    <el-input v-model="dynamicValidateForm.email"></el-input>
-                                </el-form-item>
-                            </el-form>
-                        </el-col>
-                        <el-col :span="3"></el-col>
-                    </el-row>
-                    <el-row class="checkin_frame">
-                        <el-col :span="4"></el-col>
-                        <el-col :span="17">
-                            <el-button class="checkin" type="primary" @click="submitForm(dynamicValidateForm.email)">送出</el-button>
-                        </el-col>
-                        <el-col :span="3"></el-col>
-                    </el-row>
+                    <el-form label-width="100px" class="email_frame" :model="findPasswordForm" @submit.prevent="submitForm(findPasswordForm.email)">
+                      <el-row>
+                          <el-col :span="21">
+                          
+                                  <el-form-item prop="email" label="信箱">
+                                      <el-input v-model="findPasswordForm.email"></el-input>
+                                  </el-form-item>
+                            
+                          </el-col>
+                          <el-col :span="3"></el-col>
+                      </el-row>
+                      <el-row class="checkin_frame">
+                          <el-col :span="4"></el-col>
+                          <el-col :span="17">
+                            <el-form-item>
+
+                              <el-button class="checkin" type="primary" @click="submitForm(findPasswordForm.email)">送出</el-button>
+                            </el-form-item>
+                          </el-col>
+                          <el-col :span="3"></el-col>
+                      </el-row>
+                    </el-form>
                 </el-main>
             </el-container>
-        </el-col>
-        <el-col :span="7"></el-col>
-    </el-row>
+
 </template>
 
 <script>
@@ -39,7 +40,7 @@
     name: '',
     data() {
       return {
-        dynamicValidateForm: {
+        findPasswordForm: {
           email: '',
         },
       };
