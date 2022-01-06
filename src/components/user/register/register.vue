@@ -94,7 +94,7 @@
         UserService.register(email, account, password, name).then(data => {
           console.log(data);
           alert("註冊成功");
-          this.$router.push({path: '/identify/register'});
+          this.$router.push({path: '/identify/login'});
         }).catch((error) => {
           alert(error.response.data.message);
         })

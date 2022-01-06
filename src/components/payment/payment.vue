@@ -70,8 +70,8 @@
                   <el-radio v-model="radio2">信用卡</el-radio>
                 </el-col>
                 <el-col :span="8">
-                  <el-select :data="insert_card" v-model="value" filterable placeholder="Choose a credit card">
-                    <el-option v-for="item in insert_card" :key="item.CreditCardNumber" :label="item.label" :value="item.CreditCardNumber">
+                  <el-select v-model="value" filterable placeholder="Choose a credit card">
+                    <el-option v-for="item in insert_card" :key="item" :label="item.CreditCardNumber" :value="item.CreditCardNumber">
                     </el-option>
                   </el-select>
                 </el-col>
@@ -104,7 +104,7 @@
         </el-col>
       </el-row>
       <div style="padding-bottom:10px;">
-        <el-button type="success">結帳</el-button>
+        <el-button type="success" @click="completeOrder()">結帳</el-button>
       </div>
     </div>
   </div>
@@ -112,13 +112,13 @@
     <el-dialog v-model="isEditShow" title="修改" width="30%">
       <el-form :model="form">
         <el-form-item label="姓名">
-          <el-input v-model="form.customer_name" autocomplete="off"></el-input>
+          <el-input v-model="form.Name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="電話">
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
+          <el-input v-model="form.Phone" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="住址">
-          <el-input v-model="form.address" autocomplete="off"></el-input>
+          <el-input v-model="form.Address" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -133,16 +133,16 @@
     <el-dialog v-model="isAddShow" title="使用新信用卡付款" width="30%">
       <el-form :model="Form">
         <el-form-item label="卡號">
-          <el-input v-model="Form.number" autocomplete="off"></el-input>
+          <el-input v-model="Form.CreditCardNumber" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="安全碼">
-          <el-input v-model="Form.safeCode" autocomplete="off"></el-input>
+          <el-input v-model="Form.SecurityCode" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="年">
-          <el-input v-model="Form.year" autocomplete="off"></el-input>
+          <el-input v-model="Form.ExpireYear" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="月">
-          <el-input v-model="Form.month" autocomplete="off"></el-input>
+          <el-input v-model="Form.ExpireMonth" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -157,9 +157,12 @@
 
 <script>
 import UserService from '../../services/user.service'
+import CartService from '../../services/cart.service'
+import OrderService from '../../services/order.service'
+import { ElMessage } from 'element-plus'
   export default {
     name: 'payment',
-    mounted() {
+    mounted() { 
       this.dataTable = JSON.parse(this.$route.query.dataTable);
       UserService.getCreditCard().then(data => {
         this.insert_card = data;
@@ -172,38 +175,57 @@ import UserService from '../../services/user.service'
       return {
         freight: 80,
         activeName: "cash",
+        paymentMethod: 1,
         totalPice: [],
         dataTable: [],
+        convertTable: [],
         radio1: 'COD',
         radio2: 'Card',
         choice: 0,
         isEditShow: false,
         isAddShow: false,
         send_Info: {},
-        form: {
-          customer_name: '',
-          phone: '',
-          address: '',
-        },
+        form: {},
         Form: {
-          number: "",
-          safeCode: "",
-          year: "",
-          month: "",
+          CreditCardNumber: "",
+          SecurityCode: "",
+          ExpireYear: "",
+          ExpireMonth: ""
         },
         insert_card: [],
         value: '',
       }
     },
     methods: {
+      completeOrder(){
+        this.paymentMethod = this.activeName==='cash' ? 1 : 2;
+        this.ConvertJsonToObject();
+        OrderService.submitOrder(this.convertTable, this.paymentMethod).then(data => {
+          ElMessage({
+            message: data.message,
+            type: 'success'
+          }),
+          this.dataTable.forEach(element => {
+            CartService.deleteProductofCart(element.ProductID);
+          })
+          this.$router.push("/member/order");
+        }).catch((error) => {
+          console.log(error.response.data.message)
+        });
+      },
+      ConvertJsonToObject(){
+        this.dataTable.forEach(element=>{
+          this.convertTable.push({"productId": element.ProductID, "quantity": element.Quantity});
+        })
+      },
       handleClick() {
-        console.log(this.activeName);
+        
       },
       clickEdit() {
         this.isEditShow = true;
-        this.form.customer_name = this.send_Info.Name;
-        this.form.phone = this.send_Info.Phone;
-        this.form.address = this.send_Info.Address;
+        this.form.Name = this.send_Info.Name;
+        this.form.Phone = this.send_Info.Phone;
+        this.form.Address = this.send_Info.Address;
       },
       windowsEditClose() {
         this.isEditShow = false;
@@ -211,15 +233,16 @@ import UserService from '../../services/user.service'
       },
       onEditSubmit() {
         this.isEditShow = false;
-        this.send_Info.customer_name = this.form.customer_name;
-        this.send_Info.phone = this.form.phone;
-        this.send_Info.address = this.form.address;
+        this.send_Info.Name = this.form.Name;
+        this.send_Info.Phone = this.form.Phone;
+        this.send_Info.Address = this.form.Address;
+        UserService.EditInformation(this.send_Info.Email, this.form.Name, this.form.Address, this.form.Phone);
         this.cleanEdit();
       },
       cleanEdit() {
-        this.form.customer_name = '';
-        this.form.phone = '';
-        this.form.address = '';
+        this.form.Name = '';
+        this.form.Phone = '';
+        this.form.Address = '';
       },
 
       clickAdd() {
@@ -228,9 +251,8 @@ import UserService from '../../services/user.service'
       },
 
       onAddSubmit() {
-        this.insert_card.push({
-          number: this.Form.number
-        })
+        this.insert_card.push({CreditCardNumber: this.Form.CreditCardNumber});
+        UserService.AddCreditCard(this.Form.CreditCardNumber, this.Form.SecurityCode, this.Form.ExpireYear, this.Form.ExpireMonth);
         this.isAddShow = false;
         this.clearForm();
       },

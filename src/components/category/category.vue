@@ -75,7 +75,7 @@ import CategoryController from './category.controller'
             }
         },
         mounted(){
-            console.log(this.$route.query.q);
+            this.eventBus.emit("ishide", localStorage.getItem("isLogin"));
             this.eventBus.on("click-send-msg", (msgData) => (
                 this.searchByName(msgData.toString())
             ));

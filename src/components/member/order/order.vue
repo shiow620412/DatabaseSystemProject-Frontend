@@ -9,19 +9,19 @@
         </el-row>
         <el-collapse v-model="activeName" accordion>
             <div v-for="(i,index) in orderData" :key="i">
-                <el-collapse-item :name="i.number" @click="OnselectDetail(index)">
+                <el-collapse-item :name="i.OrderID" @click="OnselectDetail(index)">
                     <template #title>
-                        {{i.number}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        {{i.date}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        {{i.price}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                        {{i.state}}
+                        {{i.OrderID}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        {{i.Date}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        {{i.Total}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                        {{i.StatusType}}
                     </template>
                     <el-table :data="tableData" style="width: 100%">
-                    <el-table-column prop="number" label="名稱" width="180" />
-                    <el-table-column prop="date" label="單價" width="180" />
-                    <el-table-column prop="price" label="數量" />
-                    <el-table-column prop="state" label="小計" />
-                </el-table>
+                        <el-table-column prop="ProductName" label="名稱" width="180" />
+                        <el-table-column prop="Price" label="單價" width="180" />
+                        <el-table-column prop="Quantity" label="數量" />
+                        <el-table-column prop="" label="小計" />
+                    </el-table>
                 </el-collapse-item>
             </div>
         </el-collapse>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import OrderService from '../../../services/order.service'
+// import ProductService from '../../../services/product.service'
     export default {
         name: 'order',
         components: {
@@ -37,39 +39,23 @@
         data(){
             return{
                 activeName: '0',
-                orderData: [
-                    {
-                        number: '16516153',
-                        date: "2020/03/12",
-                        price: 1234,
-                        state: '已出貨',
-                    },
-                    {
-                        number: '46549887',
-                        date: "2021/06/19",
-                        price: 4589,
-                        state: '確認中',
-                    }
-                ],
-                tableData: [
-                    {
-                        number: '16516153',
-                        date: "2020/03/12",
-                        price: 1234,
-                        state: '已出貨',
-                    },
-                    {
-                        number: '46549887',
-                        date: "2021/06/19",
-                        price: 4589,
-                        state: '確認中',
-                    }
-                ],
+                orderData: [],
+                tableData: [],
             }
+        },
+        mounted() {
+            OrderService.getTotalOrder().then(data => {
+                this.orderData = data.result;
+            })
         },
         methods: {
             OnselectDetail(index){
-                this.tableData[0].number = index.toString();
+                OrderService.getOrderDetail(this.orderData[index].OrderID).then(data => {
+                    this.tableData = data;
+                });
+            },
+            computPriceEachItem(){
+                
             }
         },
     }

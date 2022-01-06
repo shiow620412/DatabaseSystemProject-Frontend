@@ -70,7 +70,7 @@ import { ElMessage } from 'element-plus'
           ElMessage({
             message:'已加入購物車',
             type: 'success'
-            })
+          })
         }).catch((error) => {
           alert(error.response.data.message);
         })

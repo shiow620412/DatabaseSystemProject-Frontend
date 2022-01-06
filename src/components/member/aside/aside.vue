@@ -54,6 +54,7 @@
             logout(){
                 if(confirm("確定登出?")){
                     localStorage.removeItem("token");
+                    localStorage.setItem("isLogin", 0);
                     this.$router.push({path: "/identify"});
                 }
             }

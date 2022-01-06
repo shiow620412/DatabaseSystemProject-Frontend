@@ -37,12 +37,12 @@
                                 <div>
                                     <el-row>
                                         <el-col :span="12">
-                                            <div>
+                                            <div v-if="isShow">
                                                 <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
                                             </div>
                                         </el-col>
                                         <el-col :span="12">
-                                            <div>
+                                            <div v-if="isShow">
                                                 <router-link to="/identify/register" class="register-position"><font face="DFKai-sb">註冊</font></router-link>
                                             </div>
                                         </el-col>
@@ -71,21 +71,27 @@
         components: {
             Search
         },
+        mounted() {
+            this.eventBus.on("ishide", (msgData) => (
+                this.isShow = msgData==='1' ? false : true
+            ));
+            this.isShow = localStorage.getItem("isLogin")==='1' ? false : true
+        },
         data(){
             return{
-                input: ref('')
+                input: ref(''),
+                isShow: true
             }
         },
         methods: {
             search(){
-                console.log("push data");
                 this.eventBus.emit("click-send-msg", this.input);
                 this.$router.push({
                     path: "/index",
                     query: {
                         q: this.input
                     }
-                })
+                });
             },
             checkLogin(){
                 if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
