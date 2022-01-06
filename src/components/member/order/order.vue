@@ -21,6 +21,11 @@
                         <el-table-column prop="Price" label="單價" width="180" />
                         <el-table-column prop="Quantity" label="數量" />
                         <el-table-column prop="" label="小計" />
+                        <el-table-column align="right" v-if="i.StatusType==='確認中'">
+                            <template #header>
+                                <el-button size="small" type="danger" @click="handleDelete(index)">取消訂單</el-button>
+                            </template>
+                        </el-table-column>
                     </el-table>
                 </el-collapse-item>
             </div>
@@ -56,6 +61,16 @@ import OrderService from '../../../services/order.service'
             },
             computPriceEachItem(){
                 
+            },
+            handleDelete(index){
+                if(confirm("確定取消")){
+                    OrderService.deleteOrder(this.orderData[index].OrderID).then(data => {
+                        this.orderData[index].StatusType = "交易取消";
+                        console.log(data);
+                    }).catch((error) => {
+                        console.log(error.response.data.message);
+                    });
+                }
             }
         },
     }
