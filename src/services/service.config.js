@@ -2,8 +2,9 @@ import axios from 'axios'
 
 const instance = axios.create({
     // baseURL: 'http://prj.inf.saihs.edu.tw:8787/api',
-    baseURL: 'http://203.64.47.60:8787/api',
+    // baseURL: 'http://203.64.47.60:8787/api',
     // baseURL: 'http://localhost:3000/api',
+    baseURL: 'http://45.77.128.81:300/api',
     headers: { 
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache'

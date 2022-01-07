@@ -18,6 +18,10 @@ const router = {
       component: orderManagement
     }, {
       path: 'product',
+      alias: '/product',
+      component: productManagement
+    }, {
+      path: 'product/:id',
       component: productManagement
     }]
   }

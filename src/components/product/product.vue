@@ -83,8 +83,6 @@ export default {
             });
         } else if (this.SimulatedProduct) {
             this.product = this.SimulatedProduct;
-            console.log(this.product);
-            console.log(this.SimulatedProduct);
         }
     }
 };

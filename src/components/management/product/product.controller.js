@@ -18,7 +18,8 @@ export default {
     handleChange,
     handleImageAdded,
     handleSizeChange,
-    handleCurrentChange
+    handleCurrentChange,
+    newurl
 }
 
 function changeChinese(text) {
@@ -40,6 +41,7 @@ function checkButton(clickButton) {
 function addProduct() {
     this.proID = 0;
     this.loaded = true;
+    this.$router.push("/management/product/" + this.proID);
 }
 
 function editProduct(productID) {
@@ -48,19 +50,18 @@ function editProduct(productID) {
     productService.getProductDetail(this.proID).then(data => {
         this.operationProduct = data;
         this.loaded = true;
+        this.$router.push("/management/product/" + productID);
     })
 }
 
 function setPID(productID) {
     this.proID = productID;
-    console.log(this.proID);
 }
 
 function changeProductStatus(productID, status) {
     adminProductService.changeProductStatus(productID, status).then((result) => {
         ElMessage({message: result.message, type: 'success'});
         location.reload();
-
     });
     this.deleteDialogVisible = false;
     this.onSelfDialogVisible = false;
@@ -69,7 +70,7 @@ function changeProductStatus(productID, status) {
 function clickCancel() {
     this.operationProduct.length = 0;
     this.operationProduct = [];
-    console.log(this.operationProduct);
+    this.$router.push("/management/product");
     if (this.tabName === '新增商品') {
         ElMessage.success('取消新增商品');
     } else if (this.tabName === '編輯商品') {
@@ -82,25 +83,25 @@ function clickSave(productID) {
     if (this.tabName === '編輯商品') {
         adminProductService.modifyProduct(productID, temp.Price, temp.Thumbnail, temp.Description, temp.Stock).then((result) => {
             ElMessage.success(result.message);
-            location.reload();
+            // location.reload();
         }).catch((error) => {
             ElMessage.error(error.response.data.message);
         });
     } else if (this.tabName === '新增商品') {
         adminProductService.addProduct(temp.ProductName, temp.Price, temp.Thumbnail, temp.Description, temp.Type, temp.Stock).then((result) => {
             ElMessage.success(result.message);
-            location.reload();
+            // location.reload();
         }).catch((error) => {
             ElMessage.error(error.response.data.message);
         });
     }
+    this.$router.push("/management/product");
     this.operationProduct.length = 0;
     this.operationProduct = [];
 }
 
 function checkPrice(num) {
     if (num < 0) {
-        console.log('checkprice');
         this.operationProduct.Price = 0;
         ElMessage.error('價格不可以低於0');
     }
@@ -153,15 +154,20 @@ function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
 
 function handleSizeChange(size) {
     this.pageSize = size;
-    console.log(this.pageSize);
 }
 
 function handleCurrentChange(currentPage) {
     this.currentPage = currentPage;
-    console.log(this.currentPage);
     adminProductService.getProducts(this.currentPage).then(data => {
         this.productArray = data;
     }).catch((error) => {
         ElMessage.error(error.response.data.message);
     });
+}
+
+function newurl(myurl){
+    myurl = location.href;  var times = myurl.split("?");   if(times[1] != 1){   myurl += "?1";
+        self.location.replace(myurl);
+        history.go(0);
+    }
 }
