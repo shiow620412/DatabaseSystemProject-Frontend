@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24">
                     <div>
-                        <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
+                        <router-link to="/" @click="goHome"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
                     </div>
                 </el-col>
                 <el-col :span="3">
@@ -96,6 +96,9 @@
             checkLogin(){
                 if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
                 else{this.$router.push({path: "/identify"});}
+            },
+            goHome(){
+                this.eventBus.emit("notifyReload", "0");
             }
         },
     }

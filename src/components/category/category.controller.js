@@ -13,7 +13,7 @@ function ResolveOverlongString(input, action){
     this.max_page = parseInt(input.pages);
     input.result.forEach(element => {
         if(element.ProductName.length>12){
-            element.ProductName = element.ProductName.substr(0, 12)+"...";
+            element.ProductName = element.ProductName.substring(0, 12)+"...";
         }else{
             element.ProductName += "";
         }
@@ -34,13 +34,14 @@ function ResolveOverlongString(input, action){
 
 function searchByName(name){
     this.isSearch = 1;
+    this.filter = '00000';
     productService.getProductBySearch(name).then(data => {
         this.ResolveOverlongString(data, 0);
     })
 }
 
-function OnSelectCategoy(order, filter, min, max){
-    productService.getProductsBycategory(order+1,filter, min, max).then(data => {
+function OnSelectCategoy(order, name, filter, min, max){
+    productService.getProductBySearchAndCategory(order, name, filter, min, max).then(data => {
         this.ResolveOverlongString(data, 0);
     })
     this.category = order;
@@ -48,26 +49,25 @@ function OnSelectCategoy(order, filter, min, max){
 }
 
 function RequestNewPage(){
-    console.log("receive!");
     this.current_page += 1;
-    if(this.current_page <= this.max_page && this.category!=-1){
-        productService.getNewProductPage(this.category+1, this.current_page, this.filter, this.input1, this.input2).then(data => {
-            this.ResolveOverlongString(data, 1);
-        })
-    }
-    else if(this.current_page < this.max_page){
-        productService.getNewProductPage(this.category+1, this.current_page).then(data => {
+    if(this.current_page <= this.max_page){
+        productService.getNewProductPage(this.category, this.searchName, this.current_page, this.filter, this.input1, this.input2).then(data => {
             this.ResolveOverlongString(data, 1);
         })
     }
 }
 
-function changefilter(input, min, max){
-    if(input[4]==='1'){
-        this.filter = this.filter.substr(0, 4)+'1';
+function changefilter(name, filter, min, max){
+    if(filter[0]==='1' || filter[1]==='1'){
+        let temp = filter[0]==='1' ? '10' : '01';
+        this.filter = temp + this.filter.substring(2);
     }
-    else{
-        this.filter = input;
+    if(filter[2]==='1' || filter[3]==='1'){
+        let temp = filter[2]==='1' ? '10' : '01';
+        this.filter = this.filter.substring(0, 2) + temp + this.filter[4];
     }
-    this.OnSelectCategoy(this.category, this.filter, min, max);
+    if(filter[4]==='1'){
+        this.filter = this.filter.substring(0, 4)+'1';
+    }
+    this.OnSelectCategoy(this.category, name, this.filter, min, max);
 }
