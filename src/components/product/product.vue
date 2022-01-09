@@ -2,7 +2,7 @@
 <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="7" class="pro_Image">
-      <div class="image"><img src="../../assets/al.jpg"></div>
+        <div class="image"><img :src="this.product.Thumbnail"></div>
     </el-col>
     <el-col :span="11" class="pro_intro">
       <div class="pro_name">
@@ -44,7 +44,7 @@
 <el-row class="product-briefing">
     <el-col :span="3"></el-col>
     <el-col :span="18" class="product-detail">
-        <div class="ql-editor" v-html="this.product.description"></div>
+        <div class="ql-editor" v-html="this.product.Description"></div>
     </el-col>
     <el-col :span="3"></el-col>
 </el-row>
@@ -56,12 +56,13 @@ import CartService from "../../services/cart.service"
 import { ElMessage } from 'element-plus'
   export default {
     name: 'top',
+    props: ["SimulatedProduct"],
     data() {
-      return {
-        content: "<p>123</p>",
-        num: 1,
-        product: {},
-      };
+        return {
+            content: "<p>123</p>",
+            num: 1,
+            product: {},
+        };
     },
     methods: {
       putProduct(id, num){
@@ -79,12 +80,25 @@ import { ElMessage } from 'element-plus'
         console.log(value);
       }
     },
-    mounted() {
-      productService.getProductdetail(this.$route.params.id).then(data => {
-          this.product = data;
-      })
+    computed: {
+        ButtonActivity: function () {
+            if (this.$route.params.id) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     },
-  };
+    mounted() {
+        if (this.$route.params.id) {
+            productService.getProductDetail(this.$route.params.id).then(data => {
+                this.product = data;
+            });
+        } else if (this.SimulatedProduct) {
+            this.product = this.SimulatedProduct;
+        }
+    }
+};
 </script>
 
 <style scoped lang="scss" src="./product.scss"></style>

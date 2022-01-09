@@ -4,7 +4,6 @@
         <el-text style="font-size: 25px;font-weight: bold">商品管理</el-text>
     </el-header>
     <el-main>
-
         <el-tabs :tab-position="tabPosition" v-model="tabPosition" type="card" style="margin-bottom: 45px;">
             <el-tab-pane label="first" name="first" :disabled="!this.readOnly">
                 <template #label>
@@ -21,30 +20,65 @@
                         <el-input style="width: 250px" placeholder="Search" class="search" v-model="search"></el-input>
                     </el-col>
                 </el-row>
-                <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'memberID' }" row-style="height: 10vh" max-height="450">
-                    <el-table-column prop="productID" label="商品ID" min-width="15%" align="center" sortable></el-table-column>
-                    <el-table-column prop="productName" label="商品名稱" min-width="25%" align="center" sortable></el-table-column>
+                <el-table :data="tables" style="width: 100%;font-size: 15px" :default-sort="{ prop: 'ProductID' }" row-style="height: 10vh" max-height="450">
+                    <el-table-column prop="ProductID" label="商品ID" min-width="15%" align="center" sortable></el-table-column>
+                    <el-table-column prop="ProductName" label="商品名稱" min-width="25%" align="center" sortable></el-table-column>
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
                             <div class="demo-image__preview">
-                                <el-image style="width: 100px; height: 100px" :src="scope.row.photo" :preview-src-list="srcList" :initial-index="1">
+                                <el-image style="width: 100px; height: 100px" :src="scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
                             </div>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="price" label="商品價格" min-width="25%" align="center"></el-table-column>
-                    <el-table-column prop="stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
-                    <el-table-column label="操作" min-width="20%" align="center">
+                    <el-table-column prop="Price" label="商品價格" min-width="25%" align="center"></el-table-column>
+                    <el-table-column prop="Stock" label="商品庫存" min-width="25%" align="center"></el-table-column>
+                    <el-table-column label="在架上" min-width="18%" align="center">
+                        <template v-slot="scope">
+                                <el-tag :type="(scope.row.OnShelf === 'Yes') ? 'success' : 'error'" size="medium">{{ changeChinese(scope.row.OnShelf) }}</el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" min-width="25%" align="center">
                         <template #default="scope">
-                            <div align="center">
-                            <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.$index, scope.row)">編輯</el-button>
-                            <el-button size="mini" @click="deleteProduct(scope.$index, scope.row.productID)" type="danger">刪除</el-button>
+                            <div align="center" v-if="scope.row.OnShelf === 'Yes'">
+                                <el-button size="mini" @click="(allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'two') & checkButton('edit') & editProduct(scope.row.ProductID)">編輯</el-button>
+                                <el-button size="mini" @click="setPID(scope.row.ProductID) & (this.deleteDialogVisible = true)" type="danger">下架</el-button>
+                            </div>
+                            <div align="center" v-else>
+                                <el-button size="mini" @click="setPID(scope.row.ProductID) & (this.onSelfDialogVisible = true)" type="success">上架</el-button>
                             </div>
                         </template>
                     </el-table-column>
                 </el-table>
-                <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage" :page-sizes="[5,10,15]" :page-size="pageSize" layout="total,jumper,prev, pager, next,size" :total="files_count">
-                </el-pagination>
+                <div style="text-align: center">
+                <el-pagination 
+                    background 
+                    @size-change="handleSizeChange" 
+                    @current-change="handleCurrentChange" 
+                    :current-page="currentPage" 
+                    :page-sizes="[50, 100, 150]" 
+                    :page-size="pageSize"
+                    layout="total, prev, pager, next, jumper"
+                    :total="this.productArray.total" />
+                </div>
+                <el-dialog v-model="deleteDialogVisible" width="20%">
+                    <span>確定要將此商品下架嗎?</span>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="deleteDialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="changeProductStatus(this.proID, false)">確定</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+                <el-dialog v-model="onSelfDialogVisible" width="20%">
+                    <span>確定要將此商品上架嗎?</span>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="onSelfDialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="changeProductStatus(this.proID, true)">確定</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
             </el-tab-pane>
             <el-tab-pane label="two" name="two" :disabled="!this.allowEdit">
                 <template #label>
@@ -56,34 +90,46 @@
                 <el-row class="product-briefing">
                     <el-col :span="3"></el-col>
                     <el-col :span="7" class="pro_Image">
-                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" limit="1" :on-success="handleAvatarSuccess" :on-remove="handleRemove" :on-progress="checkImg" :on-exceed="handleExceed">
-                            <div class="image" v-if="this.productArray[this.index].photo">
-                                <img style="width: 100%;height: 100%" :src="this.productArray[this.index].photo" :acceptPhoto="this.productArray[this.index].photo" />
+                        <el-upload
+                                class="avatar-uploader"
+                                action="#"
+                                accept=".jpg, .jpeg, .png"
+                                :show-file-list="false"
+                                :before-upload="beforeAvatarUpload"
+                                :on-change="handleChange"
+                                name="image">
+                            <div class="image" v-if="this.operationProduct.Thumbnail">
+                                <img :src="this.operationProduct.Thumbnail" class="avatar" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
                             </div>
-                            <el-button style="width: 100%" @click="clickPhoto(this.index)">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
+                            <el-button style="width: 100%">{{ (this.tabName === '新增商品') ? '新增商品圖片' : '編輯商品圖片'}}</el-button>
                         </el-upload>
                     </el-col>
-
                     <el-col :span="11" class="pro_intro">
                         <div style="text-align: left;" class="pro_name_textarea_div">
-                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" :acceptName="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
-                                <!-- <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.productArray[this.index].productName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" max-height="100%"></el-input> -->
+                            <h1>商品名稱:&nbsp;&nbsp;<el-input type="textarea" v-model="this.operationProduct.ProductName" placeholder="請輸入商品名稱" size="small" class="pro_name_textarea" :autosize="{ minRows: 2, maxRows: 5 }"></el-input>
                             </h1>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>商品價格:&nbsp;&nbsp;
                                 <span style="font-weight: normal;">NT$</span>
-                                <el-input v-model="this.productArray[this.index].price" :acceptPrice="this.productArray[this.index].price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkNumber(this.productArray[this.index].price)"></el-input>
+                                <el-input v-model="this.operationProduct.Price" placeholder="請輸入商品價格 (NT$)" size="small" style="width: 100%" type="number" :min="0" @change="checkPrice(this.operationProduct.Price)"></el-input>
                             </h1>
                             <el-col :span="15"></el-col>
                         </div>
                         <div style="text-align: left;" class="pro_info_div">
                             <h1>剩餘數量:&nbsp;&nbsp;
-                                <el-input v-model="this.productArray[this.index].stock" :acceptStock="this.productArray[this.index].stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.productArray[this.index].stock)">
+                                <el-input v-model="this.operationProduct.Stock" placeholder="請輸入剩餘數量" size="small" style="width: 100%" type="number" :min="0" @change="checkStock(this.operationProduct.Stock)">
                                 </el-input>
+                            </h1>
+                        </div>
+                        <div style="text-align: left;" class="pro_info_div" :disabled="(this.tabName === '新增商品') ? true : false" v-show="(this.tabName === '新增商品') ? true : false">
+                            <h1>商品類型:&nbsp;&nbsp;
+                                <el-select v-model="this.operationProduct.Type" placeholder="Select" size="medium">
+                                    <el-option v-for="item in typesArray" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                </el-select>
                             </h1>
                         </div>
                     </el-col>
@@ -92,22 +138,22 @@
                 <el-row>
                     <el-col :span="3"></el-col>
                     <el-col :span="18" class="product-detail">
-                        <vue-editor v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor>
-                        <!-- <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="this.productArray[this.index].description" :acceptDescription="this.productArray[this.index].description"></vue-editor> -->
-                        <!-- <div v-text="this.productArray[this.index].description"></div> -->
+                        <vue-editor useCustomImageHandler @imageAdded="handleImageAdded" v-model="this.operationProduct.Description"></vue-editor>
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
                 <el-row>
                     <el-col :span="3"></el-col>
-                    <el-col :span="18">
-                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.index) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
+                    <el-col :span="9">
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickCancel() & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">取消</el-button>
+                        </el-col>
+                        <el-col :span="9">
+                        <el-button style="width: 100%;height: 5vh;font-size: 20px;" @click="clickSave(this.proID) & (allowEdit = !allowEdit) & (readOnly = !readOnly) & (this.tabPosition = 'first')">儲存</el-button>
                     </el-col>
                     <el-col :span="3"></el-col>
                 </el-row>
-
                 <p style="color: black;font-size: 25px;font-weight: bold;">商品詳情頁面模擬</p>
-                <productPage :product="this.productArray[this.index]" />
+                <productPage v-if="allowEdit & loaded" :SimulatedProduct="this.operationProduct" />
             </el-tab-pane>
         </el-tabs>
     </el-main>
@@ -115,17 +161,41 @@
 </template>
 
 <script>
-import {
-    VueEditor
-} from 'vue3-editor';
+import { ref } from 'vue'
+import { VueEditor } from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
-// import imageService from '../../../services/image.service'
+import adminProductService from '../../../services/admin/product.service'
 export default {
     name: 'product',
     components: {
         VueEditor,
         productPage,
+    },
+    setup() {
+        return {
+            typesArray: ref([{
+                    value: 1,
+                    label: '水果'
+                }, {
+                    value: 2, 
+                    label: '食物'
+                }, {
+                    value: 3, 
+                    label: '3c'
+                }, {
+                    value: 4, 
+                    label: '衣物'
+                }, {
+                    value: 5, 
+                    label: '日用品'
+                }, {
+                    value: 6, 
+                    label: '飲料'
+                }
+            ]),
+            value: ref('')
+        }
     },
     data() {
         return {
@@ -134,60 +204,14 @@ export default {
             readOnly: true,
             tabPosition: 'first',
             tabName: "新增商品",
-            num: 1,
-            index: 0,
-            productArray: [{
-                productID: 0,
-                productName: "-特價- FCMM 防風 外套 騎車 韓國正品｜ 96LINE.TW 韓國代購",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p><p class='ql-align-center'>product <span style='color: rgb(230, 100, 0);'>description</span></p>"
-            }, {
-                productID: 1,
-                productName: "商品1",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                productID: 2,
-                productName: "商品2",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "p class='ql-align-center'>product2 <span style='color: rgb(230, 0, 255);'>description</span></p>"
-            }, {
-                productID: 3,
-                productName: "商品3",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                productID: 4,
-                productName: "商品4",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 515,
-                stock: 10,
-                description: "<p>txt url</p>"
-            }, {
-                productID: 5,
-                productName: "商品5",
-                photo: "http://www.am1470.com/data/activities/4988_747715_1.jpg",
-                price: 1000,
-                stock: 1,
-                description: "<p class='ql-align-center'>product <span style='color: rgb(230, 255, 0);'>description</span></p>"
-            }],
-            operationProduct: {
-                productID: 0,
-                productName: '',
-                photo: '',
-                price: 0,
-                stock: 0,
-                description: ''
-            },
-            testData: "Test send data"
+            proID: 0,
+            productArray: [],
+            operationProduct: [],
+            deleteDialogVisible: false,
+            onSelfDialogVisible: false,
+            currentPage: 1,
+            pageSize: 50,
+            loaded: false
         }
     },
     methods: productController,
@@ -195,20 +219,33 @@ export default {
         tables: function () {
             var search = this.search;
             if (search) {
-                return this.productArray.filter(function (dataNews) {
+                return this.productArray.result.filter(function (dataNews) {
                     return Object.keys(dataNews).some(function (key) {
                         return String(dataNews[key]).toLowerCase().indexOf(search) > -1
                     })
                 })
             }
-            return this.productArray
+            return this.productArray.result
         }
     },
-    // mounted() {
-    //     imageService.getImage().then(data => {
-    //         this.ResolveOverlongString(data, 0);
-    //     })
-    // }
+    mounted() {
+        if (this.$route.params.id) {
+            window.location.reload;
+            this.allowEdit = !this.allowEdit
+            this.readOnly = !this.readOnly
+            this.tabPosition = 'two'
+            console.log(typeof(this.$route.params.id))
+            if (parseInt(this.$route.params.id) !== 0) {
+                this.checkButton('edit');
+                this.editProduct(parseInt(this.$route.params.id));
+            }
+        } else {
+            // window.location.reload();
+            adminProductService.getAllProducts().then(data => {
+                this.productArray = data;
+            })
+        }
+    }
 }
 </script>
 

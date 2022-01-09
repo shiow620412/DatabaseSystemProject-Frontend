@@ -1,4 +1,4 @@
-import http from "./service.config"
+import http from "../service.config"
 
 const prefix = "/admin/img";
 const services = {

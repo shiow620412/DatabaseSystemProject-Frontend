@@ -3,7 +3,7 @@ import http from "./service.config";
 const prefix = "/products";
 const services = {
     getProducts,
-    getProductdetail,
+    getProductDetail,
     getNewProductPage,
     getProductBySearch,
     getProductBySearchAndCategory
@@ -13,7 +13,7 @@ function getProducts(){
 
     return http.get(url);
 }
-function getProductdetail(id){
+function getProductDetail(id){
     let url = prefix + "/"+id;
 
     return http.get(url);

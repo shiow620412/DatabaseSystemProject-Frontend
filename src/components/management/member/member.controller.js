@@ -1,10 +1,13 @@
 import memberService from '../../../services/admin/user.service'
+import { ElMessage } from 'element-plus'
 
 export default {
     changeIsAdminChinese,
     changeStatusChinese,
     changeUserStatus,
-    clickSave
+    clickSave,
+    handleSizeChange,
+    handleCurrentChange
 }
 
 function changeIsAdminChinese(num) {
@@ -30,4 +33,19 @@ function changeUserStatus(id, isAdminStatus, isBanStatus) {
 function clickSave(index, userId, isAdminStatus, isBanStatus) {
     console.log(index);
     changeUserStatus(userId, isAdminStatus, isBanStatus);
+}
+
+function handleSizeChange(size) {
+    this.pageSize = size;
+    console.log(this.pageSize);
+}
+
+function handleCurrentChange(currentPage) {
+    this.currentPage = currentPage;
+    console.log(this.currentPage);
+    memberService.getMembers(this.currentPage).then(data => {
+        this.memberArray = data;
+    }).catch((error) => {
+        ElMessage.error(error.response.data.message);
+    });
 }
