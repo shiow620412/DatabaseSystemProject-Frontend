@@ -6,7 +6,7 @@
         </div>
     </div>
     <el-row>
-        <el-col :span="4" style="background-color: #E4FFD3;height: 800px;">
+        <el-col :span="4" style="background-color: #E4FFD3;height: auto">
             <div style="width: 90%;margin: auto auto;">
                 <router-link style="text-decoration: none;" :to="{query: {id:true}}" @click="changefilter(searchName, '10000', input1, input2)"><p style="position: positive;left: -20px;">> 新上市</p></router-link>
                 <router-link style="text-decoration: none;" to="/" @click="changefilter(searchName, '01000', input1, input2)"><p style="position: positive;left: -20px;">> 有貨優先</p></router-link>

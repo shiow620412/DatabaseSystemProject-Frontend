@@ -10,7 +10,7 @@ import Payment from "../components/payment/payment.vue";
 
 import memberRouter from "./member.router"
 import managementRouter from "./management.router"
-import identifyRouter from "./identify.router";
+import userRouter from "./user.router";
 const routes = [
   {
     path: '',
@@ -46,7 +46,7 @@ const routes = [
   },
  
   managementRouter,
-  identifyRouter
+  userRouter
 ]
   
 

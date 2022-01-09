@@ -1,5 +1,5 @@
 <template>
-    <el-row style="align: cenetr;height: 650px;">
+    <el-row style="align: cenetr;">
         <br>
         <el-col :span="2" style="background-color: #EFFFE4;">
             <div class=""></div>
@@ -36,7 +36,7 @@
         </el-col>
         <el-col :span="14" style="background-color: #EFFFE4;">
             <br>
-            <div><router-view/></div>
+            <router-view/>
         </el-col>
         <el-col :span="2" style="background-color: #EFFFE4;">
             <div class=""></div>
@@ -55,14 +55,17 @@
                 if(confirm("確定登出?")){
                     localStorage.removeItem("token");
                     localStorage.setItem("isLogin", 0);
-                    this.$router.push({path: "/identify"});
+                    this.$router.push({path: "/user"});
                 }
             }
         },
     }
 </script>
 
-<style>
+<style scoped>
+    .el-row{
+        height: calc(100vh - 100px);
+    }
     .button-back{
         background-color: #7EEDD2;
         margin: 10px;
