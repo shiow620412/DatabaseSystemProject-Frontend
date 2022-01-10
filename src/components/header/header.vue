@@ -1,7 +1,7 @@
 <template>
     <el-row class="top" >
         <el-col :span="7">
-            <router-link to="/">
+            <router-link to="/"  @click="goHome">
                 <el-image  :fit="'contain'" :src="require('../../assets/logo.png')" alt=""></el-image>
             </router-link>
                 <!-- <el-col :span="24">
