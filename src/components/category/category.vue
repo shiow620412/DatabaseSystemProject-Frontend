@@ -86,6 +86,7 @@ import CategoryController from './category.controller'
                     this.ResolveOverlongString(data, 0);
                     this.current_page = 1;
                     this.name = '';
+                    this.category = -1;
                 })
             ));
             if(this.$route.params.category){

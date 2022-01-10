@@ -66,6 +66,7 @@
 <script>
     import { ref } from 'vue'
     import {Search} from '@element-plus/icons'
+    import headerController from './header.controller'
     export default {
         name: 'Top',
         components: {
@@ -83,66 +84,8 @@
                 isShow: true
             }
         },
-        methods: {
-            search(){
-                this.eventBus.emit("click-send-msg", this.input);
-                this.$router.push({
-                    path: "/index",
-                    query: {
-                        q: this.input
-                    }
-                });
-            },
-            checkLogin(){
-                if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
-                else{this.$router.push({path: "/identify"});}
-            },
-            goHome(){
-                this.eventBus.emit("notifyReload", "0");
-            }
-        },
+        methods: headerController,
     }
 </script>
 
-<style>
-    .top{
-        height: 100px;
-        width: 100%;
-        z-index: 2;
-        background-color: #FAEDA7; 
-    }
-    .shoppingCart-position{
-        top: 33px;
-        left: 10px;
-        position: relative;
-        top: 25px;
-        right: -30px;
-    }
-    .shoppingCart-image{
-        transition: 0.5s;
-        width: 30%;
-    }
-    .shoppingCart-image:hover{
-        transform: scale(1.2);
-    }
-    .register-position{
-        position: relative;
-        font-size: 18px;
-        top: 10px;
-        color: #F97E13;
-    }
-    .member-position{
-        position: relative;
-        font-size: 18px;
-        top: 10px;
-        left: 10px;
-        color: #F97E13;
-    }
-    .input-position{
-        margin: auto auto;
-    }
-    .home-image{
-        width: 40%;
-        transform:translateY(20%);
-    }
-</style>
+<style scoped lang="scss" src="./header.scss"></style>
