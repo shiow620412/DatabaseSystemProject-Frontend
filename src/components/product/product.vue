@@ -22,7 +22,7 @@
         </el-col>
         <el-col :span="6">
           <div class="pro_input_quantity">
-            <el-input-number v-model="num" @change="handleChange" :min="1" :max="this.product.Stock" label="描述文字">
+            <el-input-number v-model="num" @change="handleChange" :min="0" :max="this.product.Stock" label="描述文字">
             </el-input-number>
           </div>
         </el-col>
@@ -34,7 +34,8 @@
       <el-row class="add_procar">
         <el-col :span="4"></el-col>
         <el-col :span="8"><br><br>
-          <el-button type="success" @click="putProduct(this.$route.params.id, num)">加入購物車</el-button>
+          <el-button v-if="num<=0" type="success" disabled>加入購物車</el-button>
+          <el-button v-else type="success" @click="putProduct(this.$route.params.id, num)">加入購物車</el-button>
         </el-col>
         <el-col :span="12"></el-col>
       </el-row>
@@ -58,11 +59,11 @@ import { ElMessage } from 'element-plus'
     name: 'top',
     props: ["SimulatedProduct"],
     data() {
-        return {
-            content: "<p>123</p>",
-            num: 1,
-            product: {},
-        };
+      return {
+        content: "<p>123</p>",
+        num: 0,
+        product: {},
+      };
     },
     methods: {
       putProduct(id, num){
@@ -74,6 +75,7 @@ import { ElMessage } from 'element-plus'
           })
         }).catch((error) => {
           alert(error.response.data.message);
+          this.$router.push("/identify/login");
         })
       },
       handleChange(value) {

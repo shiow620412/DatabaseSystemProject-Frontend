@@ -69,5 +69,6 @@ function changefilter(name, filter, min, max){
     if(filter[4]==='1'){
         this.filter = this.filter.substring(0, 4)+'1';
     }
+    console.log(this.filter);
     this.OnSelectCategoy(this.category, name, this.filter, min, max);
 }

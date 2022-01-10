@@ -70,6 +70,7 @@
 <script>
     import { ref } from 'vue'
     import {Search} from '@element-plus/icons'
+    import headerController from './header.controller'
     export default {
         name: 'Top',
         components: {
@@ -87,79 +88,8 @@
                 isShow: true
             }
         },
-        methods: {
-            search(){
-                this.eventBus.emit("click-send-msg", this.input);
-                this.$router.push({
-                    path: "/index",
-                    query: {
-                        q: this.input
-                    }
-                });
-            },
-            checkLogin(){
-                if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
-                else{this.$router.push({path: "/user"});}
-            },
-            goHome(){
-                this.eventBus.emit("notifyReload", "0");
-            }
-        },
+        methods: headerController,
     }
 </script>
 
-<style scoped>
-    .el-col-7 a{
-        height: 100px;   
-    }
-    .el-image{
-        height: inherit;
-    }
-    .top{
-        position: sticky;
-        top: 0;
-        left: 0;
-        height: 100px;
-        width: 100%;
-        z-index: 2;
-        background-color: #FAEDA7; 
-    }
-    .shoppingCart-position{
-        top: 33px;
-        left: 10px;
-        position: relative;
-        top: 25px;
-        right: -30px;
-    }
-    .shoppingCart-image{
-        transition: 0.5s;
-        width: 30%;
-    }
-    .shoppingCart-image:hover{
-        transform: scale(1.2);
-    }
-    .register-position{
-        position: relative;
-        font-size: 18px;
-        top: 10px;
-        color: #F97E13;
-    }
-    .member-position{
-        position: relative;
-        font-size: 18px;
-        top: 10px;
-        left: 10px;
-        color: #F97E13;
-    }
-    .input-position{
-        margin: auto auto;
-        display: flex;
-        justify-content: center;
-        align-content: center;
-    }
-    .home-image{
-        width: 40%;
-        transform:translateY(20%);
-        display: inline-block;
-    }
-</style>
+<style scoped lang="scss" src="./header.scss"></style>
