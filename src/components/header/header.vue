@@ -39,7 +39,7 @@
                         <el-row>
                             <el-col :span="12">
                                 <div>
-                                    <el-row>
+                                    <el-row v-if="isShow">
                                         <el-col :span="12">
                                             <div>
                                                 <router-link to="/user/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
