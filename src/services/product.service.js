@@ -4,61 +4,73 @@ const prefix = "/products";
 const services = {
     getProducts,
     getProductDetail,
-    getNewProductPage,
-    getProductBySearch,
-    getProductBySearchAndCategory
+
+    getProductsByCategory,
+    searchAllProductByName,
+    searchCategoryProductByName,
+    countProductInCategoryByName
 }
-function getProducts(){
-    let url = prefix + "/sales";
+function removeUndefinedParams(obj){
+    const params = new URLSearchParams(obj)
+    const keysForDel = [];
+    params.forEach((value, key) => {
+        console.log(value, typeof value);
+    
+        if(value === "undefined"){
+            keysForDel.push(key)
+        }
+    })
+    keysForDel.forEach(key => {
+        params.delete(key);
+    })
+    return params.toString();
+}
+function getProductsByCategory(categoryId, page, filterObj){//, filter, sort, minPrice, maxPrice ){
+    const paramObj = Object.assign({}, {page}, filterObj );
+    const params = removeUndefinedParams(paramObj);
+    const url = prefix + `/category/${categoryId}?${params}`;
 
     return http.get(url);
 }
+function getProducts(page, filterObj){
+    const paramObj = Object.assign({}, {page}, filterObj );
+    const params = removeUndefinedParams(paramObj);
+    const url = prefix + `/sales?${params}`;
+
+    return http.get(url);
+}
+
+function searchAllProductByName(page, filterObj){
+    const paramObj = Object.assign({}, {page}, filterObj );
+    const params = removeUndefinedParams(paramObj);
+    const url = prefix + `/search?${params}`;
+
+    return http.get(url);
+}
+
+function searchCategoryProductByName(categoryId, page ,filterObj){
+    const paramObj = Object.assign({}, {page}, filterObj );
+    const params = removeUndefinedParams(paramObj);
+    const url = prefix + `/search/category/${categoryId}?${params}`;
+
+    return http.get(url);
+}
+
+function countProductInCategoryByName(productName){
+    const param = removeUndefinedParams({productName})
+    const url = prefix + "/search/category?" + param
+    
+    return http.get(url);
+}
+
+
+
 function getProductDetail(id){
     let url = prefix + "/"+id;
 
     return http.get(url);
 }
-function getNewProductPage(type, name, _page, filter, min, max){
-    let temp = "filter=";
-    let url = '';
-    if(parseInt(type)===-1){
-        url = prefix + '/sales?';
-    }
-    else{
-        url = name==='' ? prefix + "/category/"+(parseInt(type)+1).toString()+'?' : prefix + "/search/category/" + (parseInt(type)+1).toString()+'?productName='+name+'&    ';
-    }
-    if(filter[0]==='1'){url += "filter=Id&";temp = '';}
-    if(filter[1]==='1'){url += "filter=Stock&";temp = '';}
-    if(filter[2]==='1'){url += temp + "Price&sort=ASC&";}
-    if(filter[3]==='1'){url += temp + "Price&sort=DESC&";}
-    if(filter[4]==='1'){url += "minPrice="+min+"&maxPrice="+max+"&";}
-    url += 'page='+_page.toString();
-    console.log(url);
 
-    return http.get(url);
-}
-function getProductBySearch(name){
-    let url = prefix + "/search?productName=" + name;
 
-    return http.get(url);
-}
-function getProductBySearchAndCategory(type, name, filter, min, max){
-    let temp = "filter=";
-    let url = '';
-    if(parseInt(type)===-1){
-        url = prefix + '/sales?';
-    }
-    else{
-        url = name==='' ? prefix + "/category/"+(parseInt(type)+1).toString()+'?' : prefix + "/search/category/" + (parseInt(type)+1).toString()+'?productName='+name+'&';
-    }
-    if(filter[0]==='1'){url += "filter=Id&";temp = '';}
-    if(filter[1]==='1'){url += "filter=Stock&";temp = '';}
-    if(filter[2]==='1'){url += temp + "Price&sort=ASC&";}
-    if(filter[3]==='1'){url += temp + "Price&sort=DESC&";}
-    if(filter[4]==='1'){url += "minPrice="+min+"&maxPrice="+max+"&";}
-    console.log(url);
-
-    return http.get(url);
-}
 
 export default services

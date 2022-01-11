@@ -4,11 +4,11 @@ export default {
     goHome
 }
 function search(){
-    this.eventBus.emit("click-send-msg", this.input);
+    this.eventBus.emit("searchEvent", this.searchInput);
     this.$router.push({
-        path: "/index",
+        path: "/",
         query: {
-            q: this.input
+            productName: this.searchInput
         }
     });
 }
@@ -17,5 +17,7 @@ function checkLogin(){
     else{this.$router.push({path: "/user"});}
 }
 function goHome(){
-    this.eventBus.emit("notifyReload", "0");
+    this.searchInput = '';
+    this.eventBus.emit("recoverCategory");
+    this.eventBus.emit("changeCategory", 0);
 }

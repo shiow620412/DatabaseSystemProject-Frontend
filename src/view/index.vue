@@ -1,14 +1,18 @@
 <template>
-  <Category />
+  <el-row style="background-color: #efffe4;">
+    <index-aside></index-aside>
+    <index-main></index-main>
+  </el-row>
 </template>
 
 <script>
-  import Category from '../components/category/category.vue'
-
+  import indexAside from '../components/category/category.vue'
+  import indexMain from '../components/subject/subject.vue'
   export default {
     name: 'index',
     components: {
-      Category,
+      indexAside,
+      indexMain
     }
   }
 </script>

@@ -4,28 +4,17 @@
             <router-link to="/"  @click="goHome">
                 <el-image  :fit="'contain'" :src="require('../../assets/logo.png')" alt=""></el-image>
             </router-link>
-                <!-- <el-col :span="24">
-                    <div>
-                        <router-link to="/" @click="goHome"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
-                      
-                        class="home-image"
-                    </div>
-                </el-col>
-                <el-col :span="3">
-                    <div>
-                        layout-margin
-                    </div>
-                </el-col> -->
-          
+
         </el-col>
         <el-col :span="10" class="input-position">
-           
-                <el-input v-model="input" placeholder="Please Search Product">
+            <el-form @submit.prevent="search">
+                <el-input v-model="searchInput" placeholder="Please Search Product">
                 <template #append>
                     <el-button @click="search"><el-icon><Search/></el-icon></el-button>
                 </template>
                 </el-input>
-         
+            </el-form>
+            
         </el-col>
         <el-col :span="7">
             <el-row>
@@ -68,7 +57,6 @@
 </template>
 
 <script>
-    import { ref } from 'vue'
     import {Search} from '@element-plus/icons'
     import headerController from './header.controller'
     export default {
@@ -76,18 +64,18 @@
         components: {
             Search
         },
-        mounted() {
-            this.eventBus.on("ishide", (msgData) => (
-                this.isShow = msgData==='1' ? false : true
-            ));
-            this.isShow = localStorage.getItem("isLogin")==='1' ? false : true
-        },
         data(){
             return{
-                input: ref(''),
+                searchInput: '',
                 isShow: true
             }
         },
+        mounted() {
+            if(this.$route.query.productName){
+                this.searchInput = this.$route.query.productName;
+            }       
+        },
+        
         methods: headerController,
     }
 </script>

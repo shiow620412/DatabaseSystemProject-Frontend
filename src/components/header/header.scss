@@ -1,4 +1,13 @@
+.el-col-7 a{
+    height: 100px;   
+}
+.el-image{
+    height: inherit;
+}
 .top{
+    position: sticky;
+    top: 0;
+    left: 0;
     height: 100px;
     width: 100%;
     z-index: 2;
@@ -33,8 +42,15 @@
 }
 .input-position{
     margin: auto auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 .home-image{
     width: 40%;
     transform:translateY(20%);
+    display: inline-block;
+}
+.el-form{
+    width: 100%;
 }
