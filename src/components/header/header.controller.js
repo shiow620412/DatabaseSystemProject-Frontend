@@ -1,8 +1,9 @@
 export default {
     search,
-    checkLogin,
+    logout,
     goHome
 }
+import {ElMessage} from 'element-plus';
 function search(){
     this.eventBus.emit("searchEvent", this.searchInput);
     this.$router.push({
@@ -12,12 +13,30 @@ function search(){
         }
     });
 }
-function checkLogin(){
-    if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
-    else{this.$router.push({path: "/user"});}
-}
+
 function goHome(){
     this.searchInput = '';
     this.eventBus.emit("recoverCategory");
     this.eventBus.emit("changeCategory", 0);
+}
+
+function logout(){
+    this.userOptions = [
+        {
+             label: "登入",
+             path: "/user/login",
+             display: true
+         },
+         {
+             label: "註冊",
+             path: "/user/register",
+             display: true
+         }
+     ]
+    this.memberInformation = {};
+    localStorage.removeItem("token")
+    ElMessage({
+        message: '成功登出',
+        type: 'success',
+      })
 }

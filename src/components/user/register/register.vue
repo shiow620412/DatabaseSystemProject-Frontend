@@ -96,10 +96,9 @@
     },
     methods: {
       submitForm(email, account, password, name) {
-        UserService.register(email, account, password, name).then(data => {
-          console.log(data);
+        UserService.register(email, account, password, name).then(() => {
           alert("註冊成功");
-          this.$router.push({path: '/identify/login'});
+          this.$router.push({path: '/'});
         }).catch((error) => {
           alert(error.response.data.message);
         })

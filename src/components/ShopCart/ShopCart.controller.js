@@ -21,7 +21,8 @@ function addToPayArray(val) {
     this.productOfChecked = val;
 }
 function handleChange(index,quantity){
-    console.log(index, quantity);
+    CartService.updateProductQuantity(this.productArray[index].ProductID, quantity);
+    
 }
 function click(){
     this.$router.push({

@@ -7,7 +7,8 @@
           </div>
         </el-header>
         <el-main>
-          <el-form :model="loginForm" label-width="100px" class="account_frame" @submit.prevent="login(loginForm.account, loginForm.password)">
+          <el-form :model="loginForm" label-width="100px" class="account_frame" @submit.prevent="login(loginForm.account, loginForm.password)" 
+          @keyup.enter="login(loginForm.account, loginForm.password)">
           <el-row>
             <el-col :span="21">
               

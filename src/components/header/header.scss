@@ -8,7 +8,7 @@
     position: sticky;
     top: 0;
     left: 0;
-    height: 100px;
+    // height: 100px;
     width: 100%;
     z-index: 2;
     background-color: #FAEDA7; 
@@ -54,3 +54,13 @@
 .el-form{
     width: 100%;
 }
+
+.el-space__item a{
+    color: #F97E13;
+    // text-decoration-line: none;
+    font-family: "DFKai-sb";
+    font-size: 18px;
+}
+
+
+

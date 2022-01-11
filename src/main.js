@@ -7,6 +7,7 @@ import mitt from "mitt";
 const eventBus = mitt();
 const app = createApp(App);
 app.config.globalProperties.eventBus = eventBus;
+
 installElementPlus(app);
 app.use(router);
 app.mount('#app');

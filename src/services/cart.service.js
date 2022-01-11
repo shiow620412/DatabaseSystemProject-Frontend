@@ -4,7 +4,8 @@ const prefix = "/cart";
 const services = {
     PutProductIntoCart,
     getProductFromCart,
-    deleteProductofCart
+    deleteProductofCart,
+    updateProductQuantity
 }
 function PutProductIntoCart(productId, quantity){
     let url = prefix;
@@ -29,4 +30,11 @@ function deleteProductofCart(ProductID){
     });
 }
 
+function updateProductQuantity(productId, quantity){
+    const url = prefix;
+
+    return http.put(url, {
+        productId, quantity
+    })
+}
 export default services;

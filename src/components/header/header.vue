@@ -17,16 +17,27 @@
             
         </el-col>
         <el-col :span="7">
-            <el-row>
+            <el-row style="height: 100%">
                 <el-col :span="8">
-                    <div>
+                    
                         <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link>
-                    </div>
+                    
                 </el-col>
                 <el-col :span="16">
                     <div>
-                        <el-row>
-                            <el-col :span="12">
+                        <el-row justify="end">
+                            <el-space :size="10">
+                                <template v-if="memberInformation.Name">
+                                    <div>Hi {{memberInformation.Name}}</div>
+                                    <router-link to="/" @click="logout">登出</router-link>
+                                </template>
+                                <template v-for="element in userOptions" :key="element">
+                                    <router-link :to="element.path" >
+                                        {{element.label}}
+                                    </router-link>
+                                </template>
+                            </el-space>
+                            <!-- <el-col :span="12">
                                 <div>
                                     <el-row v-if="isShow">
                                         <el-col :span="12">
@@ -46,7 +57,7 @@
                                 <div>
                                     <router-link to="/" @click="checkLogin()" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
                                 </div>
-                            </el-col>
+                            </el-col> -->
                         </el-row>
                     </div>
                 </el-col>
@@ -57,6 +68,7 @@
 </template>
 
 <script>
+    import userService from "../../services/user.service"
     import {Search} from '@element-plus/icons'
     import headerController from './header.controller'
     export default {
@@ -67,10 +79,50 @@
         data(){
             return{
                 searchInput: '',
-                isShow: true
+                userOptions:[],
+                memberInformation:{}
             }
         },
         mounted() {
+            if(localStorage.getItem("token")){
+                userService.getInformation().then(data => {
+                    this.memberInformation = data;
+                    this.userOptions = [
+                        {
+                            label: "會員中心",
+                            path: "/member",
+                            display: true
+                        },{
+                            label: "後台管理",
+                            path: "/management",
+                            display: this.memberInformation.isAdmin
+                        }
+                    ]
+                    this.userOptions.map(option => {
+                        if(option.label === "後台管理"){
+                            option.display = this.memberInformation.isAdmin;
+                        }else{
+                            option.display = !option.display;
+                        }
+                        return option;
+                    });
+        
+                    
+                })
+            }else{
+                this.userOptions = [
+                   {
+                        label: "登入",
+                        path: "/user/login",
+                        display: true
+                    },
+                    {
+                        label: "註冊",
+                        path: "/user/register",
+                        display: true
+                    }
+                ]
+            }
             if(this.$route.query.productName){
                 this.searchInput = this.$route.query.productName;
             }       

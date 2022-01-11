@@ -97,7 +97,7 @@ import CategoryController from './category.controller'
                 this.searchName = '';
             })
             this.eventBus.on("searchEvent", (query) => {
-                this.searchName = query;
+                this.searchName = query;               
             })
 
         }
