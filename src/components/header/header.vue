@@ -32,7 +32,7 @@
                                     <router-link to="/" @click="logout">登出</router-link>
                                 </template>
                                 <template v-for="element in userOptions" :key="element">
-                                    <router-link :to="element.path" >
+                                    <router-link :to="element.path" v-if="element.display">
                                         {{element.label}}
                                     </router-link>
                                 </template>
@@ -98,16 +98,6 @@
                             display: this.memberInformation.isAdmin
                         }
                     ]
-                    this.userOptions.map(option => {
-                        if(option.label === "後台管理"){
-                            option.display = this.memberInformation.isAdmin;
-                        }else{
-                            option.display = !option.display;
-                        }
-                        return option;
-                    });
-        
-                    
                 })
             }else{
                 this.userOptions = [
