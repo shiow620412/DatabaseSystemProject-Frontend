@@ -11,7 +11,6 @@ function requestFilterProduct(filterObj){
 }
 
 function RequestNewPage(){
-    
     this.currentPage++;
     if(this.currentPage <= this.maxPage){
         //const query = Object.entries(this.$route.query);

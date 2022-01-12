@@ -55,6 +55,7 @@ export default {
         }
     },
     mounted() {
+        this.eventBus.emit('routeChanged');
         memberService.getAllMemberStatus().then(data => {
             this.memberArray = data
             this.memberLoaded = true

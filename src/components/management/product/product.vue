@@ -228,7 +228,21 @@ export default {
             return this.productArray.result
         }
     },
+    watch:{
+        '$route'(to){
+            if(to.path === "/management/product"){
+                this.operationProduct = [];
+                this.allowEdit = !this.allowEdit
+                this.readOnly = !this.readOnly
+                this.tabPosition = 'first'
+                adminProductService.getAllProducts().then(data => {
+                    this.productArray = data;             
+                })
+            }
+        }
+    },
     mounted() {
+        this.eventBus.emit('routeChanged');
         if (this.$route.params.id) {
             window.location.reload;
             this.allowEdit = !this.allowEdit
@@ -242,7 +256,7 @@ export default {
         } else {
             // window.location.reload();
             adminProductService.getAllProducts().then(data => {
-                this.productArray = data;
+                this.productArray = data;             
             })
         }
     }

@@ -83,10 +83,9 @@
                 memberInformation:{}
             }
         },
-        mounted() {
-            if(localStorage.getItem("token")){
-                userService.getInformation().then(data => {
-                    this.memberInformation = data;
+        watch:{
+            memberInformation(){
+                if(Object.keys(this.memberInformation).length > 0){
                     this.userOptions = [
                         {
                             label: "會員中心",
@@ -98,20 +97,32 @@
                             display: this.memberInformation.isAdmin
                         }
                     ]
-                })
-            }else{
-                this.userOptions = [
-                   {
-                        label: "登入",
-                        path: "/user/login",
-                        display: true
-                    },
+                }else{
+                    this.userOptions = [
                     {
-                        label: "註冊",
-                        path: "/user/register",
-                        display: true
-                    }
-                ]
+                            label: "登入",
+                            path: "/user/login",
+                            display: true
+                        },
+                        {
+                            label: "註冊",
+                            path: "/user/register",
+                            display: true
+                        }
+                    ]
+                }
+            }
+        },
+        mounted() {
+            if(localStorage.getItem("token")){
+                userService.getInformation().then(data => {
+                    this.memberInformation = data;                    
+                }).catch(() => {
+                    localStorage.removeItem("token");   
+                    this.memberInformation = {};                
+                });
+            }else{
+                this.memberInformation = {};
             }
             if(this.$route.query.productName){
                 this.searchInput = this.$route.query.productName;

@@ -80,7 +80,7 @@ import { ElMessage } from 'element-plus'
           })
         }).catch((error) => {
           alert(error.response.data.message);
-          this.$router.push("/identify/login");
+          this.$router.push("/user/login");
         })
       },
       handleChange(value) {

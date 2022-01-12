@@ -68,7 +68,6 @@ function changeProductStatus(productID, status) {
 }
 
 function clickCancel() {
-    this.operationProduct.length = 0;
     this.operationProduct = [];
     this.$router.push("/management/product");
     if (this.tabName === '新增商品') {
@@ -95,8 +94,14 @@ function clickSave(productID) {
             ElMessage.error(error.response.data.message);
         });
     }
+    const findProduct = this.productArray.result.find(product => product.productID === this.operationProduct.productID)
+    if(findProduct){
+        Object.keys(this.operationProduct).forEach(key => {
+            findProduct[key] = this.operationProduct[key];
+        });
+        
+    }
     this.$router.push("/management/product");
-    this.operationProduct.length = 0;
     this.operationProduct = [];
 }
 
