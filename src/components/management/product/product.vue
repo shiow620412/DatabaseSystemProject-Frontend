@@ -128,7 +128,7 @@
                         <div style="text-align: left;" class="pro_info_div" :disabled="(this.tabName === '新增商品') ? true : false" v-show="(this.tabName === '新增商品') ? true : false">
                             <h1>商品類型:&nbsp;&nbsp;
                                 <el-select v-model="this.operationProduct.Type" placeholder="Select" size="medium">
-                                    <el-option v-for="item in typesArray" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                    <el-option v-for="item in typesArray" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </h1>
                         </div>
@@ -166,6 +166,7 @@ import { VueEditor } from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
 import adminProductService from '../../../services/admin/product.service'
+import categoryService from "../../../services/category.service"
 export default {
     name: 'product',
     components: {
@@ -174,26 +175,6 @@ export default {
     },
     setup() {
         return {
-            typesArray: ref([{
-                    value: 1,
-                    label: '水果'
-                }, {
-                    value: 2, 
-                    label: '食物'
-                }, {
-                    value: 3, 
-                    label: '3c'
-                }, {
-                    value: 4, 
-                    label: '衣物'
-                }, {
-                    value: 5, 
-                    label: '日用品'
-                }, {
-                    value: 6, 
-                    label: '飲料'
-                }
-            ]),
             value: ref('')
         }
     },
@@ -211,7 +192,8 @@ export default {
             onSelfDialogVisible: false,
             currentPage: 1,
             pageSize: 50,
-            loaded: false
+            loaded: false,
+            typesArray:[]
         }
     },
     methods: productController,
@@ -243,6 +225,9 @@ export default {
     },
     mounted() {
         this.eventBus.emit('routeChanged');
+        categoryService.getCategories().then(data =>{
+            this.typesArray = data;
+        });
         if (this.$route.params.id) {
             window.location.reload;
             this.allowEdit = !this.allowEdit

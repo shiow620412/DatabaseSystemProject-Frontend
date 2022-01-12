@@ -17,7 +17,7 @@
                                         productName: searchName
                                     }
                                 }"  @click="changeSearchCategory(element.id, searchName)">
-                                <el-button type="text" >
+                                <el-button type="text" :class="{active:element.isActive}">
                                     {{element.name.concat(`(${element.searchCount})`)}}
                                 </el-button>
                             </router-link>
@@ -26,7 +26,7 @@
                     <template v-else>
                         <el-row  justify="center">
                             <router-link :to="'/category/'+element.id" @click="changeCategory(element.id)" >
-                                <el-button type="text">
+                                <el-button type="text" :class="{active:element.isActive}">
                                     {{element.name}}
                                 </el-button>
                             </router-link>
@@ -89,7 +89,7 @@ import CategoryController from './category.controller'
             }else{
                 categoryService.getCategories().then(data =>{
                     this.category = data
-                    this.sourceCategory = JSON.stringify(data);
+                    this.sourceCategory = JSON.stringify(this.category);
                 });
             }
             this.eventBus.on("recoverCategory", ()=>{

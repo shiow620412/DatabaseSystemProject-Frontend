@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-    // baseURL: 'https://prj.inf.saihs.edu.tw:8787/api',
-    baseURL: 'http://45.77.128.81:3000/api',
+    baseURL: 'https://prj.inf.saihs.edu.tw/api',
+    // baseURL: 'http://45.77.128.81:3000/api',
     // baseURL: 'http://203.64.47.60:8787/api',
     // baseURL: 'http://localhost:3000/api',
     headers: { 
