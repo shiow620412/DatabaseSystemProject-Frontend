@@ -1,8 +1,8 @@
 <template>
     <el-col :span="20">
     
-        <productFilter v-show="filterShow" 
-            @filterProduct="requestFilterProduct" ref="productFilter"
+        <productFilter v-show="filterShow" :clear="clearFilter"
+            @filterProduct="requestFilterProduct"
         ></productFilter>
     
         <el-row>
@@ -39,19 +39,14 @@
         methods: subjectController,
         data() {
             return {
-                filterOptions:{
-                    stock: "有貨優先",
-                    sales: "銷售數量",
-                    productId: "新上市",
-                    asc: "價格由低到高",
-                    desc: "價格由高到低",
-                },
+                clearFilter: 0,
                 currentPage:1,
                 maxPage:0,
                 productData:[],
                 categoryId:-1,
                 filterObj:{},
-                filterShow: false
+                filterShow: false,
+
             }
         },
         watch:{
@@ -135,12 +130,9 @@
                 if(this.categoryId === categoryId && categoryId === 0){
                     this.filterObj = {};
                 }
-
                 this.categoryId = categoryId;
-                this.$route.query = {};
-                this.$refs.productFilter.filterSelect = [];
-                this.$refs.productFilter.minPrice = "";
-                this.$refs.productFilter.maxPrice = "";
+                this.$route.query = {};                
+                this.clearFilter = Math.random();
             });
             this.eventBus.on("changeSearchCategory", (searchObject) => {
                 const {categoryId, productName} = searchObject;
@@ -150,17 +142,12 @@
                 this.$route.query = {
                     productName
                 };
-
-                this.$refs.productFilter.filterSelect = [];
-                this.$refs.productFilter.minPrice = "";
-                this.$refs.productFilter.maxPrice = "";
+                this.clearFilter = Math.random();
             });
             this.eventBus.on("searchEvent", (query) => {
                 console.log("searchEvent ", this.filterObj)
-                this.filterObj = {productName: query}
-                this.$refs.productFilter.filterSelect = [];
-                this.$refs.productFilter.minPrice = "";
-                this.$refs.productFilter.maxPrice = "";
+                this.filterObj = {productName: query}                
+                this.clearFilter = Math.random();
             })
         }
     }

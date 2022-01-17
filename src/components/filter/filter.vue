@@ -39,19 +39,24 @@ import filterController from "./filter.controller"
 
 export default {
     name: 'productFilter',
+    props: ["clear"],
     components:{
         Filter
+    },
+    watch:{
+        clear(){
+            this.filterSelect = [];
+            this.minPrice = "";
+            this.maxPrice = "";
+        }
     },
     data(){
         return{
             filterSelect: [],
-            // sortSelect: [],
             filter:{
                 "有貨優先": {filter:"stock"},    
                 "銷售數量": {filter:"sales"},    
                 "新上市": {filter:"productId"},    
-            // },         
-            // sort:{
                 "價格由低到高": {sort:"asc"},    
                 "價格由高到低": {sort:"desc"}    
             },
