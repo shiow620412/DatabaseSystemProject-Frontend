@@ -4,7 +4,7 @@
     <el-row class="product-briefing">
         <el-col :span="3"></el-col>
         <el-col :span="7" class="pro_Image">
-            <el-image fit="contain" :src="this.product.Thumbnail" />
+            <el-image fit="contain" :src="this.imgURL + this.product.Thumbnail" />
 
 
         </el-col>
@@ -72,8 +72,8 @@ import { ElMessage } from 'element-plus'
     },
     methods: {
       putProduct(id, num){
-        CartService.PutProductIntoCart(id, num).then(data => {
-          console.log(data.message);
+        CartService.PutProductIntoCart(id, num).then(() => {
+          
           ElMessage({
             message:'已加入購物車',
             type: 'success'
@@ -82,9 +82,6 @@ import { ElMessage } from 'element-plus'
           alert(error.response.data.message);
           this.$router.push("/user/login");
         })
-      },
-      handleChange(value) {
-        console.log(value);
       }
     },
     computed: {
