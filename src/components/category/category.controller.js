@@ -1,11 +1,11 @@
 export default {
     changeCategory,
-    changeSearchCategory
+    changeSearchCategory,
+    changeActiveCategory
 }
 
-
-function changeCategory(categoryId){
-    this.category.map(element => {
+function changeActiveCategory(category, categoryId){
+    category.map(element => {
         if(element.id === categoryId){
             element.isActive = true;
         }else{
@@ -13,18 +13,15 @@ function changeCategory(categoryId){
         }
         return element;
     });
+}
+
+function changeCategory(categoryId){
+    changeActiveCategory(this.category, categoryId);
     this.eventBus.emit("changeCategory", categoryId);
 }
 
 function changeSearchCategory(categoryId, productName){
-    this.category.map(element => {
-        if(element.id === categoryId){
-            element.isActive = true;
-        }else{
-            element.isActive = false;
-        }
-        return element;
-    });
+    changeActiveCategory(this.category, categoryId);
     const searchObject = {
         categoryId,
         productName

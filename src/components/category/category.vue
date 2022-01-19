@@ -78,7 +78,27 @@ import CategoryController from './category.controller'
                         }
                         return element;
                     });
+                    
+                    if(this.$route.params.category){
+                        this.changeActiveCategory(this.category, Number(this.$route.params.category));
+                    }
                 })
+            },
+            "$route": function(){
+                if(this.$route.query.productName){
+                    
+                    if(this.searchName === this.$route.query.productName){
+                        this.$route.params.category ? this.changeActiveCategory(this.category, Number(this.$route.params.category)) : this.changeActiveCategory(this.category, 0);
+                    }else{
+                        this.searchName = this.$route.query.productName;
+                    }
+                }else{
+                    this.category = JSON.parse(this.sourceCategory); 
+                    if(this.$route.params.category){
+                        this.changeActiveCategory(this.category, Number(this.$route.params.category));
+                    }
+                    this.searchName = '';
+                }
             }
         },
         methods: CategoryController,
@@ -90,10 +110,12 @@ import CategoryController from './category.controller'
                 categoryService.getCategories().then(data =>{
                     this.category = data
                     this.sourceCategory = JSON.stringify(this.category);
+                    this.changeActiveCategory(this.category, Number(this.$route.params.category))                    
                 });
             }
             this.eventBus.on("recoverCategory", ()=>{
                 this.category = JSON.parse(this.sourceCategory);
+                this.changeCategory(0, true);
                 this.searchName = '';
             })
             this.eventBus.on("searchEvent", (query) => {

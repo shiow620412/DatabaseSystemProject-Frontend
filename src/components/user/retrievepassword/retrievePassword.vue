@@ -53,8 +53,8 @@
       submitForm(email, account) {
         UserService.resetPassword(email, account).then(data => {
           alert(data.message);
-        }).catch((error) => {
-          console.log(error.response.data.message);
+        }).catch(() => {
+          
         })
       },
     }

@@ -14,7 +14,7 @@ function removeUndefinedParams(obj){
     const params = new URLSearchParams(obj)
     const keysForDel = [];
     params.forEach((value, key) => {
-        console.log(value, typeof value);
+        
     
         if(value === "undefined"){
             keysForDel.push(key)

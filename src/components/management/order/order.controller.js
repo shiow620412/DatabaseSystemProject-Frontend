@@ -41,7 +41,7 @@ function modifyOrder(id, status) {
 }
 
 function clickSave(index, orderId, orderStatus) {
-    console.log(index);
+    
     let tempStatus = '';
     if (orderStatus === 1) {
         tempStatus = 'finish';
@@ -53,12 +53,12 @@ function clickSave(index, orderId, orderStatus) {
 
 function handleSizeChange(size) {
     this.pageSize = size;
-    console.log(this.pageSize);
+    
 }
 
 function handleCurrentChange(currentPage) {
     this.currentPage = currentPage;
-    console.log(this.currentPage);
+    
     orderService.getOrders(this.currentPage).then(data => {
         this.orderArray = data;
     }).catch((error) => {

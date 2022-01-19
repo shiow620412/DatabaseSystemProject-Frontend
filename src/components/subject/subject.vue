@@ -9,18 +9,21 @@
             <ul v-infinite-scroll="RequestNewPage" style="margin-block-start: 0em;padding-inline-start: 0px; width:100%">
                 <a href="#max-height"><el-button type="info" class="return-top-button el-icon-upload2"><p>TOP</p></el-button></a> 
                 <div class="subject-div-content">
-                    <el-card class="card" v-for="i in productData" :key="i" id="max-height">
-                        <!-- <router-link :to="`/product/${i.ProductID}`">
-                            <el-image src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="subject-image"/></router-link> -->
+                    <template  v-for="i in productData" :key="i" >
+
                         <router-link :to="`/product/${i.ProductID}`">
-                            <el-image :src="imgURL + i.Thumbnail" class="subject-image">
-                            </el-image>
+                            <el-card class="card">
+                                <!-- <router-link :to="`/product/${i.ProductID}`">
+                                    <el-image src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="subject-image"/></router-link> -->
+                                    <el-image :src="imgURL + i.Thumbnail" class="subject-image">
+                                    </el-image>
+                                <div>
+                                    <p>{{i.ProductName}}</p>
+                                </div>
+                                <p style="color: red;">$ {{i.Price}}</p>
+                            </el-card>
                         </router-link>
-                        <div>
-                            <p>{{i.ProductName}}</p>
-                        </div>
-                        <p style="color: red;">$ {{i.Price}}</p>
-                    </el-card>
+                    </template>
                 </div>
             </ul>
         </el-row>
@@ -40,6 +43,7 @@
         data() {
             return {
                 clearFilter: 0,
+                setFilter:{},
                 currentPage:1,
                 maxPage:0,
                 productData:[],
@@ -50,55 +54,20 @@
             }
         },
         watch:{
-            categoryId: function(){
-                if(this.categoryId !== 0){
-                    this.filterShow = true;
-                }else{
-                    this.filterShow = false;
-                }
-                this.currentPage = 1;
-                console.log("query", this.$route.query)
-                if(Object.keys(this.$route.query).length > 0){
-                    
-                    const expectQueryString = ["productName", "filter", "sort", "minPrice", "maxPrice"];
-                    const filterObj = {};
-                    expectQueryString.forEach(queryString => {
-                        if(this.$route.query[queryString]){
-                            filterObj[queryString] = this.$route.query[queryString];
-                            if(queryString === "minPrice"){
-                                this.$refs.productFilter.minPrice = filterObj[queryString];
-                            }
-                            if(queryString === "maxPrice"){
-                                this.$refs.productFilter.maxPrice = filterObj[queryString];
-                            }
-                            if(queryString === "filter" || queryString === "sort"){
-                                console.log("123", this.filterOptions[filterObj[queryString]]);
-                                this.$refs.productFilter.filterSelect = [this.filterOptions[filterObj[queryString]]];
-                            }
-                        
-                        
-                        }
-                    });
-                    this.filterObj = filterObj;
-                    console.log("watch categoryId", this.filterObj);
-                    return;
-                }else{
-                    this.filterObj = {}
-                    console.log("watch categoryId else");
-                }               
-            },
+            categoryId :"watchCategory",
             filterObj: function(){
                 
                 this.currentPage = 1;
                 if(this.filterObj.productName){
+                    
                     if(this.categoryId){
-                        console.log("search product with category")
+                        
                         productService.searchCategoryProductByName(this.categoryId, this.currentPage, this.filterObj).then(data =>{
                             this.productData = data.result;
                             this.maxPage = data.pages
                         });
                     }else{
-                        console.log("search product ")
+                        
                         productService.searchAllProductByName(this.currentPage, this.filterObj).then(data =>{
                             this.productData = data.result;
                             this.maxPage = data.pages;
@@ -106,13 +75,13 @@
                     }
                 }else{
                     if(this.categoryId){
-                        console.log(" filterObj if true")
+                        
                         productService.getProductsByCategory(this.categoryId, this.currentPage, this.filterObj).then(data =>{
                             this.productData = data.result;
                             this.maxPage = data.pages
                         });
                     }else{
-                        console.log(" filterObj if false")
+                        
                         productService.getProducts(this.currentPage, this.filterObj).then(data =>{
                             this.productData = data.result;
                             this.maxPage = data.pages;
@@ -120,13 +89,27 @@
                     }
                 }
             
-                console.log("filterObj", this.filterObj);
+                
+            }, "$route": function(){
+                
+                if(this.$route.params.category){      
+                    if(this.categoryId !== this.$route.params.category)              
+                        this.categoryId = this.$route.params.category;
+                    else
+                        this.watchCategory();
+                }else{
+                    this.filterShow = false;
+                    if(this.categoryId === 0)
+                        this.watchCategory();
+                    else
+                        this.categoryId = 0;
+                }
             }
         },
         mounted(){
             this.categoryId = this.$route.params.category ? this.$route.params.category : 0;
             this.eventBus.on("changeCategory", (categoryId) => {
-                console.log("changeCategory ", this.categoryId);
+                
                 if(this.categoryId === categoryId && categoryId === 0){
                     this.filterObj = {};
                 }
@@ -136,8 +119,8 @@
             });
             this.eventBus.on("changeSearchCategory", (searchObject) => {
                 const {categoryId, productName} = searchObject;
-                console.log("changeSearchCategory", categoryId);
-                console.log("changeSearchCategory", productName);
+                
+                
                 this.categoryId = categoryId;
                 this.$route.query = {
                     productName
@@ -145,8 +128,14 @@
                 this.clearFilter = Math.random();
             });
             this.eventBus.on("searchEvent", (query) => {
-                console.log("searchEvent ", this.filterObj)
-                this.filterObj = {productName: query}                
+                
+                
+                this.$route.query = {productName: query}                
+                if(this.categoryId === 0){
+                    this.filterObj = this.$route.query;
+                }else{
+                    this.categoryId = 0;
+                }
                 this.clearFilter = Math.random();
             })
         }

@@ -5,13 +5,13 @@ export default {
 }
 import {ElMessage} from 'element-plus';
 function search(){
-    this.eventBus.emit("searchEvent", this.searchInput);
     this.$router.push({
         path: "/",
         query: {
             productName: this.searchInput
         }
     });
+    this.eventBus.emit("searchEvent", this.searchInput);
 }
 
 function goHome(){

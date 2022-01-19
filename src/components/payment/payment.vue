@@ -209,8 +209,8 @@ import { ElMessage } from 'element-plus'
             CartService.deleteProductofCart(element.ProductID);
           })
           this.$router.push("/member/order");
-        }).catch((error) => {
-          console.log(error.response.data.message)
+        }).catch(() => {
+          
         });
       },
       ConvertJsonToObject(){

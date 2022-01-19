@@ -64,11 +64,11 @@ import OrderService from '../../../services/order.service'
             },
             handleDelete(index){
                 if(confirm("確定取消")){
-                    OrderService.deleteOrder(this.orderData[index].OrderID).then(data => {
+                    OrderService.deleteOrder(this.orderData[index].OrderID).then(() => {
                         this.orderData[index].StatusType = "交易取消";
-                        console.log(data);
-                    }).catch((error) => {
-                        console.log(error.response.data.message);
+                        
+                    }).catch(() => {
+                        
                     });
                 }
             }

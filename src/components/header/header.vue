@@ -37,27 +37,6 @@
                                     </router-link>
                                 </template>
                             </el-space>
-                            <!-- <el-col :span="12">
-                                <div>
-                                    <el-row v-if="isShow">
-                                        <el-col :span="12">
-                                            <div>
-                                                <router-link to="/user/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
-                                            </div>
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <div>
-                                                <router-link to="/user/register" class="register-position"><font face="DFKai-sb">註冊</font></router-link>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                </div>
-                            </el-col>
-                            <el-col :span="12">
-                                <div>
-                                    <router-link to="/" @click="checkLogin()" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
-                                </div>
-                            </el-col> -->
                         </el-row>
                     </div>
                 </el-col>
@@ -111,14 +90,16 @@
                         }
                     ]
                 }
+            },
+            "$route.query.productName"(newValue){
+                this.searchInput = newValue;
             }
         },
         mounted() {
             if(localStorage.getItem("token")){
                 userService.getInformation().then(data => {
                     this.memberInformation = data;                    
-                }).catch(() => {
-                    localStorage.removeItem("token");   
+                }).catch(() => {                      
                     this.memberInformation = {};                
                 });
             }else{

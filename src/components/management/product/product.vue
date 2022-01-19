@@ -233,7 +233,7 @@ export default {
             this.allowEdit = !this.allowEdit
             this.readOnly = !this.readOnly
             this.tabPosition = 'two'
-            console.log(typeof(this.$route.params.id))
+            
             if (parseInt(this.$route.params.id) !== 0) {
                 this.checkButton('edit');
                 this.editProduct(parseInt(this.$route.params.id));

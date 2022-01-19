@@ -132,7 +132,7 @@ function beforeAvatarUpload(file) {
             const url = result.imageUrl;
             this.operationProduct.Thumbnail = url.replace(this.imgURL, "");
             ElMessage.success(result.message);
-            console.log(url);
+            
         });
     }
 }

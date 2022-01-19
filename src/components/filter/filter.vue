@@ -48,6 +48,38 @@ export default {
             this.filterSelect = [];
             this.minPrice = "";
             this.maxPrice = "";
+        },
+        "$route" (){
+            
+            
+
+            this.filterSelect = [];
+            this.minPrice = "";
+            this.maxPrice = "";
+            
+            const expectQueryString = ["filter", "sort", "minPrice", "maxPrice"];
+            expectQueryString.forEach(queryString => {
+                if(this.$route.query[queryString]){
+                    if(queryString === "minPrice"){
+                        this.minPrice = this.$route.query[queryString];
+                    }
+                    if(queryString === "maxPrice"){
+                        this.maxPrice = this.$route.query[queryString];
+                    }
+                    if(queryString === "filter" || queryString === "sort"){
+                        Object.entries(this.filter).forEach((element) => {
+                            const value = Object.values(element[1])[0];
+                            if(this.$route.query[queryString] === value){
+                                this.filterSelect = [element[0]];
+                            }
+                        })
+                        
+                    }
+                
+                
+                }
+            });
+            
         }
     },
     data(){

@@ -98,7 +98,6 @@ export default {
                     this.adminName = data.Name;
                 }                    
             }).catch(() => {
-                localStorage.removeItem("token"); 
                 this.$router.push({path:"/"});  
             });
         }else{
