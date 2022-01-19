@@ -13,7 +13,7 @@
                         <!-- <router-link :to="`/product/${i.ProductID}`">
                             <el-image src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="subject-image"/></router-link> -->
                         <router-link :to="`/product/${i.ProductID}`">
-                            <el-image :src="i.Thumbnail" class="subject-image">
+                            <el-image :src="imgURL + i.Thumbnail" class="subject-image">
                             </el-image>
                         </router-link>
                         <div>

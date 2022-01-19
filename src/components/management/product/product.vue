@@ -26,7 +26,7 @@
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
                             <div class="demo-image__preview">
-                                <el-image style="width: 100px; height: 100px" :src="scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
+                                <el-image style="width: 100px; height: 100px" :src="imgURL + scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
                             </div>
                         </template>
@@ -93,13 +93,13 @@
                         <el-upload
                                 class="avatar-uploader"
                                 action="#"
-                                accept=".jpg, .jpeg, .png"
+                                accept=".jpg, .jpeg, .png, .jfif"
                                 :show-file-list="false"
                                 :before-upload="beforeAvatarUpload"
                                 :on-change="handleChange"
                                 name="image">
                             <div class="image" v-if="this.operationProduct.Thumbnail">
-                                <img :src="this.operationProduct.Thumbnail" class="avatar" />
+                                <img :src="imgURL + this.operationProduct.Thumbnail" class="avatar" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>

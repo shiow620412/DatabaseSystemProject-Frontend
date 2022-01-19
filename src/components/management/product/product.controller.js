@@ -130,7 +130,7 @@ function beforeAvatarUpload(file) {
         formData.append("image", file);
         imageService.uploadImage(formData).then((result) => {
             const url = result.imageUrl;
-            this.operationProduct.Thumbnail = url;
+            this.operationProduct.Thumbnail = url.replace(this.imgURL, "");
             ElMessage.success(result.message);
             console.log(url);
         });
