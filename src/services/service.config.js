@@ -1,6 +1,6 @@
 import axios from 'axios'
-// const apiURL = "https://prj.inf.saihs.edu.tw/api";
-const apiURL = "http://localhost:3000/api";
+const apiURL = "https://prj.inf.saihs.edu.tw/api";
+// const apiURL = "http://localhost:3000/api";
 
 const instance = axios.create({
     baseURL: apiURL,

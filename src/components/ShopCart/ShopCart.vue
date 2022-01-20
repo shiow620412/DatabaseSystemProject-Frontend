@@ -15,7 +15,7 @@
                 <el-table-column type="selection" label="選取" min-width="10%" align="center"></el-table-column>
                 <el-table-column label="商品圖片" min-width="30%" align="center">
                     <template v-slot="scope">
-                        <el-image :src="scope.row.Thumbnail"></el-image>
+                        <el-image :src="imgURL + scope.row.Thumbnail"></el-image>
                     </template>
                 </el-table-column>
                 <el-table-column prop="ProductName" label="商品名稱" min-width="35%" align="center"></el-table-column>

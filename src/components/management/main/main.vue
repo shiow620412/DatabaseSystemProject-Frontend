@@ -121,9 +121,9 @@ export default {
             const chartData = {
                 type: "doughnut",
                 data: {
-                    labels: ["下架", "上架"],
+                    labels: ["上架", "下架"],
                     datasets: [{
-                        backgroundColor: ["rgb(255,127,80)", "rgb(80,200,120)"],
+                        backgroundColor: ["rgb(80,200,120)", "rgb(255,127,80)"],
                         data: this.getPNum
                     }, ],
                 },
