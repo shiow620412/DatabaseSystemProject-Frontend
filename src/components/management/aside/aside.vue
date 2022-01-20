@@ -11,7 +11,23 @@
         </div>
     </el-aside>
     <el-container>
-        <el-header style="text-align: right; font-size: 18px;">Hello, {{ this.adminName }}</el-header>
+        <el-header style="text-align: right; font-size: 18px;">
+            <el-row justify="end" align="middle">
+                <el-space>
+                    <div >Hello, {{ this.adminName }} </div>
+                    <!-- <el-col :span="1"> -->
+                        <router-link to="/">
+                            <el-col>
+                                <el-icon :size="30" ><home-filled style="margin-top:10px" /></el-icon>
+                            </el-col>
+                            
+                        </router-link> 
+                    <!-- </el-col>   -->
+                </el-space>
+            </el-row>
+          
+
+        </el-header>
         <el-main>
             <router-view />
         </el-main>
@@ -20,17 +36,22 @@
 </template>
 
 <script>
+import {HomeFilled} from '@element-plus/icons'
 import asideController from "./aside.controller";
+import userService from '../../../services/user.service.js';
 export default {
     name: 'aside',
+    components:{
+        HomeFilled
+    },
     data() {
         return {
-            adminName: 'Wind',
+            adminName: '',
             buttonArray: [{
                 link: '/management/main',
                 icon: 'el-icon-menu',
                 name: '系統首頁',
-                click: 1
+                click: 0
             }, {
                 link: '/management/member',
                 icon: 'el-icon-user',
@@ -46,10 +67,46 @@ export default {
                 icon: 'el-icon-shopping-bag-2',
                 name: '商品管理',
                 click: 0
-            }]
+            }],
         }
     },
     methods: asideController,
+    mounted() {
+        this.eventBus.on('routeChanged', ()=> {
+            this.buttonArray.map(button => {
+                if(this.$route.path.startsWith(button.link)){
+                    button.click = 1;
+                }else{
+                    button.click = 0;
+                }
+                return button;
+            });
+        });
+        this.buttonArray.map(button => {
+            if(this.$route.path.startsWith(button.link)){
+                button.click = 1;
+            }else{
+                button.click = 0;
+            }
+            return button;
+        });
+        if(localStorage.getItem("token")){
+            userService.getInformation().then(data => {                
+                if(!data.isAdmin){
+                    this.$router.push({path:"/"});
+                }else{
+                    this.adminName = data.Name;
+                }                    
+            }).catch(() => {
+                this.$router.push({path:"/"});  
+            });
+        }else{
+            this.$router.push({path:"/"});
+        }
+        if(this.$route.query.productName){
+            this.searchInput = this.$route.query.productName;
+        }       
+    },
 }
 </script>
 

@@ -1,19 +1,30 @@
 <template>
-  <el-row class="frame">
-    <el-col :span="7"></el-col>
-    <el-col :span="10" class="login_frame">
-      <el-container>
+
+    
+      <el-container  class="login_frame">
         <el-header>
           <div class="register_text">
             <h3>註冊會員</h3>
           </div>
         </el-header>
         <el-main>
+          <el-form :model="registerForm" label-width="100px">
+
+        
           <el-row>
             <el-col :span="21">
+            <el-form-item label="名稱" prop="checkPass">
+                  <el-input v-model="registerForm.name" autocomplete="off"></el-input>
+                </el-form-item>
+        
+            </el-col>
+            <el-col :span="3"></el-col>
+          </el-row>
+          <el-row>
+             <el-col :span="21">
               <el-form label-width="100px" class="email_frame">
                 <el-form-item prop="email" label="信箱" >
-                  <el-input v-model="dynamicValidateForm.email"></el-input>
+                  <el-input v-model="registerForm.email"></el-input>
                 </el-form-item>
               </el-form>
             </el-col>
@@ -21,58 +32,52 @@
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form label-width="100px" class="account_frame">
+
                 <el-form-item prop="account" label="帳號">
-                  <el-input v-model="dynamicValidateForm.account"></el-input>
+                  <el-input v-model="registerForm.account"></el-input>
                 </el-form-item>
-              </el-form>
+            
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
           <el-row>
             <el-col :span="21">
-              <el-form label-width="100px" class="password_frame">
+             
                 <el-form-item label="密碼" prop="pass">
-                  <el-input type="password" v-model="dynamicValidateForm.password" autocomplete="off"></el-input>
+                  <el-input type="password" v-model="registerForm.password" autocomplete="off"></el-input>
                 </el-form-item>
-              </el-form>
+         
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
-          <el-row>
-            <el-col :span="21">
-              <el-form label-width="100px" class="check_pass_frame">
-                <el-form-item label="名稱" prop="checkPass">
-                  <el-input type="password" v-model="dynamicValidateForm.name" autocomplete="off"></el-input>
-                </el-form-item>
-              </el-form>
-            </el-col>
-            <el-col :span="3"></el-col>
-          </el-row>
+
           <el-row class="checkin_frame">
             <el-col :span="4"></el-col>
             <el-col :span="17">
-              <el-button class="checkin" type="primary" @click="submitForm(dynamicValidateForm.email, dynamicValidateForm.account, dynamicValidateForm.password, dynamicValidateForm.name)">註冊</el-button>
+              <el-form-item>
+                <el-button class="checkin" type="primary" @click="submitForm(registerForm.email, registerForm.account, registerForm.password, registerForm.name)">註冊</el-button>
+              </el-form-item>
             </el-col>
             <el-col :span="3"></el-col>
           </el-row>
+          <el-row class="jump_page">
+            <el-col :span="7"></el-col>
+            <el-col :span="6" class="text">
+              <span>已註冊SHOP會員？</span>
+            </el-col>
+            <el-col :span="4">
+              <div class="subject_link">
+                <router-link to="/user/login">登入</router-link>
+              </div>
+            </el-col>
+            <el-col :span="7"></el-col>
+          </el-row>
+            </el-form>
         </el-main>
-        <el-row class="jump_page">
-          <el-col :span="7"></el-col>
-          <el-col :span="6" class="text">
-            <span>已註冊SHOP會員？</span>
-          </el-col>
-          <el-col :span="4">
-            <div class="subject_link">
-              <router-link to="/identify/login">登入</router-link>
-            </div>
-          </el-col>
-          <el-col :span="7"></el-col>
-        </el-row>
       </el-container>
-    </el-col>
-    <el-col :span="7"></el-col>
-  </el-row>
+
+
+
 </template>
 
 <script>
@@ -81,7 +86,7 @@
     name: 'top',
     data() {
       return {
-        dynamicValidateForm: {
+        registerForm: {
           email: '',
           account: '',
           password: '',
@@ -91,10 +96,9 @@
     },
     methods: {
       submitForm(email, account, password, name) {
-        UserService.register(email, account, password, name).then(data => {
-          console.log(data);
-          this.$router.push({path: '/'});
+        UserService.register(email, account, password, name).then(() => {
           alert("註冊成功");
+          this.$router.push({path: '/'});
         }).catch((error) => {
           alert(error.response.data.message);
         })
@@ -125,7 +129,7 @@
   }
 
   .email_frame {
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   .account_frame {
@@ -137,7 +141,7 @@
   }
 
   .check_pass_frame {
-    margin-top: 10px;
+    margin-top: 30px;
   }
 
   .checkin_frame {

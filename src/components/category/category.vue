@@ -1,102 +1,127 @@
 <template>
-    <div class="category-div-content">
-        <div v-for="(i,index) in category_type" :key="i" style="display: inline-block;margin-left: 50px;">
-            <router-link :to="`/category/${index+1}`" @click="OnSelectCategoy(index, '00000')"><img :src="i.photo" style="width: 50px;height: 50px;margin: auto auto;"></router-link>
-            <p class="category-p">{{i.name}}</p>
-        </div>
-    </div>
-    <el-row>
-        <el-col :span="4" style="background-color: #E4FFD3;height: 800px;">
-            <div style="width: 90%;margin: auto auto;">
-                <router-link style="text-decoration: none;" :to="{query: {id:true}}" @click="changefilter('10000')"><p style="position: positive;left: -20px;">> 新上市</p></router-link>
-                <router-link style="text-decoration: none;" to="/" @click="changefilter('01000')"><p style="position: positive;left: -20px;">> 有貨優先</p></router-link>
-                <router-link style="text-decoration: none;" to="/" @click="changefilter('00100')"><p style="position: positive;left: -20px;">> 價錢低到高</p></router-link>
-                <router-link style="text-decoration: none;" to="/" @click="changefilter('00010')"><p style="position: positive;left: -20px;">> 價錢高到低</p></router-link>
-                <el-row>
-                    <el-col :span="1"><div class="grid-content bg-purple"></div></el-col>
-                    <el-col :span="8"><div class="grid-content bg-purple"></div><el-input v-model="input1" /></el-col>
-                    <el-col :span="6"><div class="grid-content bg-purple-light">~</div></el-col>
-                    <el-col :span="8"><div class="grid-content bg-purple"></div><el-input v-model="input2" /></el-col>
-                    <el-col :span="1"><div class="grid-content bg-purple"></div></el-col>
-                </el-row><br>
-                <el-button @click="changefilter('00001',this.input1,this.input2)">搜尋</el-button>
-            </div>
+
+        <el-col :span="4" style="height: auto">
+
+            <el-card :body-style="{padding:0}" v-show="category.length > 0">
+                <template #header >
+                    <el-row justify="center" class="card-header">
+                        商品分類
+                    </el-row>
+                </template>
+                <template v-for="element in category" :key="element">
+                    <template v-if="element.searchCount !== undefined">
+                        <el-row  justify="center" v-if="element.searchCount > 0">
+                            <router-link :to="{
+                                    path:`/category/${element.id}`,
+                                    query: {
+                                        productName: searchName
+                                    }
+                                }"  @click="changeSearchCategory(element.id, searchName)">
+                                <el-button type="text" :class="{active:element.isActive}">
+                                    {{element.name.concat(`(${element.searchCount})`)}}
+                                </el-button>
+                            </router-link>
+                        </el-row>
+                    </template>
+                    <template v-else>
+                        <el-row  justify="center">
+                            <router-link :to="'/category/'+element.id" @click="changeCategory(element.id)" >
+                                <el-button type="text" :class="{active:element.isActive}">
+                                    {{element.name}}
+                                </el-button>
+                            </router-link>
+                        </el-row>
+
+                    </template>
+                </template>
+            
+            </el-card>
+            
         </el-col>
-        <el-col :span="20"><div class=""><subject :getTable="inputTable" @custom-event-trigger="RequestNewPage"/></div></el-col>
-    </el-row>
+    
+
 </template>
 
 <script>
-import subject from '../subject/subject.vue'
+
 import productService from "../../services/product.service"
+import categoryService from "../../services/category.service"
 import CategoryController from './category.controller'
     export default {
         name: 'category',
         components: {
-            subject
         },
-        methods: CategoryController,
         data(){
             return{
-                isSearch: 0,
-                filter: "00000",
-                max_page: 0,
-                current_page: 1,
-                category: -1,
-                input1: "",
-                input2: "",
-                inputTable:[],
-                category_type: [
-                    {
-                        photo: require("../../assets/category1.png"),
-                        name: "水果"
-                    },
-                    {
-                        photo: require("../../assets/category2.png"),
-                        name: "食品"
-                    },
-                    {
-                        photo: require("../../assets/category3.png"),
-                        name: "電腦"
-                    },
-                    {
-                        photo: require("../../assets/category4.png"),
-                        name: "衣服"
-                    },
-                    {
-                        photo: require("../../assets/category5.png"),
-                        name: "日用品"
-                    },
-                    {
-                        photo: require("../../assets/category6.png"),
-                        name: "飲料"
-                    },
-                ]
+                sourceCategory:'',
+                category:[],
+                searchName: '',
             }
         },
+        watch:{
+            searchName(){
+                if(this.searchName === '')
+                    return
+                
+                productService.countProductInCategoryByName(this.searchName).then(async data => {
+                    if(this.sourceCategory === '' ){
+                        await (categoryService.getCategories().then(data =>{
+                            this.sourceCategory = JSON.stringify(data);                           
+                        }))
+                    }
+                    this.category = JSON.parse(this.sourceCategory).map(element => {
+                        const findQuantity = data.find(x => x.TypeName === element.name)
+                        if(findQuantity){
+                            element.searchCount = findQuantity.quantity;
+                        }else{
+                            element.searchCount = 0;
+                        }
+                        return element;
+                    });
+                    
+                    if(this.$route.params.category){
+                        this.changeActiveCategory(this.category, Number(this.$route.params.category));
+                    }
+                })
+            },
+            "$route": function(){
+                if(this.$route.query.productName){
+                    
+                    if(this.searchName === this.$route.query.productName){
+                        this.$route.params.category ? this.changeActiveCategory(this.category, Number(this.$route.params.category)) : this.changeActiveCategory(this.category, 0);
+                    }else{
+                        this.searchName = this.$route.query.productName;
+                    }
+                }else{
+                    this.category = JSON.parse(this.sourceCategory); 
+                    if(this.$route.params.category){
+                        this.changeActiveCategory(this.category, Number(this.$route.params.category));
+                    }
+                    this.searchName = '';
+                }
+            }
+        },
+        methods: CategoryController,
         mounted(){
-            console.log(this.$route.query.q);
-            this.eventBus.on("click-send-msg", (msgData) => (
-                this.searchByName(msgData.toString())
-            ));
-            if(this.$route.params.category){
-                console.log("page "+this.$route.params.category);
-                productService.getProductsBycategory(this.$route.params.category,this.filter,this.input1,this.input2).then(data => {
-                    this.ResolveOverlongString(data, 0);
-                    this.category = parseInt(this.$route.params.category)-1;
-                })
+            this.searchName = this.$route.query.productName ? this.$route.query.productName : '';
+            if(this.$route.query.productName){
+                this.searchName = this.$route.query.productName;
+            }else{
+                categoryService.getCategories().then(data =>{
+                    this.category = data
+                    this.sourceCategory = JSON.stringify(this.category);
+                    this.changeActiveCategory(this.category, Number(this.$route.params.category))                    
+                });
             }
-            else if(this.$route.query.q){
-                productService.getProductBySearch(this.$route.query.q).then(data => {
-                    this.ResolveOverlongString(data, 0);
-                })
-            }
-            else{
-                console.log("Home");
-                productService.getProducts().then(data => {
-                    this.ResolveOverlongString(data, 0);
-                })
-            }
+            this.eventBus.on("recoverCategory", ()=>{
+                this.category = JSON.parse(this.sourceCategory);
+                this.changeCategory(0, true);
+                this.searchName = '';
+            })
+            this.eventBus.on("searchEvent", (query) => {
+                this.searchName = query;               
+            })
+
         }
     }
 </script>

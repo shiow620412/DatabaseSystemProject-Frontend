@@ -1,59 +1,42 @@
 <template>
-    <el-row class="top">
+    <el-row class="top" >
         <el-col :span="7">
-            <el-row>
-                <el-col :span="24">
-                    <div>
-                        <router-link to="/"><img class="home-image" src="../../assets/logo.png" alt=""></router-link>
-                    </div>
-                </el-col>
-                <el-col :span="3">
-                    <div>
-                        <!-- layout-margin -->
-                    </div>
-                </el-col>
-            </el-row>
+            <router-link to="/"  @click="goHome">
+                <el-image  :fit="'contain'" :src="require('../../assets/logo.png')" alt=""></el-image>
+            </router-link>
+
         </el-col>
         <el-col :span="10" class="input-position">
-            <div>
-                <el-input v-model="input" placeholder="Please Search Product">
+            <el-form @submit.prevent="search">
+                <el-input v-model="searchInput" placeholder="Please Search Product">
                 <template #append>
                     <el-button @click="search"><el-icon><Search/></el-icon></el-button>
                 </template>
                 </el-input>
-            </div>
+            </el-form>
+            
         </el-col>
         <el-col :span="7">
-            <el-row>
+            <el-row style="height: 100%">
                 <el-col :span="8">
-                    <div>
+                    
                         <router-link to="/cart" class="shoppingCart-position"><img class="shoppingCart-image" src="../../assets/shoppingCart.png" alt=""></router-link>
-                    </div>
+                    
                 </el-col>
                 <el-col :span="16">
                     <div>
-                        <el-row>
-                            <el-col :span="12">
-                                <div>
-                                    <el-row>
-                                        <el-col :span="12">
-                                            <div>
-                                                <router-link to="/identify/login" class="register-position"><font face="DFKai-sb">登入</font></router-link>
-                                            </div>
-                                        </el-col>
-                                        <el-col :span="12">
-                                            <div>
-                                                <router-link to="/identify/register" class="register-position"><font face="DFKai-sb">註冊</font></router-link>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                </div>
-                            </el-col>
-                            <el-col :span="12">
-                                <div>
-                                    <router-link to="/" @click="checkLogin()" class="member-position"><font face="DFKai-sb">會員中心</font></router-link>
-                                </div>
-                            </el-col>
+                        <el-row justify="end">
+                            <el-space :size="10">
+                                <template v-if="memberInformation.Name">
+                                    <div>Hi {{memberInformation.Name}}</div>
+                                    <router-link to="/" @click="logout">登出</router-link>
+                                </template>
+                                <template v-for="element in userOptions" :key="element">
+                                    <router-link :to="element.path" v-if="element.display">
+                                        {{element.label}}
+                                    </router-link>
+                                </template>
+                            </el-space>
                         </el-row>
                     </div>
                 </el-col>
@@ -64,8 +47,9 @@
 </template>
 
 <script>
-    import { ref } from 'vue'
+    import userService from "../../services/user.service"
     import {Search} from '@element-plus/icons'
+    import headerController from './header.controller'
     export default {
         name: 'Top',
         components: {
@@ -73,67 +57,61 @@
         },
         data(){
             return{
-                input: ref('')
+                searchInput: '',
+                userOptions:[],
+                memberInformation:{}
             }
         },
-        methods: {
-            search(){
-                console.log("push data");
-                this.eventBus.emit("click-send-msg", this.input);
-                this.$router.push({
-                    path: "/index",
-                    query: {
-                        q: this.input
-                    }
-                })
+        watch:{
+            memberInformation(){
+                if(Object.keys(this.memberInformation).length > 0){
+                    this.userOptions = [
+                        {
+                            label: "會員中心",
+                            path: "/member",
+                            display: true
+                        },{
+                            label: "後台管理",
+                            path: "/management",
+                            display: this.memberInformation.isAdmin
+                        }
+                    ]
+                }else{
+                    this.userOptions = [
+                    {
+                            label: "登入",
+                            path: "/user/login",
+                            display: true
+                        },
+                        {
+                            label: "註冊",
+                            path: "/user/register",
+                            display: true
+                        }
+                    ]
+                }
             },
-            checkLogin(){
-                if(localStorage.getItem("token")){this.$router.push({path: "/member"});}
-                else{this.$router.push({path: "/identify"});}
+            "$route.query.productName"(newValue){
+                this.searchInput = newValue;
             }
         },
+        mounted() {
+            if(localStorage.getItem("token")){
+                userService.getInformation().then(data => {
+                    this.memberInformation = data;                    
+                }).catch(() => {                      
+                    this.memberInformation = {};                
+                });
+            }else{
+                this.memberInformation = {};
+            }
+            if(this.$route.query.productName){
+                this.searchInput = this.$route.query.productName;
+            }       
+        },
+        
+        methods: headerController,
     }
 </script>
 
-<style>
-    .top{
-        height: 100px;
-        width: 100%;
-        z-index: 2;
-        background-color: #FAEDA7; 
-    }
-    .shoppingCart-position{
-        top: 33px;
-        left: 10px;
-        position: relative;
-        top: 25px;
-        right: -30px;
-    }
-    .shoppingCart-image{
-        transition: 0.5s;
-        width: 30%;
-    }
-    .shoppingCart-image:hover{
-        transform: scale(1.2);
-    }
-    .register-position{
-        position: relative;
-        font-size: 18px;
-        top: 10px;
-        color: #F97E13;
-    }
-    .member-position{
-        position: relative;
-        font-size: 18px;
-        top: 10px;
-        left: 10px;
-        color: #F97E13;
-    }
-    .input-position{
-        margin: auto auto;
-    }
-    .home-image{
-        width: 40%;
-        transform:translateY(20%);
-    }
-</style>
+<style scoped lang="scss" src="./header.scss"></style>

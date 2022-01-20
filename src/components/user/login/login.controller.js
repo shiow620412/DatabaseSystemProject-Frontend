@@ -1,12 +1,13 @@
-import logintService from '../../../services/user.service'
+import loginService from '../../../services/user.service'
 
 export default {
     login,
 }
 
 function login(account, password){
-    logintService.login(account, password).then(data =>{
+    loginService.login(account, password).then(data =>{
         localStorage.setItem("token", data.token);
+        localStorage.setItem("isLogin", 1);
         this.$router.push({path: "/index"});
     }).catch((error) => {
         alert(error.response.data.message);

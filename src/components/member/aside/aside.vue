@@ -1,5 +1,5 @@
 <template>
-    <el-row style="align: cenetr;height: 650px;">
+    <el-row style="align: cenetr;">
         <br>
         <el-col :span="2" style="background-color: #EFFFE4;">
             <div class=""></div>
@@ -29,14 +29,14 @@
                     <span class="button-text ">修改密碼</span>
                 </el-button>
             </router-link>
-            <el-button class="button-back" @click="logout()">
-                <p class="el-icon-edit-outline button-text"></p>
+            <!-- <el-button class="button-back" @click="logout()">
+                <p class="el-icon-s-release button-text"></p>
                 <span class="button-text ">登出</span>
-            </el-button>
+            </el-button> -->
         </el-col>
         <el-col :span="14" style="background-color: #EFFFE4;">
             <br>
-            <div><router-view/></div>
+            <router-view/>
         </el-col>
         <el-col :span="2" style="background-color: #EFFFE4;">
             <div class=""></div>
@@ -51,17 +51,15 @@
 
         },
         methods: {
-            logout(){
-                if(confirm("確定登出?")){
-                    localStorage.removeItem("token");
-                    this.$router.push({path: "/identify"});
-                }
-            }
+
         },
     }
 </script>
 
-<style>
+<style scoped>
+    .el-row{
+        height: calc(100vh - 104px);
+    }
     .button-back{
         background-color: #7EEDD2;
         margin: 10px;

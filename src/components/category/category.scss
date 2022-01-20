@@ -18,3 +18,22 @@
     text-align: center;
     color: black;
 }
+
+.el-button.active{
+    color: #ff69b4;
+}
+.el-button{
+    margin: 5px;
+    color: #6AB8FF;
+}
+.el-card{
+    background-color: #FFFADF ;
+    margin: 20% 10% 0;
+    border: solid #FFD88B 1px; 
+}
+
+.el-row.card-header{
+    background-color: #FFD88B;
+    color: #FFFFFF;
+    margin: -5px -10px;
+}

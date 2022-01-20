@@ -109,6 +109,7 @@ export default {
         }
     },
     mounted() {
+        this.eventBus.emit('routeChanged');
         memberService.getAllMembers().then(data => {
             this.memberArray = data
         })

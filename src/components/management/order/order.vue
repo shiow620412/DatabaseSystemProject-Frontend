@@ -29,7 +29,7 @@
                     </template>
                     <template v-else-if="scope.row.click">
                         <el-select v-model="scope.row.OrderStatus" placeholder="Select" size="medium">
-                            <el-option v-for="item in statusArray" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                            <el-option v-for="item in statusArray" :key="item.value" :label="item.label" :value="item.value" :disabled="item.disabled"></el-option>
                         </el-select>
                     </template>
                 </template>
@@ -66,6 +66,10 @@ export default {
                 {
                     value: 2,
                     label: '交易取消',
+                },{
+                    value: 3,
+                    label: "訂單成立",
+                    disabled: true
                 }
             ]),
             value: ref('')
@@ -94,6 +98,7 @@ export default {
         }
     },
     mounted() {
+        this.eventBus.emit('routeChanged');
         orderService.getAllOrders().then(data => {
             this.orderArray = data
         })

@@ -1,48 +1,34 @@
-import ShopCartService from "../../services/shopcart.service"
+import CartService from '../../services/cart.service'
 
 export default {
-    setDeleteID,
+    setIndex,
     deleteProduct,
-    editProduct,
-    saveProduct,
-    cancelEdit,
-    addToPayArray
+    addToPayArray,
+    handleChange,
+    click
 }
 
-function setDeleteID(productID) {
-    this.proID = productID;
-    console.log(this.proID);
+function setIndex(num) {
+    this.deleteIndex = num;
     this.dialogVisible = true;
 }
-
-function deleteProduct(productID) {
-    ShopCartService.deleteProduct(productID).then((result) => {
-        this.$message.success(result.message);
-        location.reload();
-    }).catch((error) => {
-        this.$message.error(error.response.data.message);
-    });
+function deleteProduct() {
+    CartService.deleteProductofCart(this.productArray[this.deleteIndex].ProductID);
+    this.productArray.splice(this.deleteIndex, 1);
     this.dialogVisible = false;
 }
-
-function editProduct(productID) {
-    console.log(productID);
-}
-
-function saveProduct(productID, quantity) {
-    console.log(productID);
-    ShopCartService.modifyProductQuantity(productID, quantity).then((result) => {
-        this.$message.success(result.message);
-        // location.reload();
-    }).catch((error) => {
-        this.$message.error(error.response.data.message);
-    });
-}
-
-function cancelEdit() {
-    this.$message.success('取消編輯');
-}
-
 function addToPayArray(val) {
     this.productOfChecked = val;
+}
+function handleChange(index,quantity){
+    CartService.updateProductQuantity(this.productArray[index].ProductID, quantity);
+    
+}
+function click(){
+    this.$router.push({
+        path: '/payment',
+        query: {
+            dataTable: JSON.stringify(this.productOfChecked)
+        }
+    });
 }

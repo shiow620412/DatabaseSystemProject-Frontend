@@ -26,7 +26,7 @@
                     <el-table-column label="商品圖片" min-width="25%" align="center">
                         <template #default="scope">
                             <div class="demo-image__preview">
-                                <el-image style="width: 100px; height: 100px" :src="scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
+                                <el-image style="width: 100px; height: 100px" :src="imgURL + scope.row.Thumbnail" :preview-src-list="srcList" :initial-index="1">
                                 </el-image>
                             </div>
                         </template>
@@ -93,13 +93,13 @@
                         <el-upload
                                 class="avatar-uploader"
                                 action="#"
-                                accept=".jpg, .jpeg, .png"
+                                accept=".jpg, .jpeg, .png, .jfif"
                                 :show-file-list="false"
                                 :before-upload="beforeAvatarUpload"
                                 :on-change="handleChange"
                                 name="image">
                             <div class="image" v-if="this.operationProduct.Thumbnail">
-                                <img :src="this.operationProduct.Thumbnail" class="avatar" />
+                                <img :src="imgURL + this.operationProduct.Thumbnail" class="avatar" />
                             </div>
                             <div class="image" v-else>
                                 <span style="width: 100%;height: 100%;font-size: 100px;" class="el-icon-picture"></span>
@@ -128,7 +128,7 @@
                         <div style="text-align: left;" class="pro_info_div" :disabled="(this.tabName === '新增商品') ? true : false" v-show="(this.tabName === '新增商品') ? true : false">
                             <h1>商品類型:&nbsp;&nbsp;
                                 <el-select v-model="this.operationProduct.Type" placeholder="Select" size="medium">
-                                    <el-option v-for="item in typesArray" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                                    <el-option v-for="item in typesArray" :key="item.id" :label="item.name" :value="item.id"></el-option>
                                 </el-select>
                             </h1>
                         </div>
@@ -166,6 +166,7 @@ import { VueEditor } from 'vue3-editor';
 import productController from './product.controller';
 import productPage from '../../product/product.vue';
 import adminProductService from '../../../services/admin/product.service'
+import categoryService from "../../../services/category.service"
 export default {
     name: 'product',
     components: {
@@ -174,26 +175,6 @@ export default {
     },
     setup() {
         return {
-            typesArray: ref([{
-                    value: 1,
-                    label: '水果'
-                }, {
-                    value: 2, 
-                    label: '食物'
-                }, {
-                    value: 3, 
-                    label: '3c'
-                }, {
-                    value: 4, 
-                    label: '衣物'
-                }, {
-                    value: 5, 
-                    label: '日用品'
-                }, {
-                    value: 6, 
-                    label: '飲料'
-                }
-            ]),
             value: ref('')
         }
     },
@@ -211,7 +192,8 @@ export default {
             onSelfDialogVisible: false,
             currentPage: 1,
             pageSize: 50,
-            loaded: false
+            loaded: false,
+            typesArray:[]
         }
     },
     methods: productController,
@@ -228,13 +210,30 @@ export default {
             return this.productArray.result
         }
     },
+    watch:{
+        '$route'(to){
+            if(to.path === "/management/product"){
+                this.operationProduct = [];
+                this.allowEdit = !this.allowEdit
+                this.readOnly = !this.readOnly
+                this.tabPosition = 'first'
+                adminProductService.getAllProducts().then(data => {
+                    this.productArray = data;             
+                })
+            }
+        }
+    },
     mounted() {
+        this.eventBus.emit('routeChanged');
+        categoryService.getCategories().then(data =>{
+            this.typesArray = data;
+        });
         if (this.$route.params.id) {
             window.location.reload;
             this.allowEdit = !this.allowEdit
             this.readOnly = !this.readOnly
             this.tabPosition = 'two'
-            console.log(typeof(this.$route.params.id))
+            
             if (parseInt(this.$route.params.id) !== 0) {
                 this.checkButton('edit');
                 this.editProduct(parseInt(this.$route.params.id));
@@ -242,7 +241,7 @@ export default {
         } else {
             // window.location.reload();
             adminProductService.getAllProducts().then(data => {
-                this.productArray = data;
+                this.productArray = data;             
             })
         }
     }

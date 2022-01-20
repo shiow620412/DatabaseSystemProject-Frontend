@@ -4,7 +4,7 @@ const prefix = "/user";
 const services = {
     login,
     register,
-    findPassword,
+    resetPassword,
     getInformation,
     EditInformation,
     getCreditCard,
@@ -30,11 +30,12 @@ function register(email, account, password, name){
         name
     });
 }
-function findPassword(email){
-    const url = prefix + "/findPassword";
+function resetPassword(email, account){
+    const url = prefix + "/resetPassword";
 
-    return http.get(url, {
-        email
+    return http.post(url, {
+        email,
+        account
     });
 }
 function getInformation(){

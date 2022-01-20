@@ -55,6 +55,7 @@ export default {
         }
     },
     mounted() {
+        this.eventBus.emit('routeChanged');
         memberService.getAllMemberStatus().then(data => {
             this.memberArray = data
             this.memberLoaded = true
@@ -78,8 +79,7 @@ export default {
         },
         getONum() {
             let tempArray = [];
-            for (let i = 0; i < this.orderArray.length; i++) {
-                console.log(this.orderArray[i].total);
+            for (let i = 0; i < this.orderArray.length; i++) { 
                 tempArray.push(this.orderArray[i].total);
             }
             return tempArray;

@@ -37,22 +37,22 @@
         <el-dialog v-model="isEditShow" title="修改個人資料" width="30%">
             <el-form :model="form">
                 <el-form-item label="姓名">
-                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <el-input v-model="form.Name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="電話">
-                    <el-input v-model="form.phone" autocomplete="off"></el-input>
+                    <el-input v-model="form.Phone" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="信箱">
-                    <el-input v-model="form.email" autocomplete="off"></el-input>
+                    <el-input v-model="form.Email" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="住址">
-                    <el-input v-model="form.address" autocomplete="off"></el-input>
+                    <el-input v-model="form.Address" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="windowsEditClose()">取消</el-button>
-                    <el-button type="primary" @click="onEditSubmit(this.form.email, this.form.name, this.form.address, this.form.phone)">完成</el-button>
+                    <el-button type="primary" @click="onEditSubmit(this.form.Email, this.form.Name, this.form.Address, this.form.Phone)">完成</el-button>
                 </span>
             </template>
         </el-dialog>
